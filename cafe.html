@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cutie Cafe Kitchen 🍳💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .game-header {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #ec407a, #f48fb1);
+            color: white;
+            box-shadow: 0 4px 15px rgba(236, 64, 122, 0.3);
+        }
+
+        .game-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* Game Container */
+        .game-container {
+            display: grid;
+            grid-template-columns: 200px 1fr 250px;
+            gap: 15px;
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: calc(100vh - 100px);
+        }
+
+        /* Ingredients Panel */
+        .ingredients-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .panel-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.2rem;
+            color: #ec407a;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .ingredient {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #fff5f8, #ffe0eb);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: grab;
+            transition: all 0.2s;
+            border: 3px solid transparent;
+            user-select: none;
+        }
+
+        .ingredient:hover {
+            transform: scale(1.1);
+            border-color: #ec407a;
+            box-shadow: 0 5px 15px rgba(236, 64, 122, 0.3);
+        }
+
+        .ingredient:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .ingredient.dragging {
+            opacity: 0.5;
+        }
+
+        /* Kitchen Area */
+        .kitchen-area {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cooking-stations {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .station {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(145deg, #fafafa, #f0f0f0);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px dashed #ddd;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .station.drag-over {
+            border-color: #ec407a;
+            background: linear-gradient(145deg, #fff5f8, #ffe0eb);
+            transform: scale(1.05);
+        }
+
+        .station-icon {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .station-name {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .station-contents {
+            position: absolute;
+            top: 10px;
+            display: flex;
+            gap: 5px;
+            font-size: 1.5rem;
+        }
+
+        .station.cooking .station-icon {
+            animation: cooking 0.5s infinite alternate;
+        }
+
+        @keyframes cooking {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        /* Prep Area */
+        .prep-area {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border-radius: 15px;
+            padding: 15px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border: 3px dashed #64b5f6;
+        }
+
+        .prep-area.drag-over {
+            border-color: #1976d2;
+            background: linear-gradient(145deg, #bbdefb, #90caf9);
+        }
+
+        .prep-item {
+            font-size: 2rem;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: grab;
+        }
+
+        .prep-label {
+            color: #1976d2;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cook-btn {
+            background: linear-gradient(135deg, #ff9800, #ffc107);
+            color: white;
+        }
+
+        .cook-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #9e9e9e, #bdbdbd);
+            color: white;
+        }
+
+        .clear-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Cooked Dish Display */
+        .cooked-dish {
+            background: linear-gradient(145deg, #c8e6c9, #a5d6a7);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            display: none;
+            border: 3px solid #66bb6a;
+        }
+
+        .cooked-dish.has-dish {
+            display: block;
+            animation: pop 0.3s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .dish-display {
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+
+        .dish-name {
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        .serve-btn {
+            margin-top: 10px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #66bb6a, #81c784);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .serve-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 187, 106, 0.4);
+        }
+
+        /* Customer Panel */
+        .customer-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .customer-slot {
+            background: linear-gradient(145deg, #fff8e1, #ffecb3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border: 3px solid #ffd54f;
+        }
+
+        .customer-slot.empty {
+            opacity: 0.5;
+            border-style: dashed;
+        }
+
+        .customer-slot.drag-over {
+            border-color: #66bb6a;
+            background: linear-gradient(145deg, #e8f5e9, #c8e6c9);
+        }
+
+        .customer-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .customer-name {
+            font-weight: 700;
+            color: #f57c00;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .order-bubble {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: white;
+            border-radius: 15px;
+            padding: 5px 10px;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border: 2px solid #ec407a;
+        }
+
+        .patience-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .patience-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f44336, #ff9800, #4caf50);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            animation: modalPop 0.3s ease-out;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0) rotate(-10deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        .modal-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2rem;
+            color: #ec407a;
+            margin-bottom: 15px;
+        }
+
+        .modal-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ec407a, #f48fb1);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(236, 64, 122, 0.4);
+        }
+
+        /* Day Complete Modal */
+        .day-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .day-stat {
+            text-align: center;
+        }
+
+        .day-stat-value {
+            font-size: 2rem;
+            color: #ec407a;
+            font-weight: 700;
+        }
+
+        .day-stat-label {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Win Modal */
+        .win-characters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .win-character {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        .win-character:nth-child(2n) {
+            animation-delay: 0.1s;
+        }
+
+        .win-character:nth-child(3n) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Floating Hearts */
+        .floating-heart {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: floatUp 2s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) scale(1.5);
+            }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.5rem;
+            animation: sparkle 0.8s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .game-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .ingredients-panel {
+                order: 1;
+            }
+
+            .kitchen-area {
+                order: 2;
+            }
+
+            .customer-panel {
+                order: 0;
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .customer-slot {
+                min-width: 150px;
+            }
+        }
+
+        /* Start Screen */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .start-screen.hidden {
+            display: none;
+        }
+
+        .start-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 3rem;
+            color: #ec407a;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .start-subtitle {
+            font-size: 1.2rem;
+            color: #ad1457;
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .start-characters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 400px;
+        }
+
+        .start-character {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .start-btn {
+            padding: 20px 60px;
+            background: linear-gradient(135deg, #ec407a, #ad1457);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 25px rgba(236, 64, 122, 0.4);
+        }
+
+        .start-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(236, 64, 122, 0.5);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.9);
+            color: #ec407a;
+            border: none;
+            border-radius: 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Screen -->
+    <div class="start-screen" id="startScreen">
+        <h1 class="start-title">🍳 Cutie Cafe Kitchen 💕</h1>
+        <p class="start-subtitle">Help your cute customers get their favorite dishes!<br>Drag ingredients, cook, and serve with love! 💕</p>
+        <div class="start-characters">
+            <img src="images/pompompurin.svg" alt="" class="start-character">
+            <img src="images/cinnamoroll.svg" alt="" class="start-character" style="animation-delay: 0.1s">
+            <img src="images/hamtaro.svg" alt="" class="start-character" style="animation-delay: 0.2s">
+            <img src="images/hello-kitty.svg" alt="" class="start-character" style="animation-delay: 0.3s">
+            <img src="images/gudetama.svg" alt="" class="start-character" style="animation-delay: 0.4s">
+        </div>
+        <button class="start-btn" onclick="startGame()">Start Cooking! 🍳</button>
+    </div>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">← Back Home</a>
+
+    <!-- Header -->
+    <header class="game-header">
+        <h1 class="game-title">🍳 Cutie Cafe Kitchen 💕</h1>
+        <div class="game-stats">
+            <div class="stat">Day: <span id="dayNum">1</span>/10</div>
+            <div class="stat">💕 Hearts: <span id="hearts">0</span></div>
+            <div class="stat">Served: <span id="served">0</span></div>
+        </div>
+    </header>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <!-- Ingredients Panel -->
+        <div class="ingredients-panel">
+            <div class="panel-title">🧺 Ingredients</div>
+            <div class="ingredients-grid">
+                <div class="ingredient" draggable="true" data-ingredient="bread">🍞</div>
+                <div class="ingredient" draggable="true" data-ingredient="egg">🥚</div>
+                <div class="ingredient" draggable="true" data-ingredient="cheese">🧀</div>
+                <div class="ingredient" draggable="true" data-ingredient="bacon">🥓</div>
+                <div class="ingredient" draggable="true" data-ingredient="lettuce">🥬</div>
+                <div class="ingredient" draggable="true" data-ingredient="tomato">🍅</div>
+                <div class="ingredient" draggable="true" data-ingredient="cake">🍰</div>
+                <div class="ingredient" draggable="true" data-ingredient="strawberry">🍓</div>
+                <div class="ingredient" draggable="true" data-ingredient="coffee">☕</div>
+                <div class="ingredient" draggable="true" data-ingredient="rice">🍚</div>
+            </div>
+        </div>
+
+        <!-- Kitchen Area -->
+        <div class="kitchen-area">
+            <div class="cooking-stations">
+                <div class="station" id="stove" data-station="stove">
+                    <div class="station-contents"></div>
+                    <div class="station-icon">🍳</div>
+                    <div class="station-name">Stove</div>
+                </div>
+                <div class="station" id="oven" data-station="oven">
+                    <div class="station-contents"></div>
+                    <div class="station-icon">🔥</div>
+                    <div class="station-name">Oven</div>
+                </div>
+            </div>
+
+            <div class="prep-area" id="prepArea">
+                <span class="prep-label">🍽️ Drop ingredients here to combine!</span>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn cook-btn" onclick="cookDish()">🍳 Cook!</button>
+                <button class="action-btn clear-btn" onclick="clearPrep()">🗑️ Clear</button>
+            </div>
+
+            <div class="cooked-dish" id="cookedDish">
+                <div class="dish-display" id="dishEmoji">🍽️</div>
+                <div class="dish-name" id="dishName">Delicious Dish!</div>
+                <button class="serve-btn" onclick="serveDish()">Serve! 💕</button>
+            </div>
+        </div>
+
+        <!-- Customer Panel -->
+        <div class="customer-panel">
+            <div class="panel-title">🧑‍🍳 Customers</div>
+            <div class="customer-slot" id="customer1">
+                <div class="order-bubble" id="order1">🍞</div>
+                <img src="images/pompompurin.svg" alt="" class="customer-img" id="customerImg1">
+                <div class="customer-name" id="customerName1">Pompompurin</div>
+                <div class="patience-bar">
+                    <div class="patience-fill" id="patience1" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="customer-slot empty" id="customer2">
+                <div class="order-bubble" id="order2">?</div>
+                <img src="" alt="" class="customer-img" id="customerImg2">
+                <div class="customer-name" id="customerName2">Waiting...</div>
+                <div class="patience-bar">
+                    <div class="patience-fill" id="patience2" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="customer-slot empty" id="customer3">
+                <div class="order-bubble" id="order3">?</div>
+                <img src="" alt="" class="customer-img" id="customerImg3">
+                <div class="customer-name" id="customerName3">Waiting...</div>
+                <div class="patience-bar">
+                    <div class="patience-fill" id="patience3" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day Complete Modal -->
+    <div class="modal-overlay" id="dayModal">
+        <div class="modal">
+            <div class="modal-title">☀️ Day <span id="completedDay">1</span> Complete!</div>
+            <div class="day-stats">
+                <div class="day-stat">
+                    <div class="day-stat-value" id="dayHearts">0</div>
+                    <div class="day-stat-label">Hearts Earned</div>
+                </div>
+                <div class="day-stat">
+                    <div class="day-stat-value" id="dayServed">0</div>
+                    <div class="day-stat-label">Customers Served</div>
+                </div>
+            </div>
+            <div class="modal-message" id="dayMessage">Great job! Keep cooking!</div>
+            <button class="modal-btn" onclick="nextDay()">Next Day →</button>
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div class="modal-overlay" id="winModal">
+        <div class="modal">
+            <div class="modal-title">🎉 You Did It! 🎉</div>
+            <div class="win-characters" id="winCharacters"></div>
+            <div class="modal-message">
+                You ran the cutest cafe ever!<br><br>
+                Just like how you make every day special,<br>
+                you made all these cuties so happy! 💕<br><br>
+                <strong>Happy 100 Days, my love! 사랑해! 💕</strong>
+            </div>
+            <button class="modal-btn" onclick="playAgain()">Play Again! 🍳</button>
+        </div>
+    </div>
+
+    <script>
+        // Character data
+        const characters = [
+            { name: "Pompompurin", img: "images/pompompurin.svg", favFood: "egg" },
+            { name: "Cinnamoroll", img: "images/cinnamoroll.svg", favFood: "cake" },
+            { name: "Gudetama", img: "images/gudetama.svg", favFood: "egg" },
+            { name: "Moomin", img: "images/moomin.svg", favFood: "bread" },
+            { name: "Corocorokuririn", img: "images/corocorokuririn.svg", favFood: "rice" },
+            { name: "Hello Kitty", img: "images/hello-kitty.svg", favFood: "cake" },
+            { name: "My Melody", img: "images/my-melody.svg", favFood: "strawberry" },
+            { name: "Kuromi", img: "images/kuromi.svg", favFood: "coffee" },
+            { name: "Pochacco", img: "images/pochacco.svg", favFood: "bacon" },
+            { name: "Keroppi", img: "images/keroppi.svg", favFood: "lettuce" },
+            { name: "Hamtaro", img: "images/hamtaro.svg", favFood: "rice" },
+            { name: "Bijou", img: "images/bijou.svg", favFood: "strawberry" },
+            { name: "Oxnard", img: "images/oxnard.svg", favFood: "bacon" },
+            { name: "Boss", img: "images/boss.svg", favFood: "egg" },
+            { name: "Pashmina", img: "images/pashmina.svg", favFood: "coffee" },
+            { name: "Penelope", img: "images/penelope.svg", favFood: "cake" },
+            { name: "Mametchi", img: "images/mametchi.svg", favFood: "rice" },
+            { name: "Kuchipatchi", img: "images/kuchipatchi.svg", favFood: "bacon" },
+            { name: "Memetchi", img: "images/memetchi.svg", favFood: "strawberry" },
+            { name: "Badtz-Maru", img: "images/badtz-maru.svg", favFood: "coffee" },
+            { name: "Chococat", img: "images/chococat.svg", favFood: "cake" },
+            { name: "Tuxedo Sam", img: "images/tuxedosam.svg", favFood: "cheese" }
+        ];
+
+        // Recipes
+        const recipes = {
+            "toast": { ingredients: ["bread"], emoji: "🍞", name: "Toast", needsCooking: true },
+            "friedEgg": { ingredients: ["egg"], emoji: "🍳", name: "Fried Egg", needsCooking: true },
+            "eggSandwich": { ingredients: ["bread", "egg"], emoji: "🥪", name: "Egg Sandwich", needsCooking: true },
+            "baconEgg": { ingredients: ["bacon", "egg"], emoji: "🍳🥓", name: "Bacon & Eggs", needsCooking: true },
+            "breakfast": { ingredients: ["bread", "egg", "bacon"], emoji: "🍽️", name: "Full Breakfast", needsCooking: true },
+            "salad": { ingredients: ["lettuce", "tomato"], emoji: "🥗", name: "Fresh Salad", needsCooking: false },
+            "cakeSlice": { ingredients: ["cake"], emoji: "🍰", name: "Cake Slice", needsCooking: false },
+            "strawberryCake": { ingredients: ["cake", "strawberry"], emoji: "🍓🍰", name: "Strawberry Cake", needsCooking: false },
+            "coffee": { ingredients: ["coffee"], emoji: "☕", name: "Hot Coffee", needsCooking: false },
+            "cheesyToast": { ingredients: ["bread", "cheese"], emoji: "🧀🍞", name: "Cheese Toast", needsCooking: true },
+            "riceBowl": { ingredients: ["rice"], emoji: "🍚", name: "Rice Bowl", needsCooking: true },
+            "riceWithEgg": { ingredients: ["rice", "egg"], emoji: "🍳🍚", name: "Egg Rice", needsCooking: true }
+        };
+
+        // Ingredient to emoji mapping
+        const ingredientEmojis = {
+            bread: "🍞", egg: "🥚", cheese: "🧀", bacon: "🥓",
+            lettuce: "🥬", tomato: "🍅", cake: "🍰", strawberry: "🍓",
+            coffee: "☕", rice: "🍚"
+        };
+
+        // Game state
+        let gameState = {
+            day: 1,
+            hearts: 0,
+            served: 0,
+            dayHearts: 0,
+            dayServed: 0,
+            prepIngredients: [],
+            cookedDish: null,
+            customers: [null, null, null],
+            patienceTimers: [null, null, null],
+            customersPerDay: 3,
+            gameStarted: false
+        };
+
+        // Initialize drag and drop
+        function initDragDrop() {
+            const ingredients = document.querySelectorAll('.ingredient');
+            const prepArea = document.getElementById('prepArea');
+            const stations = document.querySelectorAll('.station');
+            const customerSlots = document.querySelectorAll('.customer-slot');
+
+            ingredients.forEach(ing => {
+                ing.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('ingredient', ing.dataset.ingredient);
+                    ing.classList.add('dragging');
+                });
+                ing.addEventListener('dragend', () => {
+                    ing.classList.remove('dragging');
+                });
+            });
+
+            // Prep area
+            prepArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                prepArea.classList.add('drag-over');
+            });
+            prepArea.addEventListener('dragleave', () => {
+                prepArea.classList.remove('drag-over');
+            });
+            prepArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                prepArea.classList.remove('drag-over');
+                const ingredient = e.dataTransfer.getData('ingredient');
+                if (ingredient && gameState.prepIngredients.length < 4) {
+                    addToPrep(ingredient);
+                }
+            });
+
+            // Customer slots (for serving)
+            customerSlots.forEach((slot, index) => {
+                slot.addEventListener('dragover', (e) => {
+                    if (gameState.cookedDish && gameState.customers[index]) {
+                        e.preventDefault();
+                        slot.classList.add('drag-over');
+                    }
+                });
+                slot.addEventListener('dragleave', () => {
+                    slot.classList.remove('drag-over');
+                });
+                slot.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    slot.classList.remove('drag-over');
+                    if (gameState.cookedDish && gameState.customers[index]) {
+                        serveToCustomer(index);
+                    }
+                });
+            });
+        }
+
+        function addToPrep(ingredient) {
+            gameState.prepIngredients.push(ingredient);
+            updatePrepDisplay();
+        }
+
+        function updatePrepDisplay() {
+            const prepArea = document.getElementById('prepArea');
+            if (gameState.prepIngredients.length === 0) {
+                prepArea.innerHTML = '<span class="prep-label">🍽️ Drop ingredients here to combine!</span>';
+            } else {
+                prepArea.innerHTML = gameState.prepIngredients.map(ing =>
+                    `<div class="prep-item">${ingredientEmojis[ing]}</div>`
+                ).join('');
+            }
+        }
+
+        function clearPrep() {
+            gameState.prepIngredients = [];
+            gameState.cookedDish = null;
+            updatePrepDisplay();
+            document.getElementById('cookedDish').classList.remove('has-dish');
+        }
+
+        function cookDish() {
+            if (gameState.prepIngredients.length === 0) return;
+
+            // Sort ingredients to match recipes
+            const sortedIngredients = [...gameState.prepIngredients].sort();
+
+            // Find matching recipe
+            let foundRecipe = null;
+            for (const [key, recipe] of Object.entries(recipes)) {
+                const sortedRecipeIng = [...recipe.ingredients].sort();
+                if (JSON.stringify(sortedIngredients) === JSON.stringify(sortedRecipeIng)) {
+                    foundRecipe = { key, ...recipe };
+                    break;
+                }
+            }
+
+            if (foundRecipe) {
+                // Check if needs cooking
+                if (foundRecipe.needsCooking) {
+                    // Animate cooking
+                    const stove = document.getElementById('stove');
+                    stove.classList.add('cooking');
+                    setTimeout(() => {
+                        stove.classList.remove('cooking');
+                        showCookedDish(foundRecipe);
+                    }, 1000);
+                } else {
+                    showCookedDish(foundRecipe);
+                }
+            } else {
+                // Invalid recipe - show error
+                createSparkle(window.innerWidth / 2, window.innerHeight / 2, '❌');
+                clearPrep();
+            }
+        }
+
+        function showCookedDish(recipe) {
+            gameState.cookedDish = recipe;
+            gameState.prepIngredients = [];
+            updatePrepDisplay();
+
+            document.getElementById('dishEmoji').textContent = recipe.emoji;
+            document.getElementById('dishName').textContent = recipe.name;
+            document.getElementById('cookedDish').classList.add('has-dish');
+
+            createSparkle(window.innerWidth / 2, window.innerHeight / 2, '✨');
+        }
+
+        function serveDish() {
+            if (!gameState.cookedDish) return;
+
+            // Find first customer who wants this dish
+            for (let i = 0; i < 3; i++) {
+                if (gameState.customers[i]) {
+                    serveToCustomer(i);
+                    return;
+                }
+            }
+        }
+
+        function serveToCustomer(index) {
+            const customer = gameState.customers[index];
+            if (!customer || !gameState.cookedDish) return;
+
+            // Check if dish matches order
+            const wantedIngredients = customer.order.sort();
+            const dishIngredients = gameState.cookedDish.ingredients.sort();
+
+            if (JSON.stringify(wantedIngredients) === JSON.stringify(dishIngredients)) {
+                // Correct order!
+                const slot = document.getElementById(`customer${index + 1}`);
+                const rect = slot.getBoundingClientRect();
+
+                // Create floating hearts
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createFloatingHeart(rect.left + rect.width / 2, rect.top);
+                    }, i * 100);
+                }
+
+                createSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2, '💕');
+
+                // Add points
+                const patience = gameState.customers[index].patience;
+                const bonusHearts = Math.ceil(patience / 20);
+                gameState.hearts += bonusHearts;
+                gameState.dayHearts += bonusHearts;
+                gameState.served++;
+                gameState.dayServed++;
+
+                updateStats();
+
+                // Clear customer
+                clearCustomer(index);
+
+                // Spawn new customer after delay
+                setTimeout(() => {
+                    if (gameState.dayServed < gameState.customersPerDay) {
+                        spawnCustomer(index);
+                    } else {
+                        checkDayComplete();
+                    }
+                }, 1000);
+            } else {
+                // Wrong order
+                createSparkle(window.innerWidth / 2, window.innerHeight / 2, '❌');
+            }
+
+            // Clear dish
+            gameState.cookedDish = null;
+            document.getElementById('cookedDish').classList.remove('has-dish');
+        }
+
+        function clearCustomer(index) {
+            gameState.customers[index] = null;
+            if (gameState.patienceTimers[index]) {
+                clearInterval(gameState.patienceTimers[index]);
+            }
+
+            const slot = document.getElementById(`customer${index + 1}`);
+            slot.classList.add('empty');
+            document.getElementById(`customerImg${index + 1}`).src = '';
+            document.getElementById(`customerName${index + 1}`).textContent = 'Waiting...';
+            document.getElementById(`order${index + 1}`).textContent = '?';
+            document.getElementById(`patience${index + 1}`).style.width = '100%';
+        }
+
+        function spawnCustomer(index) {
+            // Pick random character
+            const char = characters[Math.floor(Math.random() * characters.length)];
+
+            // Generate order based on day difficulty
+            const order = generateOrder();
+
+            const customer = {
+                character: char,
+                order: order,
+                patience: 100
+            };
+
+            gameState.customers[index] = customer;
+
+            // Update UI
+            const slot = document.getElementById(`customer${index + 1}`);
+            slot.classList.remove('empty');
+            document.getElementById(`customerImg${index + 1}`).src = char.img;
+            document.getElementById(`customerName${index + 1}`).textContent = char.name;
+            document.getElementById(`order${index + 1}`).textContent = order.map(i => ingredientEmojis[i]).join('');
+            document.getElementById(`patience${index + 1}`).style.width = '100%';
+
+            // Start patience timer
+            gameState.patienceTimers[index] = setInterval(() => {
+                if (gameState.customers[index]) {
+                    gameState.customers[index].patience -= 2;
+                    document.getElementById(`patience${index + 1}`).style.width =
+                        gameState.customers[index].patience + '%';
+
+                    if (gameState.customers[index].patience <= 0) {
+                        // Customer left sad
+                        customerLeft(index);
+                    }
+                }
+            }, 500);
+        }
+
+        function generateOrder() {
+            const day = gameState.day;
+            const possibleOrders = [];
+
+            // Easy orders (days 1-3)
+            possibleOrders.push(["bread"]);
+            possibleOrders.push(["egg"]);
+            possibleOrders.push(["cake"]);
+            possibleOrders.push(["coffee"]);
+            possibleOrders.push(["rice"]);
+
+            if (day >= 2) {
+                possibleOrders.push(["bread", "egg"]);
+                possibleOrders.push(["cake", "strawberry"]);
+                possibleOrders.push(["lettuce", "tomato"]);
+                possibleOrders.push(["bread", "cheese"]);
+                possibleOrders.push(["rice", "egg"]);
+            }
+
+            if (day >= 4) {
+                possibleOrders.push(["bacon", "egg"]);
+            }
+
+            if (day >= 6) {
+                possibleOrders.push(["bread", "egg", "bacon"]);
+            }
+
+            return possibleOrders[Math.floor(Math.random() * possibleOrders.length)];
+        }
+
+        function customerLeft(index) {
+            clearInterval(gameState.patienceTimers[index]);
+
+            const slot = document.getElementById(`customer${index + 1}`);
+            const rect = slot.getBoundingClientRect();
+            createSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2, '😢');
+
+            clearCustomer(index);
+
+            // Spawn new customer
+            setTimeout(() => {
+                if (gameState.dayServed < gameState.customersPerDay) {
+                    spawnCustomer(index);
+                } else {
+                    checkDayComplete();
+                }
+            }, 1000);
+        }
+
+        function checkDayComplete() {
+            // Check if all customers served or left
+            const activeCustomers = gameState.customers.filter(c => c !== null);
+            if (activeCustomers.length === 0) {
+                showDayComplete();
+            }
+        }
+
+        function showDayComplete() {
+            document.getElementById('completedDay').textContent = gameState.day;
+            document.getElementById('dayHearts').textContent = gameState.dayHearts;
+            document.getElementById('dayServed').textContent = gameState.dayServed;
+
+            const messages = [
+                "Great job! Keep cooking! 💕",
+                "You're doing amazing! 🌟",
+                "The cuties love your food! 😊",
+                "You're a natural chef! 👨‍🍳",
+                "So delicious! Keep it up! 🍽️"
+            ];
+            document.getElementById('dayMessage').textContent =
+                messages[Math.floor(Math.random() * messages.length)];
+
+            document.getElementById('dayModal').classList.add('active');
+        }
+
+        function nextDay() {
+            document.getElementById('dayModal').classList.remove('active');
+
+            gameState.day++;
+            gameState.dayHearts = 0;
+            gameState.dayServed = 0;
+            gameState.customersPerDay = 3 + Math.floor(gameState.day / 2);
+
+            if (gameState.day > 10) {
+                showWin();
+            } else {
+                updateStats();
+                startDay();
+            }
+        }
+
+        function startDay() {
+            // Clear all customers first
+            for (let i = 0; i < 3; i++) {
+                clearCustomer(i);
+            }
+
+            // Spawn initial customers based on day
+            const initialCustomers = Math.min(1 + Math.floor(gameState.day / 4), 3);
+            for (let i = 0; i < initialCustomers; i++) {
+                setTimeout(() => spawnCustomer(i), i * 500);
+            }
+        }
+
+        function showWin() {
+            const container = document.getElementById('winCharacters');
+            container.innerHTML = characters.slice(0, 10).map(c =>
+                `<img src="${c.img}" alt="${c.name}" class="win-character">`
+            ).join('');
+
+            document.getElementById('winModal').classList.add('active');
+
+            // Confetti!
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    createFloatingHeart(
+                        Math.random() * window.innerWidth,
+                        window.innerHeight + 50
+                    );
+                }, i * 50);
+            }
+        }
+
+        function playAgain() {
+            document.getElementById('winModal').classList.remove('active');
+            gameState = {
+                day: 1,
+                hearts: 0,
+                served: 0,
+                dayHearts: 0,
+                dayServed: 0,
+                prepIngredients: [],
+                cookedDish: null,
+                customers: [null, null, null],
+                patienceTimers: [null, null, null],
+                customersPerDay: 3,
+                gameStarted: true
+            };
+            updateStats();
+            clearPrep();
+            startDay();
+        }
+
+        function updateStats() {
+            document.getElementById('dayNum').textContent = gameState.day;
+            document.getElementById('hearts').textContent = gameState.hearts;
+            document.getElementById('served').textContent = gameState.served;
+        }
+
+        function createFloatingHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = ['💕', '❤️', '💗', '💖', '💝'][Math.floor(Math.random() * 5)];
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+
+        function createSparkle(x, y, emoji = '✨') {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = emoji;
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 800);
+        }
+
+        function startGame() {
+            document.getElementById('startScreen').classList.add('hidden');
+            gameState.gameStarted = true;
+            initDragDrop();
+            startDay();
+        }
+
+        // Init
+        updateStats();
+    </script>
+</body>
+</html>

@@ -862,86 +862,99 @@
         }
 
         /* Gacha Promo Section */
-        .gacha-promo {
+        /* Games Section */
+        .games-promo {
+            margin: 48px 0;
+            text-align: center;
+        }
+
+        .games-section-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 48px;
+            color: var(--pink-500);
+            margin-bottom: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .game-promo-card {
             background: linear-gradient(135deg, #FFD93D 0%, #FF9EBB 50%, #E8D5FF 100%);
             border-radius: 32px;
-            padding: 40px 24px;
-            margin: 48px 0;
+            padding: 32px 24px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(255, 215, 61, 0.3);
+            box-shadow: 0 15px 40px rgba(255, 215, 61, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .gacha-promo::before {
-            content: '✨';
-            position: absolute;
-            font-size: 100px;
-            opacity: 0.1;
-            top: -20px;
-            left: -20px;
-            animation: spin-slow 10s linear infinite;
+        .game-promo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(255, 215, 61, 0.4);
         }
 
-        .gacha-promo::after {
-            content: '🎰';
-            position: absolute;
-            font-size: 80px;
-            opacity: 0.1;
-            bottom: -10px;
-            right: -10px;
-            animation: spin-slow 15s linear infinite reverse;
+        .game-promo-card:nth-child(2) {
+            background: linear-gradient(135deg, #A8E6CF 0%, #88D8B0 50%, #FFEAA7 100%);
+            box-shadow: 0 15px 40px rgba(168, 230, 207, 0.3);
+        }
+
+        .game-promo-card:nth-child(2):hover {
+            box-shadow: 0 20px 50px rgba(168, 230, 207, 0.4);
+        }
+
+        .game-promo-emoji {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 12px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .game-promo-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 32px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+        }
+
+        .game-promo-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+
+        .game-promo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: var(--pink-500);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .game-promo-btn:hover {
+            transform: scale(1.08) translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .cafe-btn {
+            color: #2d7d46;
         }
 
         @keyframes spin-slow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
-        }
-
-        .gacha-promo-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .gacha-emoji {
-            font-size: 64px;
-            display: block;
-            margin-bottom: 16px;
-            animation: bounce 1s ease-in-out infinite;
-        }
-
-        .gacha-promo-title {
-            font-family: 'Sacramento', cursive;
-            font-size: 36px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            margin-bottom: 12px;
-        }
-
-        .gacha-promo-text {
-            font-size: 16px;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 24px;
-        }
-
-        .gacha-promo-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: white;
-            color: var(--pink-500);
-            padding: 16px 36px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .gacha-promo-btn:hover {
-            transform: scale(1.08) translateY(-4px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         /* Responsive */
@@ -1053,15 +1066,28 @@
             </div>
         </section>
 
-        <!-- GACHA GAME LINK -->
-        <section class="gacha-promo">
-            <div class="gacha-promo-content">
-                <span class="gacha-emoji">🎰</span>
-                <h3 class="gacha-promo-title">Try the Boyfriend Gacha!</h3>
-                <p class="gacha-promo-text">Pull the lever to find which chubby character matches your marshmallow boyfriend!</p>
-                <a href="gacha.html" class="gacha-promo-btn">
-                    <span>🎮</span> Play Gacha! <span>💕</span>
-                </a>
+        <!-- GAMES SECTION -->
+        <section class="games-promo">
+            <h2 class="games-section-title">🎮 Play Our Games! 🎮</h2>
+            <div class="games-grid">
+                <!-- Gacha Game -->
+                <div class="game-promo-card">
+                    <span class="game-promo-emoji">🎰</span>
+                    <h3 class="game-promo-title">Boyfriend Gacha!</h3>
+                    <p class="game-promo-text">Pull the lever to find which chubby character matches your boyfriend!</p>
+                    <a href="gacha.html" class="game-promo-btn gacha-btn">
+                        <span>🎮</span> Play Gacha! <span>💕</span>
+                    </a>
+                </div>
+                <!-- Cafe Game -->
+                <div class="game-promo-card">
+                    <span class="game-promo-emoji">🍳</span>
+                    <h3 class="game-promo-title">Cutie Cafe Kitchen!</h3>
+                    <p class="game-promo-text">Cook and serve dishes to all your favorite characters!</p>
+                    <a href="cafe.html" class="game-promo-btn cafe-btn">
+                        <span>👨‍🍳</span> Play Cafe! <span>💕</span>
+                    </a>
+                </div>
             </div>
         </section>
 
