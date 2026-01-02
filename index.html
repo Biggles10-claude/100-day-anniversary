@@ -1693,7 +1693,6 @@
             "Simply everything about you 💕"
         ];
 
-        let discoveredReasons = new Set();
         let currentReasonIndex = -1;
 
         document.getElementById('totalReasons').textContent = reasons.length;
@@ -1702,14 +1701,8 @@
             const textEl = document.getElementById('reasonText');
             const counterEl = document.getElementById('reasonCounter');
 
-            // Get a random reason (different from current)
-            let newIndex;
-            do {
-                newIndex = Math.floor(Math.random() * reasons.length);
-            } while (newIndex === currentReasonIndex && reasons.length > 1);
-
-            currentReasonIndex = newIndex;
-            discoveredReasons.add(newIndex);
+            // Go to next reason sequentially (loop back to start)
+            currentReasonIndex = (currentReasonIndex + 1) % reasons.length;
 
             // Animate the text change
             textEl.classList.remove('changing');
@@ -1717,8 +1710,8 @@
             textEl.classList.add('changing');
             textEl.textContent = reasons[currentReasonIndex];
 
-            // Update counter
-            counterEl.textContent = discoveredReasons.size;
+            // Update counter (show current position)
+            counterEl.textContent = currentReasonIndex + 1;
 
             // Sparkle effect
             const card = document.getElementById('reasonCard');

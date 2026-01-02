@@ -652,14 +652,15 @@
         // GAME CONFIGURATION - MUCH MORE SPACE
         // ==========================================
         const CONFIG = {
-            WORLD_WIDTH: 2400,  // Wider for ultrawide
-            WORLD_HEIGHT: 1000,
+            WORLD_WIDTH: 2000,
+            WORLD_HEIGHT: 800,
+            KITCHEN_WIDTH: 500,  // Kitchen stops here
             TILE_SIZE: 80,
             PLAYER_SPEED: 6,
             PLAYER_SIZE: 60,
-            STATION_SIZE: 80,
-            TABLE_SIZE: 90,
-            INTERACT_DIST: 80,
+            STATION_SIZE: 70,
+            TABLE_SIZE: 80,
+            INTERACT_DIST: 70,
             DAY_LENGTH: 120000,
             MAX_DAYS: 10
         };
@@ -818,33 +819,43 @@
         function createStations() {
             stations = [];
             const S = CONFIG.STATION_SIZE;
-            const gap = 120; // More space between stations
+            const gap = 95; // Fit 5 columns in kitchen width
 
-            // Kitchen area - top section (cooking)
-            stations.push({ type: 'stove', x: 80, y: 80, w: S, h: S, canCook: true });
-            stations.push({ type: 'stove', x: 80 + gap, y: 80, w: S, h: S, canCook: true });
-            stations.push({ type: 'oven', x: 80 + gap * 2, y: 80, w: S, h: S, canCook: true });
-            stations.push({ type: 'coffee-machine', x: 80 + gap * 3, y: 80, w: S, h: S, canCook: true });
+            // Row 1: Cooking appliances (top)
+            stations.push({ type: 'stove', x: 30, y: 40, w: S, h: S, canCook: true });
+            stations.push({ type: 'stove', x: 30 + gap, y: 40, w: S, h: S, canCook: true });
+            stations.push({ type: 'oven', x: 30 + gap * 2, y: 40, w: S, h: S, canCook: true });
+            stations.push({ type: 'coffee-machine', x: 30 + gap * 3, y: 40, w: S, h: S, canCook: true });
+            stations.push({ type: 'fridge', x: 30 + gap * 4, y: 40, w: S, h: S });
 
-            // Middle section (prep)
-            stations.push({ type: 'cutting-board', x: 80, y: 80 + gap, w: S, h: S, canCook: true });
-            stations.push({ type: 'prep-counter', x: 80 + gap, y: 80 + gap, w: S, h: S, canCook: true });
-            stations.push({ type: 'prep-counter', x: 80 + gap * 2, y: 80 + gap, w: S, h: S, canCook: true });
-            stations.push({ type: 'fridge', x: 80 + gap * 3, y: 80 + gap, w: S, h: S });
+            // Row 2: Prep stations
+            stations.push({ type: 'cutting-board', x: 30, y: 40 + gap, w: S, h: S, canCook: true });
+            stations.push({ type: 'prep-counter', x: 30 + gap, y: 40 + gap, w: S, h: S, canCook: true });
+            stations.push({ type: 'prep-counter', x: 30 + gap * 2, y: 40 + gap, w: S, h: S, canCook: true });
+            stations.push({ type: 'plate-stack', x: 30 + gap * 3, y: 40 + gap, w: S, h: S });
+            stations.push({ type: 'trash-bin', x: 30 + gap * 4, y: 40 + gap, w: S, h: S });
 
-            // Bottom section (utility)
-            stations.push({ type: 'plate-stack', x: 80, y: 80 + gap * 2, w: S, h: S });
-            stations.push({ type: 'trash-bin', x: 80 + gap, y: 80 + gap * 2, w: S, h: S });
-            stations.push({ type: 'serving-counter', x: 80 + gap * 2, y: 80 + gap * 2, w: S, h: S });
-
-            // Ingredients row (very bottom of kitchen)
-            const ingY = 80 + gap * 3 + 40;
-            ingredientTypes.forEach((ing, i) => {
+            // Row 3: Ingredients (first 5)
+            const ingRow1 = ['bread', 'egg', 'cheese', 'bacon', 'lettuce'];
+            ingRow1.forEach((ing, i) => {
                 stations.push({
                     type: 'ingredient',
                     ingredient: ing,
-                    x: 50 + i * 100,
-                    y: ingY,
+                    x: 30 + i * gap,
+                    y: 40 + gap * 2,
+                    w: S,
+                    h: S
+                });
+            });
+
+            // Row 4: Ingredients (next 5)
+            const ingRow2 = ['tomato', 'rice', 'cake', 'strawberry', 'coffee'];
+            ingRow2.forEach((ing, i) => {
+                stations.push({
+                    type: 'ingredient',
+                    ingredient: ing,
+                    x: 30 + i * gap,
+                    y: 40 + gap * 3,
                     w: S,
                     h: S
                 });
@@ -853,24 +864,23 @@
 
         function createTables() {
             tables = [];
-            const startX = 700;
-            const startY = 100;
-            const gapX = 350;  // More horizontal space for ultrawide
-            const gapY = 220;
+            const startX = CONFIG.KITCHEN_WIDTH + 80; // Start after kitchen
+            const gapX = 280;  // Space between tables horizontally
+            const gapY = 180;  // Space between tables vertically
 
-            // 4x2 grid of tables spread across dining area
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {  // 4 columns now
+            // 3 rows x 4 cols of tables in dining area
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 4; col++) {
                     const tx = startX + col * gapX;
-                    const ty = 100 + row * gapY;
+                    const ty = 80 + row * gapY;
                     tables.push({
                         x: tx,
                         y: ty,
                         w: CONFIG.TABLE_SIZE,
                         h: CONFIG.TABLE_SIZE,
                         customer: null,
-                        chairLeft: { x: tx - 50, y: ty + 20 },
-                        chairRight: { x: tx + CONFIG.TABLE_SIZE + 10, y: ty + 20 }
+                        chairLeft: { x: tx - 45, y: ty + 15 },
+                        chairRight: { x: tx + CONFIG.TABLE_SIZE + 5, y: ty + 15 }
                     });
                 }
             }
@@ -1027,41 +1037,41 @@
         }
 
         function drawBackground() {
-            const kitchenWidth = 650;  // Wider kitchen
+            const kw = CONFIG.KITCHEN_WIDTH;
 
             // Kitchen (left - green)
             ctx.fillStyle = '#c8e6c9';
-            ctx.fillRect(0, 0, kitchenWidth, CONFIG.WORLD_HEIGHT);
+            ctx.fillRect(0, 0, kw, CONFIG.WORLD_HEIGHT);
             ctx.strokeStyle = '#81c784';
             ctx.lineWidth = 4;
-            ctx.strokeRect(2, 2, kitchenWidth - 4, CONFIG.WORLD_HEIGHT - 4);
+            ctx.strokeRect(2, 2, kw - 4, CONFIG.WORLD_HEIGHT - 4);
 
             // Kitchen grid
-            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
             ctx.lineWidth = 1;
-            for (let x = 0; x < kitchenWidth; x += 60) {
+            for (let x = 0; x < kw; x += 50) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, CONFIG.WORLD_HEIGHT);
                 ctx.stroke();
             }
-            for (let y = 0; y < CONFIG.WORLD_HEIGHT; y += 60) {
+            for (let y = 0; y < CONFIG.WORLD_HEIGHT; y += 50) {
                 ctx.beginPath();
                 ctx.moveTo(0, y);
-                ctx.lineTo(kitchenWidth, y);
+                ctx.lineTo(kw, y);
                 ctx.stroke();
             }
 
             // Dining (right - cream)
             ctx.fillStyle = '#fff3e0';
-            ctx.fillRect(kitchenWidth, 0, CONFIG.WORLD_WIDTH - kitchenWidth, CONFIG.WORLD_HEIGHT);
+            ctx.fillRect(kw, 0, CONFIG.WORLD_WIDTH - kw, CONFIG.WORLD_HEIGHT);
 
-            // Dining decorations
-            ctx.fillStyle = 'rgba(255,224,178,0.4)';
-            for (let x = 580; x < CONFIG.WORLD_WIDTH; x += 80) {
-                for (let y = 20; y < CONFIG.WORLD_HEIGHT; y += 80) {
+            // Dining floor pattern
+            ctx.fillStyle = 'rgba(255,224,178,0.3)';
+            for (let x = kw + 40; x < CONFIG.WORLD_WIDTH; x += 60) {
+                for (let y = 40; y < CONFIG.WORLD_HEIGHT; y += 60) {
                     ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
@@ -1213,6 +1223,7 @@
             let nearest = null;
             let nearestDist = CONFIG.INTERACT_DIST;
 
+            // Check stations first
             stations.forEach(s => {
                 const d = getDistance(player.x, player.y, s.x + s.w / 2, s.y + s.h / 2);
                 if (d < nearestDist) {
@@ -1221,10 +1232,12 @@
                 }
             });
 
+            // Check tables with LARGER interaction distance
+            const tableDist = CONFIG.INTERACT_DIST + 40;
             tables.forEach(t => {
                 if (t.customer && !t.customer.served) {
                     const d = getDistance(player.x, player.y, t.x + t.w / 2, t.y + t.h / 2);
-                    if (d < nearestDist) {
+                    if (d < tableDist && (nearest === null || nearest.type !== 'station' || d < nearestDist)) {
                         nearestDist = d;
                         nearest = { type: 'table', table: t };
                     }
@@ -1233,7 +1246,12 @@
 
             if (nearest) {
                 prompt.classList.add('show');
-                prompt.textContent = nearest.type === 'station' ? getStationPrompt(nearest.station) : 'Press SPACE to serve';
+                if (nearest.type === 'table') {
+                    const order = recipes[nearest.table.customer.order]?.name || nearest.table.customer.order;
+                    prompt.textContent = player.platedDish ? `Serve ${order} [SPACE]` : `Wants: ${order}`;
+                } else {
+                    prompt.textContent = getStationPrompt(nearest.station);
+                }
             } else {
                 prompt.classList.remove('show');
             }
@@ -1298,17 +1316,27 @@
 
         function serveTable(t) {
             if (!t.customer || t.customer.served || !player.platedDish) return;
-            if (player.platedDish === t.customer.order) {
-                const base = recipes[t.customer.order].tip;
+
+            // Check if dish matches order
+            const isCorrect = player.platedDish === t.customer.order;
+            const base = recipes[t.customer.order]?.tip || 5;
+
+            if (isCorrect) {
+                // Full tip + bonus for correct order
                 const bonus = Math.floor((t.customer.patience / t.customer.maxPatience) * base);
                 gameState.tips += base + bonus;
                 gameState.dayTips += base + bonus;
-                gameState.served++;
-                gameState.dayServed++;
-                t.customer.served = true;
-                player.platedDish = null;
-                player.hasPlate = false;
+            } else {
+                // Half tip for wrong order (still serves them)
+                gameState.tips += Math.floor(base / 2);
+                gameState.dayTips += Math.floor(base / 2);
             }
+
+            gameState.served++;
+            gameState.dayServed++;
+            t.customer.served = true;
+            player.platedDish = null;
+            player.hasPlate = false;
         }
 
         function findRecipe(ings) {
