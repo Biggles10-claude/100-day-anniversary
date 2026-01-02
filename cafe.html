@@ -996,6 +996,9 @@
         // GAME LOOP
         // ==========================================
         function startGame() {
+            // Create cached background for smooth rendering
+            createCachedBackground();
+
             gameState.running = true;
             gameState.day = 1;
             gameState.tips = 0;
@@ -1033,6 +1036,7 @@
             requestAnimationFrame(gameLoop);
         }
 
+        let lastHUDUpdate = 0;
         function update(dt) {
             movePlayer(dt);
             updateCamera();
@@ -1045,7 +1049,14 @@
 
             updateCooking(dt);
             updateCustomers(dt);
-            updateHUD();
+
+            // Throttle HUD updates for performance (every 100ms)
+            lastHUDUpdate += dt;
+            if (lastHUDUpdate >= 100) {
+                updateHUD();
+                lastHUDUpdate = 0;
+            }
+
             checkInteractions();
         }
 
@@ -1129,14 +1140,65 @@
         }
 
         // ==========================================
-        // RENDERING - OPTIMIZED
+        // RENDERING - OPTIMIZED WITH CACHED BACKGROUND
         // ==========================================
+        let bgCanvas = null;
+        let bgCtx = null;
+
+        function createCachedBackground() {
+            bgCanvas = document.createElement('canvas');
+            bgCanvas.width = CONFIG.WORLD_WIDTH;
+            bgCanvas.height = CONFIG.WORLD_HEIGHT;
+            bgCtx = bgCanvas.getContext('2d');
+
+            const kw = CONFIG.KITCHEN_WIDTH;
+
+            // Kitchen (left - green)
+            bgCtx.fillStyle = '#c8e6c9';
+            bgCtx.fillRect(0, 0, kw, CONFIG.WORLD_HEIGHT);
+            bgCtx.strokeStyle = '#81c784';
+            bgCtx.lineWidth = 4;
+            bgCtx.strokeRect(2, 2, kw - 4, CONFIG.WORLD_HEIGHT - 4);
+
+            // Kitchen grid - draw once to cache
+            bgCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+            bgCtx.lineWidth = 1;
+            bgCtx.beginPath();
+            for (let x = 0; x < kw; x += 50) {
+                bgCtx.moveTo(x, 0);
+                bgCtx.lineTo(x, CONFIG.WORLD_HEIGHT);
+            }
+            for (let y = 0; y < CONFIG.WORLD_HEIGHT; y += 50) {
+                bgCtx.moveTo(0, y);
+                bgCtx.lineTo(kw, y);
+            }
+            bgCtx.stroke();
+
+            // Dining (right - cream)
+            bgCtx.fillStyle = '#fff3e0';
+            bgCtx.fillRect(kw, 0, CONFIG.WORLD_WIDTH - kw, CONFIG.WORLD_HEIGHT);
+
+            // Dining floor pattern - simpler, drawn once
+            bgCtx.fillStyle = 'rgba(255,224,178,0.4)';
+            for (let x = kw + 40; x < CONFIG.WORLD_WIDTH; x += 80) {
+                for (let y = 40; y < CONFIG.WORLD_HEIGHT; y += 80) {
+                    bgCtx.beginPath();
+                    bgCtx.arc(x, y, 4, 0, Math.PI * 2);
+                    bgCtx.fill();
+                }
+            }
+        }
+
         function render() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.translate(-cameraX, -cameraY);
 
-            drawBackground();
+            // Draw cached background (super fast!)
+            if (bgCanvas) {
+                ctx.drawImage(bgCanvas, 0, 0);
+            }
+
             drawStations();
             drawTables();
             drawCustomers();
@@ -1144,47 +1206,6 @@
             drawPlayer();
 
             ctx.restore();
-        }
-
-        function drawBackground() {
-            const kw = CONFIG.KITCHEN_WIDTH;
-
-            // Kitchen (left - green)
-            ctx.fillStyle = '#c8e6c9';
-            ctx.fillRect(0, 0, kw, CONFIG.WORLD_HEIGHT);
-            ctx.strokeStyle = '#81c784';
-            ctx.lineWidth = 4;
-            ctx.strokeRect(2, 2, kw - 4, CONFIG.WORLD_HEIGHT - 4);
-
-            // Kitchen grid
-            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-            ctx.lineWidth = 1;
-            for (let x = 0; x < kw; x += 50) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, CONFIG.WORLD_HEIGHT);
-                ctx.stroke();
-            }
-            for (let y = 0; y < CONFIG.WORLD_HEIGHT; y += 50) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(kw, y);
-                ctx.stroke();
-            }
-
-            // Dining (right - cream)
-            ctx.fillStyle = '#fff3e0';
-            ctx.fillRect(kw, 0, CONFIG.WORLD_WIDTH - kw, CONFIG.WORLD_HEIGHT);
-
-            // Dining floor pattern
-            ctx.fillStyle = 'rgba(255,224,178,0.3)';
-            for (let x = kw + 40; x < CONFIG.WORLD_WIDTH; x += 60) {
-                for (let y = 40; y < CONFIG.WORLD_HEIGHT; y += 60) {
-                    ctx.beginPath();
-                    ctx.arc(x, y, 3, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
         }
 
         function drawStations() {
