@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Pashmina - light brown hamster with pink scarf -->
+  <!-- Body -->
+  <ellipse cx="50" cy="72" rx="28" ry="22" fill="#D2B48C"/>
+  <!-- White belly -->
+  <ellipse cx="50" cy="76" rx="18" ry="15" fill="#FFF8DC"/>
+  <!-- Pink scarf wrapped around -->
+  <path d="M 25 60 Q 20 70 25 80 Q 35 85 50 82 Q 65 85 75 80 Q 80 70 75 60" fill="#FF69B4" stroke="#FF1493" stroke-width="1"/>
+  <ellipse cx="30" cy="85" rx="10" ry="6" fill="#FF69B4"/>
+  <ellipse cx="25" cy="90" rx="8" ry="5" fill="#FF69B4"/>
+  <!-- Head -->
+  <circle cx="50" cy="40" r="26" fill="#D2B48C"/>
+  <!-- Face -->
+  <ellipse cx="50" cy="45" rx="18" ry="16" fill="#FFF8DC"/>
+  <!-- Ears -->
+  <ellipse cx="28" cy="22" rx="8" ry="11" fill="#D2B48C"/>
+  <ellipse cx="28" cy="22" rx="5" ry="7" fill="#FFB6C1"/>
+  <ellipse cx="72" cy="22" rx="8" ry="11" fill="#D2B48C"/>
+  <ellipse cx="72" cy="22" rx="5" ry="7" fill="#FFB6C1"/>
+  <!-- Sweet eyes -->
+  <circle cx="40" cy="40" r="5" fill="#333"/>
+  <circle cx="60" cy="40" r="5" fill="#333"/>
+  <circle cx="42" cy="38" r="2" fill="#FFF"/>
+  <circle cx="62" cy="38" r="2" fill="#FFF"/>
+  <!-- Eyelashes -->
+  <path d="M 35 36 L 37 34" stroke="#333" stroke-width="1"/>
+  <path d="M 65 36 L 63 34" stroke="#333" stroke-width="1"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="48" rx="3" ry="2" fill="#FFB6C1"/>
+  <!-- Blush -->
+  <ellipse cx="32" cy="48" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
+  <ellipse cx="68" cy="48" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
+  <!-- Gentle smile -->
+  <path d="M 45 54 Q 50 58 55 54" fill="none" stroke="#333" stroke-width="1.5"/>
+</svg>

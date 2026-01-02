@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Oxnard - pudgy grey and white hamster with sunflower seed -->
+  <!-- Chubby body -->
+  <ellipse cx="50" cy="68" rx="35" ry="28" fill="#A9A9A9"/>
+  <!-- White belly (extra round) -->
+  <ellipse cx="50" cy="72" rx="25" ry="22" fill="#FFFFFF"/>
+  <!-- Head -->
+  <circle cx="50" cy="40" r="28" fill="#A9A9A9"/>
+  <!-- White face -->
+  <ellipse cx="50" cy="45" rx="20" ry="18" fill="#FFFFFF"/>
+  <!-- Ears -->
+  <ellipse cx="26" cy="22" rx="9" ry="12" fill="#A9A9A9"/>
+  <ellipse cx="26" cy="22" rx="5" ry="7" fill="#FFB6C1"/>
+  <ellipse cx="74" cy="22" rx="9" ry="12" fill="#A9A9A9"/>
+  <ellipse cx="74" cy="22" rx="5" ry="7" fill="#FFB6C1"/>
+  <!-- Eyes -->
+  <circle cx="40" cy="40" r="5" fill="#333"/>
+  <circle cx="60" cy="40" r="5" fill="#333"/>
+  <circle cx="42" cy="38" r="2" fill="#FFF"/>
+  <circle cx="62" cy="38" r="2" fill="#FFF"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="48" rx="4" ry="3" fill="#333"/>
+  <!-- Cheeks -->
+  <ellipse cx="30" cy="50" rx="6" ry="4" fill="#FFB6C1" opacity="0.6"/>
+  <ellipse cx="70" cy="50" rx="6" ry="4" fill="#FFB6C1" opacity="0.6"/>
+  <!-- Happy mouth -->
+  <path d="M 44 54 Q 50 60 56 54" fill="none" stroke="#333" stroke-width="2"/>
+  <!-- Sunflower seed he's holding -->
+  <ellipse cx="75" cy="65" rx="8" ry="5" fill="#333" transform="rotate(30 75 65)"/>
+  <ellipse cx="75" cy="65" rx="6" ry="3" fill="#F5DEB3" transform="rotate(30 75 65)"/>
+</svg>

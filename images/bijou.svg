@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Bijou - white hamster with blue ribbons -->
+  <!-- Body -->
+  <ellipse cx="50" cy="72" rx="28" ry="22" fill="#FFFFFF"/>
+  <!-- Head -->
+  <circle cx="50" cy="45" r="28" fill="#FFFFFF"/>
+  <!-- Ears with blue ribbons -->
+  <ellipse cx="28" cy="22" rx="8" ry="12" fill="#FFFFFF"/>
+  <ellipse cx="28" cy="22" rx="5" ry="8" fill="#FFB6C1"/>
+  <ellipse cx="72" cy="22" rx="8" ry="12" fill="#FFFFFF"/>
+  <ellipse cx="72" cy="22" rx="5" ry="8" fill="#FFB6C1"/>
+  <!-- Blue ribbons/pigtails -->
+  <circle cx="20" cy="28" r="6" fill="#87CEEB"/>
+  <ellipse cx="14" cy="26" rx="5" ry="4" fill="#87CEEB"/>
+  <ellipse cx="14" cy="32" rx="5" ry="4" fill="#87CEEB"/>
+  <circle cx="80" cy="28" r="6" fill="#87CEEB"/>
+  <ellipse cx="86" cy="26" rx="5" ry="4" fill="#87CEEB"/>
+  <ellipse cx="86" cy="32" rx="5" ry="4" fill="#87CEEB"/>
+  <!-- Eyes (sparkly) -->
+  <circle cx="40" cy="42" r="6" fill="#333"/>
+  <circle cx="60" cy="42" r="6" fill="#333"/>
+  <circle cx="42" cy="40" r="2" fill="#FFF"/>
+  <circle cx="62" cy="40" r="2" fill="#FFF"/>
+  <circle cx="38" cy="44" r="1" fill="#FFF"/>
+  <circle cx="58" cy="44" r="1" fill="#FFF"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="50" rx="3" ry="2" fill="#FFB6C1"/>
+  <!-- Blush -->
+  <ellipse cx="32" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+  <ellipse cx="68" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+  <!-- Cute smile -->
+  <path d="M 45 56 Q 50 60 55 56" fill="none" stroke="#333" stroke-width="1.5"/>
+</svg>
