@@ -747,8 +747,8 @@
         // GAME CONFIGURATION - MUCH MORE SPACE
         // ==========================================
         const CONFIG = {
-            WORLD_WIDTH: 1400,  // Smaller world - no ultrawide
-            WORLD_HEIGHT: 600,  // Shorter height
+            WORLD_WIDTH: 1920,  // 1080p width
+            WORLD_HEIGHT: 1020, // 1080p height (minus HUD)
             KITCHEN_WIDTH: 500,  // Kitchen stops here
             TILE_SIZE: 80,
             PLAYER_SPEED: 15,   // 50% FASTER movement
@@ -970,15 +970,15 @@
 
         function createTables() {
             tables = [];
-            const startX = CONFIG.KITCHEN_WIDTH + 60; // Start after kitchen
-            const gapX = 200;  // Tighter spacing
-            const gapY = 150;  // Tighter vertical
+            const startX = CONFIG.KITCHEN_WIDTH + 80; // Start after kitchen
+            const gapX = 280;  // More spacing for 1080p
+            const gapY = 220;  // More vertical spacing
 
-            // 3 rows x 3 cols of tables (fewer tables, tighter fit)
-            for (let row = 0; row < 3; row++) {
-                for (let col = 0; col < 3; col++) {
+            // 4 rows x 4 cols of tables for bigger screen
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
                     const tx = startX + col * gapX;
-                    const ty = 50 + row * gapY;
+                    const ty = 60 + row * gapY;
                     tables.push({
                         x: tx,
                         y: ty,
