@@ -606,7 +606,7 @@
         // GAME CONFIGURATION - MUCH MORE SPACE
         // ==========================================
         const CONFIG = {
-            WORLD_WIDTH: 1600,
+            WORLD_WIDTH: 2400,  // Wider for ultrawide
             WORLD_HEIGHT: 1000,
             TILE_SIZE: 80,
             PLAYER_SPEED: 6,
@@ -803,14 +803,14 @@
 
         function createTables() {
             tables = [];
-            const startX = 620;
+            const startX = 700;
             const startY = 100;
-            const gapX = 240;
+            const gapX = 350;  // More horizontal space for ultrawide
             const gapY = 220;
 
-            // 2x4 grid of tables with lots of space
+            // 4x2 grid of tables spread across dining area
             for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 2; col++) {
+                for (let col = 0; col < 4; col++) {  // 4 columns now
                     const tx = startX + col * gapX;
                     const ty = 100 + row * gapY;
                     tables.push({
@@ -977,17 +977,19 @@
         }
 
         function drawBackground() {
+            const kitchenWidth = 650;  // Wider kitchen
+
             // Kitchen (left - green)
             ctx.fillStyle = '#c8e6c9';
-            ctx.fillRect(0, 0, 560, CONFIG.WORLD_HEIGHT);
+            ctx.fillRect(0, 0, kitchenWidth, CONFIG.WORLD_HEIGHT);
             ctx.strokeStyle = '#81c784';
             ctx.lineWidth = 4;
-            ctx.strokeRect(2, 2, 556, CONFIG.WORLD_HEIGHT - 4);
+            ctx.strokeRect(2, 2, kitchenWidth - 4, CONFIG.WORLD_HEIGHT - 4);
 
             // Kitchen grid
             ctx.strokeStyle = 'rgba(255,255,255,0.2)';
             ctx.lineWidth = 1;
-            for (let x = 0; x < 560; x += 60) {
+            for (let x = 0; x < kitchenWidth; x += 60) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, CONFIG.WORLD_HEIGHT);
@@ -996,13 +998,13 @@
             for (let y = 0; y < CONFIG.WORLD_HEIGHT; y += 60) {
                 ctx.beginPath();
                 ctx.moveTo(0, y);
-                ctx.lineTo(560, y);
+                ctx.lineTo(kitchenWidth, y);
                 ctx.stroke();
             }
 
             // Dining (right - cream)
             ctx.fillStyle = '#fff3e0';
-            ctx.fillRect(560, 0, CONFIG.WORLD_WIDTH - 560, CONFIG.WORLD_HEIGHT);
+            ctx.fillRect(kitchenWidth, 0, CONFIG.WORLD_WIDTH - kitchenWidth, CONFIG.WORLD_HEIGHT);
 
             // Dining decorations
             ctx.fillStyle = 'rgba(255,224,178,0.4)';
