@@ -1,26 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Pochacco - white dog with black floppy ears -->
-  <!-- Body -->
-  <ellipse cx="50" cy="78" rx="25" ry="18" fill="#FFFFFF"/>
-  <!-- Head -->
-  <circle cx="50" cy="45" r="30" fill="#FFFFFF"/>
-  <!-- Black floppy ears -->
-  <ellipse cx="22" cy="40" rx="12" ry="22" fill="#333"/>
-  <ellipse cx="78" cy="40" rx="12" ry="22" fill="#333"/>
-  <!-- Eyes -->
-  <circle cx="38" cy="42" r="5" fill="#333"/>
-  <circle cx="62" cy="42" r="5" fill="#333"/>
-  <circle cx="40" cy="40" r="2" fill="#FFF"/>
-  <circle cx="64" cy="40" r="2" fill="#FFF"/>
-  <!-- Nose -->
-  <circle cx="50" cy="52" r="5" fill="#333"/>
-  <!-- Rosy cheeks -->
-  <ellipse cx="28" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
-  <ellipse cx="72" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
-  <!-- Tail with black tip -->
-  <ellipse cx="78" cy="82" rx="8" ry="5" fill="#FFFFFF"/>
-  <ellipse cx="84" cy="82" rx="4" ry="3" fill="#333"/>
-  <!-- Little feet -->
-  <ellipse cx="38" cy="94" rx="8" ry="4" fill="#FFFFFF" stroke="#333" stroke-width="1"/>
-  <ellipse cx="62" cy="94" rx="8" ry="4" fill="#FFFFFF" stroke="#333" stroke-width="1"/>
+  <!-- Pochacco - white dog with BLACK floppy ears, NO mouth, black nose -->
+  <!-- Inspired by Snoopy - beagle-like appearance -->
+
+  <!-- Tail with black tip (behind body) -->
+  <ellipse cx="82" cy="75" rx="10" ry="6" fill="#FFFFFF"/>
+  <ellipse cx="90" cy="75" rx="5" ry="4" fill="#333333"/>
+
+  <!-- Round chubby body -->
+  <ellipse cx="50" cy="75" rx="28" ry="22" fill="#FFFFFF"/>
+
+  <!-- Round head -->
+  <circle cx="50" cy="40" r="32" fill="#FFFFFF"/>
+
+  <!-- BLACK floppy ears (Pochacco's signature - long and droopy!) -->
+  <ellipse cx="18" cy="45" rx="14" ry="28" fill="#333333" transform="rotate(-10, 18, 45)"/>
+  <ellipse cx="82" cy="45" rx="14" ry="28" fill="#333333" transform="rotate(10, 82, 45)"/>
+
+  <!-- Simple dot eyes (like Snoopy/classic Sanrio style) -->
+  <circle cx="38" cy="38" r="4" fill="#333333"/>
+  <circle cx="62" cy="38" r="4" fill="#333333"/>
+
+  <!-- Big black nose -->
+  <ellipse cx="50" cy="52" rx="6" ry="5" fill="#333333"/>
+
+  <!-- NO MOUTH (Pochacco doesn't have a visible mouth like Hello Kitty!) -->
+
+  <!-- Pink cheeks -->
+  <ellipse cx="28" cy="50" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+  <ellipse cx="72" cy="50" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+
+  <!-- Little arms/paws -->
+  <ellipse cx="25" cy="72" rx="8" ry="10" fill="#FFFFFF"/>
+  <ellipse cx="75" cy="72" rx="8" ry="10" fill="#FFFFFF"/>
+
+  <!-- Feet with black paw pads -->
+  <ellipse cx="35" cy="94" rx="12" ry="6" fill="#FFFFFF"/>
+  <ellipse cx="65" cy="94" rx="12" ry="6" fill="#FFFFFF"/>
+  <!-- Paw pad details -->
+  <circle cx="35" cy="96" r="3" fill="#333333"/>
+  <circle cx="65" cy="96" r="3" fill="#333333"/>
 </svg>
