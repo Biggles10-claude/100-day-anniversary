@@ -686,7 +686,7 @@
                     <div><strong>Fried Egg</strong> $4<br><span style="color:#888;">= egg</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
-                    <img src="images/dish-toast.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
+                    <img src="images/dish-coffee.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
                     <div><strong>Coffee</strong> $4<br><span style="color:#888;">= coffee</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
@@ -698,15 +698,15 @@
                     <div><strong>Salad</strong> $6<br><span style="color:#888;">= lettuce + tomato</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
-                    <img src="images/dish-fried-egg.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
+                    <img src="images/dish-rice-bowl.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
                     <div><strong>Rice Bowl</strong> $6<br><span style="color:#888;">= rice + egg</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
-                    <img src="images/dish-fried-egg.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
+                    <img src="images/dish-bacon-egg.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
                     <div><strong>Bacon & Egg</strong> $7<br><span style="color:#888;">= egg + bacon</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
-                    <img src="images/dish-salad.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
+                    <img src="images/dish-veggie-plate.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
                     <div><strong>Veggie Plate</strong> $7<br><span style="color:#888;">= lettuce + tomato + cheese</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
@@ -722,7 +722,7 @@
                     <div><strong>Breakfast</strong> $10<br><span style="color:#888;">= egg + bacon + bread</span></div>
                 </div>
                 <div style="background: #fdf2f8; padding: 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px;">
-                    <img src="images/dish-sandwich.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
+                    <img src="images/dish-blt.svg" style="width:50px;height:50px;border:3px solid #f9a8d4;border-radius:10px;background:white;">
                     <div><strong>BLT</strong> $12<br><span style="color:#888;">= bread + bacon + lettuce + tomato</span></div>
                 </div>
             </div>
@@ -865,6 +865,11 @@
             loadImage('dish-breakfast', 'images/dish-breakfast.svg');
             loadImage('dish-cheese-toast', 'images/dish-cheese-toast.svg');
             loadImage('dish-strawberry-cake', 'images/dish-strawberry-cake.svg');
+            loadImage('dish-veggie-plate', 'images/dish-veggie-plate.svg');
+            loadImage('dish-blt', 'images/dish-blt.svg');
+            loadImage('dish-rice-bowl', 'images/dish-rice-bowl.svg');
+            loadImage('dish-coffee', 'images/dish-coffee.svg');
+            loadImage('dish-bacon-egg', 'images/dish-bacon-egg.svg');
             loadImage('plate', 'images/plate.svg');
         }
 
@@ -1367,8 +1372,8 @@
             const map = {
                 toast: 'dish-toast', friedEgg: 'dish-fried-egg', salad: 'dish-salad',
                 sandwich: 'dish-sandwich', breakfast: 'dish-breakfast', cheeseToast: 'dish-cheese-toast',
-                baconEgg: 'dish-fried-egg', riceBowl: 'dish-fried-egg', cake: 'dish-strawberry-cake',
-                coffee: 'dish-toast', blt: 'dish-sandwich', veggiePlate: 'dish-salad'
+                baconEgg: 'dish-bacon-egg', riceBowl: 'dish-rice-bowl', cake: 'dish-strawberry-cake',
+                coffee: 'dish-coffee', blt: 'dish-blt', veggiePlate: 'dish-veggie-plate'
             };
             return images[map[name]] || images['plate'];
         }
