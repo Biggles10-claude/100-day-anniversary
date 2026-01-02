@@ -507,6 +507,7 @@
     <div id="charSelect">
         <h1 class="select-title">Cutie Cafe Kitchen!</h1>
         <p class="select-subtitle">Pick your character to start cooking!</p>
+        <p id="loadingText" style="color: #888; margin-bottom: 20px;">Loading characters...</p>
         <div class="char-grid" id="charGrid"></div>
     </div>
 
@@ -730,7 +731,9 @@
         // INITIALIZATION
         // ==========================================
         function initCharacterSelect() {
+            console.log('initCharacterSelect called');
             const grid = document.getElementById('charGrid');
+            const loadingText = document.getElementById('loadingText');
             grid.innerHTML = '';
             characters.forEach(char => {
                 const div = document.createElement('div');
@@ -739,6 +742,8 @@
                 div.onclick = () => selectCharacter(char);
                 grid.appendChild(div);
             });
+            if (loadingText) loadingText.style.display = 'none';
+            console.log('Characters added:', characters.length);
         }
 
         function selectCharacter(char) {
