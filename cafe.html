@@ -2,1932 +2,1593 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cutie Cafe - Overcooked Edition 🍳💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Cutie Cafe Kitchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --pink-50: #fdf2f8;
+            --pink-100: #fce7f3;
+            --pink-200: #fbcfe8;
+            --pink-300: #f9a8d4;
+            --pink-400: #f472b6;
+            --pink-500: #ec4899;
+            --pink-600: #db2777;
+            --cream: #fffbeb;
+            --mint: #d1fae5;
+            --mint-dark: #6ee7b7;
+            --wood: #d4a574;
+            --wood-dark: #b8956c;
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--pink-100) 0%, var(--cream) 50%, var(--pink-50) 100%);
             min-height: 100vh;
             overflow: hidden;
-            user-select: none;
+            touch-action: none;
         }
 
-        /* ==================== CHARACTER SELECT SCREEN ==================== */
-        .select-screen {
+        /* CHARACTER SELECT SCREEN */
+        #charSelect {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);
+            inset: 0;
+            background: linear-gradient(180deg, #ffe4ec 0%, #fff5f8 50%, #ffefd5 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 3000;
+            z-index: 1000;
             padding: 20px;
-        }
-
-        .select-screen.hidden {
-            display: none;
-        }
-
-        .select-title {
-            font-family: 'Baloo 2', cursive;
-            font-size: 2.5rem;
-            color: #ec407a;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-        }
-
-        .select-subtitle {
-            font-size: 1.1rem;
-            color: #ad1457;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .character-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 15px;
-            max-width: 800px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 25px;
-            max-height: 400px;
             overflow-y: auto;
         }
 
+        #charSelect.hidden { display: none; }
+
+        .select-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(32px, 8vw, 56px);
+            color: var(--pink-500);
+            text-shadow: 3px 3px 0 white, 5px 5px 0 var(--pink-200);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .select-subtitle {
+            font-size: 18px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+        }
+
         .char-option {
-            width: 100px;
-            height: 120px;
+            aspect-ratio: 1;
             background: white;
             border-radius: 20px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 4px solid transparent;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 3px solid transparent;
             padding: 10px;
         }
 
         .char-option:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(236, 64, 122, 0.3);
-        }
-
-        .char-option.selected {
-            border-color: #ec407a;
-            background: linear-gradient(145deg, #fff5f8, #ffe0eb);
-            transform: scale(1.1);
+            transform: scale(1.08);
+            border-color: var(--pink-400);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25);
         }
 
         .char-option img {
-            width: 60px;
-            height: 60px;
+            width: 70%;
+            height: 70%;
             object-fit: contain;
         }
 
-        .char-option span {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #666;
-            margin-top: 5px;
-            text-align: center;
+        /* GAME CONTAINER */
+        #gameContainer {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
         }
 
-        .start-btn {
-            padding: 20px 60px;
-            background: linear-gradient(135deg, #ec407a, #ad1457);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-family: 'Baloo 2', cursive;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 8px 25px rgba(236, 64, 122, 0.4);
-        }
+        #gameContainer.active { display: flex; }
 
-        .start-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(236, 64, 122, 0.5);
-        }
-
-        .start-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .controls-hint {
-            margin-top: 20px;
-            padding: 15px 25px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 15px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .controls-hint strong {
-            color: #ec407a;
-        }
-
-        /* ==================== GAME HUD ==================== */
+        /* TOP HUD */
         .game-hud {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: linear-gradient(135deg, #ec407a, #f48fb1);
+            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+            padding: 12px 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            align-items: center;
+            border-bottom: 3px solid var(--pink-200);
+            flex-shrink: 0;
             z-index: 100;
-            box-shadow: 0 4px 15px rgba(236, 64, 122, 0.3);
         }
 
-        .hud-left, .hud-right {
+        .hud-section {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        .hud-title {
-            font-family: 'Baloo 2', cursive;
-            font-size: 1.5rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .hud-stat {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .timer-bar {
-            width: 200px;
-            height: 20px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .timer-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff5252, #ff9800, #4caf50);
-            transition: width 0.5s;
-            border-radius: 10px;
-        }
-
-        .back-btn {
-            position: fixed;
-            top: 70px;
-            left: 15px;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.9);
-            color: #ec407a;
-            border: none;
-            border-radius: 15px;
-            font-family: 'Quicksand', sans-serif;
+        .hud-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-weight: 700;
-            cursor: pointer;
-            z-index: 101;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            text-decoration: none;
+            font-size: 16px;
         }
 
-        .back-btn:hover {
-            transform: scale(1.05);
-            background: white;
+        .hud-icon {
+            font-size: 24px;
         }
 
-        /* ==================== GAME WORLD ==================== */
-        .game-world {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        .hud-value {
+            color: var(--pink-600);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 20px;
+        }
+
+        .day-badge {
+            background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        /* GAME WORLD */
+        .game-world-wrapper {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+        }
+
+        #gameWorld {
+            width: 1600px;
+            height: 1000px;
+            position: relative;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 550px 1fr;
+            gap: 0;
+            border-radius: 30px;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
         }
 
-        /* Kitchen Zone - Left Side */
+        /* KITCHEN ZONE */
         .kitchen-zone {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 450px;
-            height: 100%;
             background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 100%);
-            border-right: 6px solid #81c784;
+            padding: 30px;
+            position: relative;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 25px;
         }
 
-        .kitchen-floor {
+        .zone-label {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url('images/floor-kitchen.svg');
-            background-size: 100px 100px;
-            opacity: 0.3;
-        }
-
-        .kitchen-label {
-            position: absolute;
-            top: 10px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            font-family: 'Baloo 2', cursive;
-            font-size: 1.3rem;
-            color: #2e7d32;
-            background: white;
-            padding: 5px 25px;
+            background: rgba(255,255,255,0.9);
+            padding: 6px 20px;
             border-radius: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            z-index: 10;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 14px;
+            color: #2d7d46;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Dining Zone - Right Side */
-        .dining-zone {
-            position: absolute;
-            left: 456px;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 100%);
+        /* STATION GRID */
+        .stations-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding-top: 30px;
         }
 
-        .dining-floor {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url('images/floor-dining.svg');
-            background-size: 120px 120px;
-            opacity: 0.3;
-        }
-
-        .dining-label {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Baloo 2', cursive;
-            font-size: 1.3rem;
-            color: #f57c00;
-            background: white;
-            padding: 5px 25px;
-            border-radius: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-
-        /* ==================== KITCHEN STATIONS ==================== */
         .station {
-            position: absolute;
-            width: 100px;
-            height: 100px;
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.15s ease;
+            min-height: 120px;
+            position: relative;
         }
 
         .station:hover, .station.nearby {
-            transform: scale(1.08);
-            filter: brightness(1.1);
+            border-color: var(--mint-dark);
+            transform: scale(1.02);
+        }
+
+        .station.cooking {
+            border-color: #fbbf24;
+            animation: cookPulse 0.5s ease infinite alternate;
+        }
+
+        @keyframes cookPulse {
+            from { box-shadow: 0 6px 20px rgba(251, 191, 36, 0.3); }
+            to { box-shadow: 0 6px 30px rgba(251, 191, 36, 0.6); }
         }
 
         .station-img {
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         .station-name {
-            position: absolute;
-            bottom: -5px;
-            font-size: 0.7rem;
+            font-size: 12px;
             font-weight: 700;
-            color: #333;
-            background: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            color: #666;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .station-progress {
+        .station-content {
             position: absolute;
-            bottom: 15px;
-            width: 80px;
-            height: 8px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .station-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff9800, #4caf50);
-            transition: width 0.1s;
-            border-radius: 4px;
-        }
-
-        .station-contents {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            display: flex;
-            gap: 3px;
-        }
-
-        .station-item {
+            top: 5px;
+            right: 5px;
             width: 35px;
             height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-            border: 3px solid #ec407a;
-            background: white;
-            overflow: hidden;
         }
 
-        .station-item img {
-            width: 28px;
-            height: 28px;
+        .station-content img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
         }
 
-        .station.cooking .station-img {
-            animation: stationCooking 0.3s infinite alternate;
-        }
-
-        @keyframes stationCooking {
-            from { transform: scale(1) rotate(-2deg); }
-            to { transform: scale(1.02) rotate(2deg); }
-        }
-
-        /* Ingredient Shelf */
-        .ingredient-shelf {
+        .cook-progress {
             position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 0 0 17px 17px;
+            overflow: hidden;
+        }
+
+        .cook-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* INGREDIENTS SHELF */
+        .ingredients-area {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+        .ingredients-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 16px;
+            color: var(--pink-500);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .ingredient {
+            aspect-ratio: 1;
+            background: var(--pink-50);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 2px solid transparent;
+            padding: 8px;
+        }
+
+        .ingredient:hover, .ingredient.nearby {
+            border-color: var(--pink-400);
+            transform: scale(1.08);
+            background: white;
+        }
+
+        .ingredient img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        /* UTILITY AREA */
+        .utility-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .utility {
+            background: white;
+            border-radius: 15px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            padding: 12px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
-
-        .shelf-item {
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(145deg, #fff8e1, #ffecb3);
-            border-radius: 12px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 3px solid transparent;
-            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.15s ease;
         }
 
-        .shelf-item:hover, .shelf-item.nearby {
-            transform: scale(1.15);
-            border-color: #ec407a;
-            box-shadow: 0 5px 15px rgba(236, 64, 122, 0.3);
+        .utility:hover, .utility.nearby {
+            border-color: var(--pink-400);
         }
 
-        .shelf-item img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-        }
-
-        /* Plate Stack */
-        .plate-stack {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .plate-stack:hover, .plate-stack.nearby {
-            transform: scale(1.1);
-        }
-
-        .plate-stack img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
-
-        .plate-stack-label {
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: #333;
-            background: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            white-space: nowrap;
-        }
-
-        /* Trash Bin */
-        .trash-bin {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .trash-bin:hover, .trash-bin.nearby {
-            transform: scale(1.1);
-        }
-
-        .trash-bin img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
-
-        /* Service Counter */
-        .service-counter {
-            position: absolute;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 10px 15px;
-            background: linear-gradient(180deg, #8d6e63, #6d4c41);
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .counter-slot {
-            width: 55px;
-            height: 55px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px dashed rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .counter-slot:hover {
-            background: rgba(255,255,255,0.5);
-        }
-
-        .counter-slot.has-item {
-            border-style: solid;
-            border-color: #4caf50;
-            background: white;
-        }
-
-        .counter-slot img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-        }
-
-        /* ==================== TABLES & CHAIRS ==================== */
-        .table {
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .table:hover {
-            transform: scale(1.05);
-        }
-
-        .table-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
-        }
-
-        .table-items {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-        }
-
-        .table-items img {
+        .utility img {
             width: 50px;
             height: 50px;
             object-fit: contain;
+        }
+
+        .utility-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* DINING ZONE */
+        .dining-zone {
+            background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 100%);
+            padding: 30px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dining-zone .zone-label {
+            color: #f59e0b;
+        }
+
+        .tables-area {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 30px;
+            padding: 40px 20px 20px;
+        }
+
+        .table-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .table-chairs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: -15px;
+            z-index: 1;
         }
 
         .chair {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            transition: all 0.2s;
+            width: 45px;
+            height: 45px;
         }
 
-        .chair-img {
+        .chair img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
-        .chair.occupied .chair-img {
-            opacity: 0.3;
+        .table {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            width: 140px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border: 3px solid transparent;
+            transition: all 0.15s ease;
+            position: relative;
         }
 
-        .chair-customer {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
+        .table:hover, .table.nearby {
+            border-color: #fbbf24;
+        }
+
+        .table.has-customer {
+            border-color: var(--pink-300);
+        }
+
+        .table img.table-img {
+            width: 80px;
+            height: 60px;
             object-fit: contain;
-            z-index: 5;
         }
 
-        /* Order Bubble */
-        .order-bubble {
+        .customer-display {
             position: absolute;
-            top: -55px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
-            background: white;
-            padding: 8px 12px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: 3px solid #ec407a;
-            z-index: 20;
-            animation: bubbleBounce 2s infinite;
+            width: 50px;
+            height: 50px;
         }
 
-        .order-bubble img {
-            width: 35px;
-            height: 35px;
+        .customer-display img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            animation: customerBounce 1s ease infinite;
+        }
+
+        @keyframes customerBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .order-bubble {
+            position: absolute;
+            top: -60px;
+            right: -20px;
+            background: white;
+            border-radius: 15px;
+            padding: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border: 2px solid var(--pink-300);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .order-bubble::after {
             content: '';
             position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 8px solid transparent;
-            border-top-color: #ec407a;
+            bottom: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
         }
 
-        @keyframes bubbleBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-8px); }
+        .order-bubble img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
         }
 
-        /* Patience Ring */
-        .patience-ring {
+        .patience-bar {
             position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 10px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 5px;
+            bottom: -12px;
+            left: 10%;
+            right: 10%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 10px;
             overflow: hidden;
         }
 
-        .patience-ring-fill {
+        .patience-fill {
             height: 100%;
-            background: linear-gradient(90deg, #f44336, #ff9800, #4caf50);
-            transition: width 0.3s;
-            border-radius: 5px;
+            background: linear-gradient(90deg, #ef4444, #fbbf24, #22c55e);
+            width: 100%;
+            transition: width 0.3s ease;
         }
 
-        /* ==================== PLAYER ==================== */
-        .player {
+        /* PLAYER */
+        #player {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            z-index: 50;
+            width: 70px;
+            height: 70px;
             transition: left 0.08s linear, top 0.08s linear;
+            z-index: 50;
+            pointer-events: none;
         }
 
-        .player-sprite {
+        #player img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
         }
 
-        .player-held {
+        .player-holding {
             position: absolute;
-            top: -30px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
             background: white;
-            width: 45px;
-            height: 45px;
             border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border: 3px solid #4caf50;
-            animation: heldBounce 0.5s infinite alternate;
-            overflow: hidden;
         }
 
-        .player-held img {
+        .player-holding img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        /* MOBILE CONTROLS */
+        .mobile-controls {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            padding: 0 20px;
+            justify-content: space-between;
+            z-index: 200;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-controls { display: flex; }
+        }
+
+        .dpad {
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+        .dpad-btn {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 12px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .dpad-up { top: 0; left: 50px; }
+        .dpad-down { bottom: 0; left: 50px; }
+        .dpad-left { top: 50px; left: 0; }
+        .dpad-right { top: 50px; right: 0; }
+
+        .action-btns {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .action-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: white;
+            width: 55px;
+            height: 55px;
+            font-size: 22px;
+        }
+
+        /* RECIPE BOOK PANEL */
+        .recipe-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 100;
+            max-height: 400px;
+            overflow-y: auto;
+            width: 200px;
+            display: none;
+        }
+
+        .recipe-panel.show { display: block; }
+
+        .recipe-panel h3 {
+            font-family: 'Fredoka', sans-serif;
+            color: var(--pink-500);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .recipe-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            background: var(--pink-50);
+        }
+
+        .recipe-item img {
             width: 35px;
             height: 35px;
             object-fit: contain;
         }
 
-        @keyframes heldBounce {
-            from { transform: translateX(-50%) translateY(0); }
-            to { transform: translateX(-50%) translateY(-8px); }
+        .recipe-info {
+            font-size: 12px;
         }
 
-        .player-highlight {
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 25px;
-            background: radial-gradient(ellipse, rgba(236, 64, 122, 0.5), transparent);
-            border-radius: 50%;
+        .recipe-name {
+            font-weight: 700;
+            color: #333;
         }
 
-        /* ==================== MODALS ==================== */
-        .modal-overlay {
+        .recipe-ingredients {
+            color: #888;
+            font-size: 10px;
+        }
+
+        /* WIN/LOSE SCREENS */
+        .overlay-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0,0,0,0.7);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
+            z-index: 500;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .overlay-screen.show { display: flex; }
 
-        .modal {
+        .overlay-content {
             background: white;
             border-radius: 30px;
-            padding: 40px;
+            padding: 50px;
             text-align: center;
-            max-width: 500px;
-            animation: modalPop 0.3s ease-out;
+            max-width: 400px;
+            animation: popIn 0.4s ease;
         }
 
-        @keyframes modalPop {
-            0% { transform: scale(0) rotate(-10deg); }
-            100% { transform: scale(1) rotate(0); }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .modal-title {
-            font-family: 'Baloo 2', cursive;
-            font-size: 2rem;
-            color: #ec407a;
+        .overlay-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .overlay-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 36px;
+            color: var(--pink-500);
             margin-bottom: 15px;
         }
 
-        .modal-message {
-            font-size: 1.1rem;
+        .overlay-text {
+            font-size: 18px;
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.6;
         }
 
-        .modal-stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 25px 0;
-        }
-
-        .modal-stat {
-            text-align: center;
-        }
-
-        .modal-stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ec407a;
-        }
-
-        .modal-stat-label {
-            font-size: 0.85rem;
-            color: #999;
-        }
-
-        .modal-btn {
+        .overlay-btn {
+            background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+            color: white;
+            border: none;
             padding: 15px 40px;
-            background: linear-gradient(135deg, #ec407a, #f48fb1);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
+            border-radius: 30px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 18px;
             cursor: pointer;
-            transition: all 0.2s;
-            margin: 5px;
+            transition: transform 0.2s;
         }
 
-        .modal-btn:hover {
+        .overlay-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(236, 64, 122, 0.4);
         }
 
-        .modal-btn.secondary {
-            background: linear-gradient(135deg, #9e9e9e, #bdbdbd);
-        }
-
-        .win-characters {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .win-character {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            animation: bounce 0.5s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-
-        /* ==================== FLOATING EFFECTS ==================== */
-        .floating-heart {
-            position: fixed;
-            font-size: 2rem;
-            pointer-events: none;
-            animation: floatUp 2s ease-out forwards;
-            z-index: 1000;
-        }
-
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-200px) scale(1.5); }
-        }
-
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            font-size: 1.5rem;
-            animation: sparkle 0.8s ease-out forwards;
-            z-index: 1000;
-        }
-
-        @keyframes sparkle {
-            0% { opacity: 1; transform: scale(0) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
-            100% { opacity: 0; transform: scale(0) rotate(360deg); }
-        }
-
-        /* ==================== INSTRUCTIONS BUTTON ==================== */
-        .instructions-btn {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #ec407a, #f48fb1);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 101;
-            box-shadow: 0 5px 15px rgba(236, 64, 122, 0.4);
-            transition: all 0.2s;
-        }
-
-        .instructions-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* ==================== MOBILE CONTROLS ==================== */
-        .mobile-controls {
-            display: none;
+        /* INSTRUCTIONS */
+        .instructions {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
+            background: rgba(255,255,255,0.95);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: #666;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             z-index: 100;
+            white-space: nowrap;
         }
 
-        .mobile-dpad {
-            display: grid;
-            grid-template-columns: repeat(3, 60px);
-            grid-template-rows: repeat(3, 60px);
-            gap: 5px;
+        .instructions kbd {
+            background: var(--pink-100);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: inherit;
+            font-weight: 700;
+            color: var(--pink-600);
         }
 
-        .mobile-btn {
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.9);
+        @media (max-width: 1024px) {
+            .instructions { display: none; }
+        }
+
+        /* FLOATING HEARTS */
+        .float-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 30px;
+            animation: floatUp 1.5s ease forwards;
+            z-index: 300;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+
+        /* Recipe Toggle Button */
+        .recipe-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
             border: none;
-            border-radius: 15px;
-            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .mobile-btn:active {
-            background: #ec407a;
-            color: white;
-        }
-
-        @media (max-width: 1000px) {
-            .mobile-controls {
-                display: block;
-            }
-            .kitchen-zone {
-                width: 350px;
-            }
-            .dining-zone {
-                left: 356px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .character-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .character-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .char-option {
-                width: 80px;
-                height: 100px;
-            }
-            .char-option img {
-                width: 45px;
-                height: 45px;
-            }
+            z-index: 101;
         }
     </style>
 </head>
 <body>
-    <!-- CHARACTER SELECT SCREEN -->
-    <div class="select-screen" id="selectScreen">
-        <h1 class="select-title">🍳 Cutie Cafe 💕</h1>
-        <p class="select-subtitle">Choose your character to run the cutest cafe!</p>
-
-        <div class="character-grid" id="characterGrid"></div>
-
-        <button class="start-btn" id="startBtn" onclick="startGame()" disabled>
-            Choose a Character!
-        </button>
-
-        <div class="controls-hint">
-            <strong>Controls:</strong> WASD or Arrow Keys to move | SPACE or E to interact
-        </div>
+    <!-- CHARACTER SELECT -->
+    <div id="charSelect">
+        <h1 class="select-title">Cutie Cafe Kitchen</h1>
+        <p class="select-subtitle">Choose your chef!</p>
+        <div class="char-grid" id="charGrid"></div>
     </div>
 
-    <!-- GAME HUD -->
-    <div class="game-hud" id="gameHud" style="display: none;">
-        <div class="hud-left">
-            <div class="hud-title">🍳 Cutie Cafe</div>
-        </div>
-        <div class="hud-right">
-            <div class="hud-stat">Day <span id="dayNum">1</span>/10</div>
-            <div class="hud-stat">💕 <span id="hearts">0</span></div>
-            <div class="hud-stat">⭐ $<span id="tips">0</span></div>
-            <div class="timer-bar">
-                <div class="timer-fill" id="timerFill" style="width: 100%"></div>
-            </div>
-        </div>
-    </div>
-
-    <a href="index.html" class="back-btn" id="backBtn" style="display: none;">← Home</a>
-
-    <!-- GAME WORLD -->
-    <div class="game-world" id="gameWorld" style="display: none;">
-        <!-- Kitchen Zone -->
-        <div class="kitchen-zone" id="kitchenZone">
-            <div class="kitchen-floor"></div>
-            <div class="kitchen-label">🍳 Kitchen</div>
-        </div>
-
-        <!-- Dining Zone -->
-        <div class="dining-zone" id="diningZone">
-            <div class="dining-floor"></div>
-            <div class="dining-label">🍽️ Dining Area</div>
-        </div>
-    </div>
-
-    <!-- MOBILE CONTROLS -->
-    <div class="mobile-controls" id="mobileControls" style="display: none;">
-        <div class="mobile-dpad">
-            <div></div>
-            <button class="mobile-btn" data-dir="up">⬆️</button>
-            <div></div>
-            <button class="mobile-btn" data-dir="left">⬅️</button>
-            <button class="mobile-btn" data-dir="action">✋</button>
-            <button class="mobile-btn" data-dir="right">➡️</button>
-            <div></div>
-            <button class="mobile-btn" data-dir="down">⬇️</button>
-            <div></div>
-        </div>
-    </div>
-
-    <!-- INSTRUCTIONS BUTTON -->
-    <button class="instructions-btn" id="instructionsBtn" onclick="showInstructions()" style="display: none;">?</button>
-
-    <!-- DAY COMPLETE MODAL -->
-    <div class="modal-overlay" id="dayModal">
-        <div class="modal">
-            <div class="modal-title">☀️ Day <span id="completedDay">1</span> Complete!</div>
-            <div class="modal-stats">
-                <div class="modal-stat">
-                    <div class="modal-stat-value" id="dayCustomers">0</div>
-                    <div class="modal-stat-label">Customers Served</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-value">$<span id="dayTips">0</span></div>
-                    <div class="modal-stat-label">Tips Earned</div>
+    <!-- GAME -->
+    <div id="gameContainer">
+        <!-- HUD -->
+        <div class="game-hud">
+            <div class="hud-section">
+                <div class="day-badge">Day <span id="dayNum">1</span>/10</div>
+                <div class="hud-item">
+                    <span class="hud-icon">⏱️</span>
+                    <span class="hud-value" id="timer">2:00</span>
                 </div>
             </div>
-            <div class="modal-message" id="dayMessage">Great work!</div>
-            <button class="modal-btn" onclick="nextDay()">Next Day →</button>
+            <div class="hud-section">
+                <div class="hud-item">
+                    <span class="hud-icon">💰</span>
+                    <span class="hud-value" id="tips">$0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-icon">💕</span>
+                    <span class="hud-value" id="hearts">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME WORLD -->
+        <div class="game-world-wrapper">
+            <div id="gameWorld">
+                <!-- KITCHEN -->
+                <div class="kitchen-zone">
+                    <span class="zone-label">KITCHEN</span>
+
+                    <!-- COOKING STATIONS -->
+                    <div class="stations-area" id="stationsArea"></div>
+
+                    <!-- INGREDIENTS -->
+                    <div class="ingredients-area">
+                        <div class="ingredients-title">INGREDIENTS</div>
+                        <div class="ingredients-grid" id="ingredientsGrid"></div>
+                    </div>
+
+                    <!-- UTILITIES -->
+                    <div class="utility-area" id="utilityArea"></div>
+                </div>
+
+                <!-- DINING -->
+                <div class="dining-zone">
+                    <span class="zone-label">DINING AREA</span>
+                    <div class="tables-area" id="tablesArea"></div>
+                </div>
+
+                <!-- PLAYER -->
+                <div id="player">
+                    <div class="player-holding" id="playerHolding" style="display:none;"></div>
+                    <img id="playerImg" src="" alt="Player">
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE CONTROLS -->
+        <div class="mobile-controls">
+            <div class="dpad">
+                <button class="dpad-btn dpad-up" data-dir="up">▲</button>
+                <button class="dpad-btn dpad-down" data-dir="down">▼</button>
+                <button class="dpad-btn dpad-left" data-dir="left">◀</button>
+                <button class="dpad-btn dpad-right" data-dir="right">▶</button>
+            </div>
+            <div class="action-btns">
+                <button class="action-btn secondary" id="dropBtn">🗑️</button>
+                <button class="action-btn primary" id="actionBtn">👆</button>
+            </div>
+        </div>
+
+        <!-- INSTRUCTIONS -->
+        <div class="instructions">
+            <kbd>WASD</kbd> or <kbd>Arrows</kbd> to move | <kbd>Space</kbd> or <kbd>E</kbd> to interact
+        </div>
+
+        <!-- RECIPE TOGGLE -->
+        <button class="recipe-toggle" id="recipeToggle">📖</button>
+
+        <!-- RECIPE PANEL -->
+        <div class="recipe-panel" id="recipePanel">
+            <h3>Recipes</h3>
+            <div id="recipeList"></div>
         </div>
     </div>
 
-    <!-- WIN MODAL -->
-    <div class="modal-overlay" id="winModal">
-        <div class="modal">
-            <div class="modal-title">🎉 You Did It! 🎉</div>
-            <div class="win-characters" id="winCharacters"></div>
-            <div class="modal-message">
-                You ran the cutest cafe for 10 amazing days!<br><br>
-                Just like how you make every day special,<br>
-                you made all these cuties so happy! 💕<br><br>
-                <strong style="font-size: 1.3rem;">Happy 100 Days, 사랑해! 💕</strong>
-            </div>
-            <button class="modal-btn" onclick="playAgain()">Play Again!</button>
-            <button class="modal-btn secondary" onclick="goHome()">Back to Home</button>
+    <!-- DAY END OVERLAY -->
+    <div class="overlay-screen" id="dayEndOverlay">
+        <div class="overlay-content">
+            <div class="overlay-icon">🌙</div>
+            <h2 class="overlay-title">Day Complete!</h2>
+            <p class="overlay-text" id="dayEndText">Great work today!</p>
+            <button class="overlay-btn" id="nextDayBtn">Next Day →</button>
         </div>
     </div>
 
-    <!-- INSTRUCTIONS MODAL -->
-    <div class="modal-overlay" id="instructionsModal">
-        <div class="modal">
-            <div class="modal-title">📖 How to Play</div>
-            <div class="modal-message" style="text-align: left;">
-                <strong>🎮 Controls:</strong><br>
-                • WASD / Arrow Keys - Move<br>
-                • SPACE / E - Pick up / Put down / Interact<br><br>
-
-                <strong>🍳 Cooking:</strong><br>
-                • Pick up ingredients from shelves<br>
-                • Place on stove/oven to cook<br>
-                • Grab a plate, then pick up cooked food<br>
-                • Place plated dish on counter<br><br>
-
-                <strong>🍽️ Serving:</strong><br>
-                • Walk to seated customer, press E to take order<br>
-                • Make the dish they want<br>
-                • Bring it to their table!<br><br>
-
-                <strong>⚠️ Tips:</strong><br>
-                • Fast service = more tips!<br>
-                • Use trash to discard mistakes
-            </div>
-            <button class="modal-btn" onclick="hideInstructions()">Got it! 💕</button>
+    <!-- WIN OVERLAY -->
+    <div class="overlay-screen" id="winOverlay">
+        <div class="overlay-content">
+            <div class="overlay-icon">🎉</div>
+            <h2 class="overlay-title">사랑해!</h2>
+            <p class="overlay-text">You completed all 10 days!<br>You're the best chef ever!</p>
+            <button class="overlay-btn" id="playAgainBtn">Play Again 💕</button>
         </div>
     </div>
 
     <script>
-        // ==================== CHARACTER DATA ====================
-        const characters = [
-            { id: "pompompurin", name: "Pompompurin", img: "images/pompompurin.svg" },
-            { id: "cinnamoroll", name: "Cinnamoroll", img: "images/cinnamoroll.svg" },
-            { id: "gudetama", name: "Gudetama", img: "images/gudetama.svg" },
-            { id: "moomin", name: "Moomin", img: "images/moomin.svg" },
-            { id: "corocorokuririn", name: "Kuririn", img: "images/corocorokuririn.svg" },
-            { id: "hello-kitty", name: "Hello Kitty", img: "images/hello-kitty.svg" },
-            { id: "my-melody", name: "My Melody", img: "images/my-melody.svg" },
-            { id: "kuromi", name: "Kuromi", img: "images/kuromi.svg" },
-            { id: "pochacco", name: "Pochacco", img: "images/pochacco.svg" },
-            { id: "keroppi", name: "Keroppi", img: "images/keroppi.svg" },
-            { id: "hamtaro", name: "Hamtaro", img: "images/hamtaro.svg" },
-            { id: "bijou", name: "Bijou", img: "images/bijou.svg" },
-            { id: "oxnard", name: "Oxnard", img: "images/oxnard.svg" },
-            { id: "boss", name: "Boss", img: "images/boss.svg" },
-            { id: "pashmina", name: "Pashmina", img: "images/pashmina.svg" },
-            { id: "penelope", name: "Penelope", img: "images/penelope.svg" },
-            { id: "mametchi", name: "Mametchi", img: "images/mametchi.svg" },
-            { id: "kuchipatchi", name: "Kuchipatchi", img: "images/kuchipatchi.svg" },
-            { id: "memetchi", name: "Memetchi", img: "images/memetchi.svg" },
-            { id: "badtz-maru", name: "Badtz-Maru", img: "images/badtz-maru.svg" },
-            { id: "chococat", name: "Chococat", img: "images/chococat.svg" },
-            { id: "tuxedosam", name: "Tuxedo Sam", img: "images/tuxedosam.svg" }
+        // =============================================
+        // GAME DATA
+        // =============================================
+        const CHARACTERS = [
+            'pompompurin', 'cinnamoroll', 'gudetama', 'moomin', 'corocorokuririn',
+            'hello-kitty', 'my-melody', 'kuromi', 'pochacco', 'keroppi',
+            'badtz-maru', 'chococat', 'tuxedosam', 'hamtaro', 'bijou',
+            'oxnard', 'boss', 'pashmina', 'penelope', 'mametchi',
+            'kuchipatchi', 'memetchi'
         ];
 
-        // ==================== RECIPES ====================
-        const recipes = {
-            toast: { ingredients: ["bread"], img: "images/dish-toast.svg", name: "Toast", cookTime: 2000 },
-            friedEgg: { ingredients: ["egg"], img: "images/dish-fried-egg.svg", name: "Fried Egg", cookTime: 3000 },
-            bacon: { ingredients: ["bacon"], img: "images/food-bacon.svg", name: "Crispy Bacon", cookTime: 3000 },
-            salad: { ingredients: ["lettuce", "tomato"], img: "images/dish-salad.svg", name: "Fresh Salad", cookTime: 0 },
-            eggSandwich: { ingredients: ["bread", "egg"], img: "images/dish-sandwich.svg", name: "Egg Sandwich", cookTime: 4000 },
-            cheesyToast: { ingredients: ["bread", "cheese"], img: "images/dish-cheese-toast.svg", name: "Cheese Toast", cookTime: 3000 },
-            coffee: { ingredients: ["coffee"], img: "images/food-coffee.svg", name: "Hot Coffee", cookTime: 2000 },
-            cake: { ingredients: ["cake"], img: "images/food-cake.svg", name: "Cake Slice", cookTime: 0 },
-            strawberryCake: { ingredients: ["cake", "strawberry"], img: "images/dish-strawberry-cake.svg", name: "Strawberry Cake", cookTime: 0 },
-            riceBowl: { ingredients: ["rice"], img: "images/food-rice.svg", name: "Rice Bowl", cookTime: 3000 },
-            breakfast: { ingredients: ["bread", "egg", "bacon"], img: "images/dish-breakfast.svg", name: "Full Breakfast", cookTime: 5000 }
+        const STATIONS = [
+            { id: 'stove1', name: 'Stove', img: 'stove.svg', type: 'cook' },
+            { id: 'stove2', name: 'Stove', img: 'stove.svg', type: 'cook' },
+            { id: 'oven', name: 'Oven', img: 'oven.svg', type: 'cook' },
+            { id: 'cutting', name: 'Cutting', img: 'cutting-board.svg', type: 'prep' },
+            { id: 'prep', name: 'Prep', img: 'prep-counter.svg', type: 'prep' },
+            { id: 'counter', name: 'Counter', img: 'serving-counter.svg', type: 'serve' }
+        ];
+
+        const INGREDIENTS = [
+            { id: 'bread', name: 'Bread', img: 'food-bread.svg' },
+            { id: 'egg', name: 'Egg', img: 'food-egg.svg' },
+            { id: 'cheese', name: 'Cheese', img: 'food-cheese.svg' },
+            { id: 'bacon', name: 'Bacon', img: 'food-bacon.svg' },
+            { id: 'lettuce', name: 'Lettuce', img: 'food-lettuce.svg' },
+            { id: 'tomato', name: 'Tomato', img: 'food-tomato.svg' },
+            { id: 'cake', name: 'Cake', img: 'food-cake.svg' },
+            { id: 'strawberry', name: 'Strawberry', img: 'food-strawberry.svg' },
+            { id: 'coffee', name: 'Coffee', img: 'food-coffee.svg' },
+            { id: 'rice', name: 'Rice', img: 'food-rice.svg' }
+        ];
+
+        const UTILITIES = [
+            { id: 'plates', name: 'Plates', img: 'plate-stack.svg' },
+            { id: 'trash', name: 'Trash', img: 'trash-bin.svg' },
+            { id: 'fridge', name: 'Fridge', img: 'fridge.svg' }
+        ];
+
+        const RECIPES = {
+            toast: { ingredients: ['bread'], img: 'dish-toast.svg', name: 'Toast', time: 2000, tip: 5 },
+            friedEgg: { ingredients: ['egg'], img: 'dish-fried-egg.svg', name: 'Fried Egg', time: 3000, tip: 8 },
+            sandwich: { ingredients: ['bread', 'egg', 'lettuce'], img: 'dish-sandwich.svg', name: 'Sandwich', time: 4000, tip: 15 },
+            salad: { ingredients: ['lettuce', 'tomato'], img: 'dish-salad.svg', name: 'Salad', time: 2500, tip: 10 },
+            breakfast: { ingredients: ['bread', 'egg', 'bacon'], img: 'dish-breakfast.svg', name: 'Breakfast', time: 5000, tip: 20 },
+            cheeseToast: { ingredients: ['bread', 'cheese'], img: 'dish-cheese-toast.svg', name: 'Cheese Toast', time: 3000, tip: 12 },
+            strawberryCake: { ingredients: ['cake', 'strawberry'], img: 'dish-strawberry-cake.svg', name: 'Strawberry Cake', time: 2000, tip: 18 },
+            coffee: { ingredients: ['coffee'], img: 'food-coffee.svg', name: 'Coffee', time: 1500, tip: 6 },
+            baconEgg: { ingredients: ['egg', 'bacon'], img: 'dish-fried-egg.svg', name: 'Bacon & Egg', time: 4000, tip: 14 },
+            veggieSalad: { ingredients: ['lettuce', 'tomato', 'cheese'], img: 'dish-salad.svg', name: 'Veggie Salad', time: 3000, tip: 13 },
+            riceBowl: { ingredients: ['rice', 'egg'], img: 'food-rice.svg', name: 'Rice Bowl', time: 3500, tip: 12 },
+            deluxeBreakfast: { ingredients: ['bread', 'egg', 'bacon', 'cheese'], img: 'dish-breakfast.svg', name: 'Deluxe Breakfast', time: 6000, tip: 30 }
         };
 
-        const ingredients = {
-            bread: { img: "images/food-bread.svg", name: "Bread" },
-            egg: { img: "images/food-egg.svg", name: "Egg" },
-            cheese: { img: "images/food-cheese.svg", name: "Cheese" },
-            bacon: { img: "images/food-bacon.svg", name: "Bacon" },
-            lettuce: { img: "images/food-lettuce.svg", name: "Lettuce" },
-            tomato: { img: "images/food-tomato.svg", name: "Tomato" },
-            cake: { img: "images/food-cake.svg", name: "Cake" },
-            strawberry: { img: "images/food-strawberry.svg", name: "Strawberry" },
-            coffee: { img: "images/food-coffee.svg", name: "Coffee" },
-            rice: { img: "images/food-rice.svg", name: "Rice" }
-        };
-
-        // ==================== GAME STATE ====================
-        let selectedCharacter = null;
+        // =============================================
+        // GAME STATE
+        // =============================================
         let gameState = {
+            player: { x: 300, y: 400, char: '', holding: null, holdingType: null, plate: false },
             day: 1,
-            hearts: 0,
+            timer: 120,
             tips: 0,
-            dayCustomers: 0,
-            dayTips: 0,
-            timeLeft: 120,
-            maxTime: 120,
-            playerX: 200,
-            playerY: 300,
-            playerSpeed: 6,
-            heldItem: null,
-            stations: {},
-            tables: [],
+            hearts: 0,
             customers: [],
-            counterSlots: [null, null, null],
-            gameLoop: null,
-            timerLoop: null,
-            customerSpawnLoop: null,
-            keys: { up: false, down: false, left: false, right: false }
+            stations: {},
+            running: false
         };
 
-        // ==================== INIT CHARACTER SELECT ====================
-        function initCharacterSelect() {
-            const grid = document.getElementById('characterGrid');
-            grid.innerHTML = characters.map(char => `
-                <div class="char-option" data-id="${char.id}" onclick="selectCharacter('${char.id}')">
-                    <img src="${char.img}" alt="${char.name}">
-                    <span>${char.name}</span>
-                </div>
-            `).join('');
+        let keys = { up: false, down: false, left: false, right: false };
+        let lastTime = 0;
+        let gameLoop = null;
+        let timerInterval = null;
+
+        // =============================================
+        // DOM ELEMENTS
+        // =============================================
+        const $ = id => document.getElementById(id);
+        const charSelect = $('charSelect');
+        const charGrid = $('charGrid');
+        const gameContainer = $('gameContainer');
+        const gameWorld = $('gameWorld');
+        const player = $('player');
+        const playerImg = $('playerImg');
+        const playerHolding = $('playerHolding');
+        const stationsArea = $('stationsArea');
+        const ingredientsGrid = $('ingredientsGrid');
+        const utilityArea = $('utilityArea');
+        const tablesArea = $('tablesArea');
+        const recipePanel = $('recipePanel');
+        const recipeList = $('recipeList');
+
+        // =============================================
+        // INIT CHARACTER SELECT
+        // =============================================
+        function initCharSelect() {
+            charGrid.innerHTML = '';
+            CHARACTERS.forEach(char => {
+                const div = document.createElement('div');
+                div.className = 'char-option';
+                div.innerHTML = `<img src="images/${char}.svg" alt="${char}">`;
+                div.onclick = () => selectCharacter(char);
+                charGrid.appendChild(div);
+            });
         }
 
-        function selectCharacter(id) {
-            selectedCharacter = characters.find(c => c.id === id);
-            document.querySelectorAll('.char-option').forEach(el => el.classList.remove('selected'));
-            document.querySelector(`[data-id="${id}"]`).classList.add('selected');
-            const btn = document.getElementById('startBtn');
-            btn.disabled = false;
-            btn.textContent = `Play as ${selectedCharacter.name}! 🍳`;
+        function selectCharacter(char) {
+            gameState.player.char = char;
+            playerImg.src = `images/${char}.svg`;
+            charSelect.classList.add('hidden');
+            gameContainer.classList.add('active');
+            initGame();
         }
 
-        // ==================== START GAME ====================
-        function startGame() {
-            if (!selectedCharacter) return;
-            document.getElementById('selectScreen').classList.add('hidden');
-            document.getElementById('gameHud').style.display = 'flex';
-            document.getElementById('gameWorld').style.display = 'block';
-            document.getElementById('backBtn').style.display = 'block';
-            document.getElementById('instructionsBtn').style.display = 'block';
-            if (window.innerWidth <= 1000) {
-                document.getElementById('mobileControls').style.display = 'block';
+        // =============================================
+        // INIT GAME
+        // =============================================
+        function initGame() {
+            // Init stations
+            stationsArea.innerHTML = '';
+            STATIONS.forEach(s => {
+                gameState.stations[s.id] = { content: null, cooking: false, progress: 0, recipe: null };
+                const div = document.createElement('div');
+                div.className = 'station';
+                div.id = `station-${s.id}`;
+                div.innerHTML = `
+                    <img class="station-img" src="images/${s.img}" alt="${s.name}">
+                    <span class="station-name">${s.name}</span>
+                    <div class="station-content" style="display:none;"></div>
+                    <div class="cook-progress"><div class="cook-progress-bar"></div></div>
+                `;
+                stationsArea.appendChild(div);
+            });
+
+            // Init ingredients
+            ingredientsGrid.innerHTML = '';
+            INGREDIENTS.forEach(ing => {
+                const div = document.createElement('div');
+                div.className = 'ingredient';
+                div.dataset.id = ing.id;
+                div.innerHTML = `<img src="images/${ing.img}" alt="${ing.name}">`;
+                ingredientsGrid.appendChild(div);
+            });
+
+            // Init utilities
+            utilityArea.innerHTML = '';
+            UTILITIES.forEach(u => {
+                const div = document.createElement('div');
+                div.className = 'utility';
+                div.dataset.id = u.id;
+                div.innerHTML = `
+                    <img src="images/${u.img}" alt="${u.name}">
+                    <span class="utility-name">${u.name}</span>
+                `;
+                utilityArea.appendChild(div);
+            });
+
+            // Init tables
+            tablesArea.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                const div = document.createElement('div');
+                div.className = 'table-unit';
+                div.id = `table-${i}`;
+                div.innerHTML = `
+                    <div class="table-chairs">
+                        <div class="chair"><img src="images/cafe-chair.svg" alt="Chair"></div>
+                        <div class="chair"><img src="images/cafe-chair.svg" alt="Chair"></div>
+                    </div>
+                    <div class="table">
+                        <img class="table-img" src="images/cafe-table.svg" alt="Table">
+                        <div class="customer-display" style="display:none;"></div>
+                        <div class="order-bubble" style="display:none;"></div>
+                        <div class="patience-bar" style="display:none;"><div class="patience-fill"></div></div>
+                    </div>
+                `;
+                tablesArea.appendChild(div);
             }
-            setupGameWorld();
-            setupControls();
+
+            // Init recipe panel
+            recipeList.innerHTML = '';
+            Object.entries(RECIPES).forEach(([key, r]) => {
+                const div = document.createElement('div');
+                div.className = 'recipe-item';
+                div.innerHTML = `
+                    <img src="images/${r.img}" alt="${r.name}">
+                    <div class="recipe-info">
+                        <div class="recipe-name">${r.name} ($${r.tip})</div>
+                        <div class="recipe-ingredients">${r.ingredients.join(' + ')}</div>
+                    </div>
+                `;
+                recipeList.appendChild(div);
+            });
+
+            // Position player
+            gameState.player.x = 250;
+            gameState.player.y = 400;
+            updatePlayerPosition();
+
+            // Start game
             startDay();
         }
 
-        // ==================== SETUP GAME WORLD ====================
-        function setupGameWorld() {
-            const world = document.getElementById('gameWorld');
-            const kitchen = document.getElementById('kitchenZone');
-            const dining = document.getElementById('diningZone');
-
-            // Create player
-            const player = document.createElement('div');
-            player.className = 'player';
-            player.id = 'player';
-            player.innerHTML = `
-                <div class="player-highlight"></div>
-                <img src="${selectedCharacter.img}" class="player-sprite" alt="Player">
-                <div class="player-held" id="playerHeld" style="display: none;"></div>
-            `;
-            player.style.left = gameState.playerX + 'px';
-            player.style.top = gameState.playerY + 'px';
-            world.appendChild(player);
-
-            // Kitchen stations - well spaced
-            createStation('stove1', 'images/stove.svg', 'Stove', 30, 60, kitchen);
-            createStation('stove2', 'images/stove.svg', 'Stove', 140, 60, kitchen);
-            createStation('oven', 'images/oven.svg', 'Oven', 250, 60, kitchen);
-            createStation('cutting', 'images/cutting-board.svg', 'Prep', 30, 180, kitchen);
-            createStation('prep', 'images/prep-counter.svg', 'Counter', 140, 180, kitchen);
-
-            // Ingredient shelves - right side of kitchen
-            createIngredientShelf(340, 60, ['bread', 'egg', 'cheese'], kitchen);
-            createIngredientShelf(340, 250, ['bacon', 'lettuce', 'tomato'], kitchen);
-            createIngredientShelf(340, 440, ['cake', 'strawberry', 'coffee', 'rice'], kitchen);
-
-            // Plate stack
-            createPlateStack(30, 320, kitchen);
-
-            // Trash bin
-            createTrashBin(30, 440, kitchen);
-
-            // Service counter
-            createServiceCounter(140, 340, kitchen);
-
-            // Tables with chairs - nice grid in dining area
-            const tablePositions = [
-                { x: 80, y: 80 },
-                { x: 230, y: 80 },
-                { x: 380, y: 80 },
-                { x: 80, y: 230 },
-                { x: 230, y: 230 },
-                { x: 380, y: 230 },
-                { x: 80, y: 380 },
-                { x: 230, y: 380 },
-            ];
-
-            tablePositions.forEach((pos, i) => {
-                createTable(i, pos.x, pos.y, dining);
-            });
-        }
-
-        function createStation(id, img, name, x, y, parent) {
-            const station = document.createElement('div');
-            station.className = 'station';
-            station.id = id;
-            station.innerHTML = `
-                <div class="station-contents" id="${id}-contents"></div>
-                <img src="${img}" class="station-img" alt="${name}">
-                <span class="station-name">${name}</span>
-                <div class="station-progress" style="display: none;">
-                    <div class="station-progress-fill" id="${id}-progress"></div>
-                </div>
-            `;
-            station.style.left = x + 'px';
-            station.style.top = y + 'px';
-            parent.appendChild(station);
-
-            gameState.stations[id] = {
-                el: station,
-                x, y,
-                contents: [],
-                cooking: false,
-                cookProgress: 0,
-                cookTime: 0,
-                result: null
-            };
-        }
-
-        function createIngredientShelf(x, y, items, parent) {
-            const shelf = document.createElement('div');
-            shelf.className = 'ingredient-shelf';
-            shelf.style.left = x + 'px';
-            shelf.style.top = y + 'px';
-
-            items.forEach(item => {
-                const el = document.createElement('div');
-                el.className = 'shelf-item';
-                el.dataset.ingredient = item;
-                el.innerHTML = `<img src="${ingredients[item].img}" alt="${item}">`;
-                el.onclick = () => pickupIngredient(item);
-                shelf.appendChild(el);
-            });
-
-            parent.appendChild(shelf);
-        }
-
-        function createPlateStack(x, y, parent) {
-            const stack = document.createElement('div');
-            stack.className = 'plate-stack';
-            stack.id = 'plateStack';
-            stack.innerHTML = `
-                <img src="images/plate-stack.svg" alt="Plates">
-                <span class="plate-stack-label">Plates</span>
-            `;
-            stack.style.left = x + 'px';
-            stack.style.top = y + 'px';
-            stack.onclick = () => pickupPlate();
-            parent.appendChild(stack);
-        }
-
-        function createTrashBin(x, y, parent) {
-            const trash = document.createElement('div');
-            trash.className = 'trash-bin';
-            trash.id = 'trashBin';
-            trash.innerHTML = `<img src="images/trash-bin.svg" alt="Trash">`;
-            trash.style.left = x + 'px';
-            trash.style.top = y + 'px';
-            trash.onclick = () => useTrash();
-            parent.appendChild(trash);
-        }
-
-        function createServiceCounter(x, y, parent) {
-            const counter = document.createElement('div');
-            counter.className = 'service-counter';
-            counter.id = 'serviceCounter';
-            counter.style.left = x + 'px';
-            counter.style.top = y + 'px';
-
-            for (let i = 0; i < 3; i++) {
-                const slot = document.createElement('div');
-                slot.className = 'counter-slot';
-                slot.id = `counterSlot${i}`;
-                slot.onclick = () => interactCounterSlot(i);
-                counter.appendChild(slot);
-            }
-
-            parent.appendChild(counter);
-        }
-
-        function createTable(id, x, y, parent) {
-            const table = document.createElement('div');
-            table.className = 'table';
-            table.id = `table${id}`;
-            table.style.left = x + 'px';
-            table.style.top = y + 'px';
-            table.innerHTML = `
-                <img src="images/cafe-table.svg" class="table-img" alt="Table">
-                <div class="table-items" id="tableItems${id}"></div>
-            `;
-
-            const chair = document.createElement('div');
-            chair.className = 'chair';
-            chair.id = `chair${id}`;
-            chair.style.left = (x + 25) + 'px';
-            chair.style.top = (y - 50) + 'px';
-            chair.innerHTML = `<img src="images/cafe-chair.svg" class="chair-img" alt="Chair">`;
-
-            parent.appendChild(table);
-            parent.appendChild(chair);
-
-            gameState.tables.push({
-                id,
-                tableEl: table,
-                chairEl: chair,
-                x: x + 55,
-                y: y + 55,
-                chairX: x + 55,
-                chairY: y - 20,
-                customer: null
-            });
-        }
-
-        // ==================== CONTROLS ====================
-        function setupControls() {
-            document.addEventListener('keydown', (e) => {
-                switch(e.key.toLowerCase()) {
-                    case 'w': case 'arrowup': gameState.keys.up = true; e.preventDefault(); break;
-                    case 's': case 'arrowdown': gameState.keys.down = true; e.preventDefault(); break;
-                    case 'a': case 'arrowleft': gameState.keys.left = true; e.preventDefault(); break;
-                    case 'd': case 'arrowright': gameState.keys.right = true; e.preventDefault(); break;
-                    case ' ': case 'e': handleInteraction(); e.preventDefault(); break;
-                }
-            });
-
-            document.addEventListener('keyup', (e) => {
-                switch(e.key.toLowerCase()) {
-                    case 'w': case 'arrowup': gameState.keys.up = false; break;
-                    case 's': case 'arrowdown': gameState.keys.down = false; break;
-                    case 'a': case 'arrowleft': gameState.keys.left = false; break;
-                    case 'd': case 'arrowright': gameState.keys.right = false; break;
-                }
-            });
-
-            document.querySelectorAll('.mobile-btn').forEach(btn => {
-                btn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    const dir = btn.dataset.dir;
-                    if (dir === 'action') handleInteraction();
-                    else gameState.keys[dir] = true;
-                });
-                btn.addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    const dir = btn.dataset.dir;
-                    if (dir !== 'action') gameState.keys[dir] = false;
-                });
-            });
-        }
-
-        // ==================== GAME LOOPS ====================
+        // =============================================
+        // GAME LOOP
+        // =============================================
         function startDay() {
-            gameState.timeLeft = gameState.maxTime;
-            gameState.dayCustomers = 0;
-            gameState.dayTips = 0;
+            gameState.timer = 120;
+            gameState.running = true;
+            gameState.customers = [];
 
-            gameState.tables.forEach(table => {
-                table.customer = null;
-                table.chairEl.classList.remove('occupied');
-                table.chairEl.innerHTML = `<img src="images/cafe-chair.svg" class="chair-img" alt="Chair">`;
-                document.getElementById(`tableItems${table.id}`).innerHTML = '';
+            // Clear stations
+            Object.keys(gameState.stations).forEach(k => {
+                gameState.stations[k] = { content: null, cooking: false, progress: 0, recipe: null };
             });
 
-            gameState.customers = [];
             updateHUD();
 
-            if (gameState.gameLoop) cancelAnimationFrame(gameState.gameLoop);
-            function loop() {
-                updatePlayer();
-                updateStations();
-                gameState.gameLoop = requestAnimationFrame(loop);
-            }
-            loop();
-
-            if (gameState.timerLoop) clearInterval(gameState.timerLoop);
-            gameState.timerLoop = setInterval(() => {
-                gameState.timeLeft--;
+            // Timer
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (!gameState.running) return;
+                gameState.timer--;
                 updateHUD();
-                if (gameState.timeLeft <= 0) endDay();
+                if (gameState.timer <= 0) endDay();
             }, 1000);
 
-            if (gameState.customerSpawnLoop) clearInterval(gameState.customerSpawnLoop);
+            // Spawn customers
             spawnCustomer();
-            const spawnRate = Math.max(4000, 10000 - gameState.day * 600);
-            gameState.customerSpawnLoop = setInterval(spawnCustomer, spawnRate);
+
+            // Game loop
+            lastTime = performance.now();
+            if (gameLoop) cancelAnimationFrame(gameLoop);
+            gameLoop = requestAnimationFrame(update);
         }
 
+        function update(time) {
+            if (!gameState.running) return;
+
+            const delta = (time - lastTime) / 1000;
+            lastTime = time;
+
+            // Movement
+            const speed = 300;
+            let dx = 0, dy = 0;
+            if (keys.up) dy -= speed * delta;
+            if (keys.down) dy += speed * delta;
+            if (keys.left) dx -= speed * delta;
+            if (keys.right) dx += speed * delta;
+
+            if (dx !== 0 || dy !== 0) {
+                gameState.player.x = Math.max(30, Math.min(1570, gameState.player.x + dx));
+                gameState.player.y = Math.max(30, Math.min(970, gameState.player.y + dy));
+                updatePlayerPosition();
+            }
+
+            // Update cooking
+            updateCooking(delta);
+
+            // Update customers
+            updateCustomers(delta);
+
+            gameLoop = requestAnimationFrame(update);
+        }
+
+        function updatePlayerPosition() {
+            player.style.left = gameState.player.x + 'px';
+            player.style.top = gameState.player.y + 'px';
+        }
+
+        function updateHUD() {
+            $('dayNum').textContent = gameState.day;
+            $('timer').textContent = `${Math.floor(gameState.timer / 60)}:${String(gameState.timer % 60).padStart(2, '0')}`;
+            $('tips').textContent = `$${gameState.tips}`;
+            $('hearts').textContent = gameState.hearts;
+        }
+
+        // =============================================
+        // COOKING SYSTEM
+        // =============================================
+        function updateCooking(delta) {
+            Object.entries(gameState.stations).forEach(([id, station]) => {
+                if (station.cooking && station.recipe) {
+                    station.progress += delta * 1000;
+                    const recipe = RECIPES[station.recipe];
+                    const pct = Math.min(100, (station.progress / recipe.time) * 100);
+
+                    const el = $(`station-${id}`);
+                    if (el) {
+                        el.querySelector('.cook-progress-bar').style.width = pct + '%';
+
+                        if (station.progress >= recipe.time) {
+                            // Done cooking
+                            station.cooking = false;
+                            station.content = station.recipe;
+                            station.progress = 0;
+                            el.classList.remove('cooking');
+                            el.querySelector('.station-content').innerHTML = `<img src="images/${recipe.img}">`;
+                            el.querySelector('.cook-progress-bar').style.width = '0%';
+                        }
+                    }
+                }
+            });
+        }
+
+        // =============================================
+        // CUSTOMER SYSTEM
+        // =============================================
+        function spawnCustomer() {
+            if (!gameState.running) return;
+
+            const emptyTables = [];
+            for (let i = 0; i < 8; i++) {
+                if (!gameState.customers.find(c => c.table === i)) {
+                    emptyTables.push(i);
+                }
+            }
+
+            if (emptyTables.length > 0 && gameState.customers.length < Math.min(3 + gameState.day, 6)) {
+                const tableIdx = emptyTables[Math.floor(Math.random() * emptyTables.length)];
+                const recipeKeys = Object.keys(RECIPES);
+                const maxComplexity = Math.min(gameState.day + 2, recipeKeys.length);
+                const availableRecipes = recipeKeys.slice(0, maxComplexity);
+                const recipe = availableRecipes[Math.floor(Math.random() * availableRecipes.length)];
+                const char = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
+
+                const customer = {
+                    table: tableIdx,
+                    char: char,
+                    order: recipe,
+                    patience: 100,
+                    maxPatience: 30 + (10 - gameState.day) * 3
+                };
+
+                gameState.customers.push(customer);
+                renderCustomer(customer);
+            }
+
+            // Schedule next spawn
+            const delay = Math.max(3000, 8000 - gameState.day * 500);
+            setTimeout(spawnCustomer, delay + Math.random() * 3000);
+        }
+
+        function renderCustomer(customer) {
+            const tableEl = $(`table-${customer.table}`);
+            if (!tableEl) return;
+
+            const table = tableEl.querySelector('.table');
+            table.classList.add('has-customer');
+
+            const customerDisplay = table.querySelector('.customer-display');
+            customerDisplay.innerHTML = `<img src="images/${customer.char}.svg">`;
+            customerDisplay.style.display = 'block';
+
+            const recipe = RECIPES[customer.order];
+            const orderBubble = table.querySelector('.order-bubble');
+            orderBubble.innerHTML = `<img src="images/${recipe.img}">`;
+            orderBubble.style.display = 'flex';
+
+            const patienceBar = table.querySelector('.patience-bar');
+            patienceBar.style.display = 'block';
+        }
+
+        function updateCustomers(delta) {
+            gameState.customers.forEach((customer, idx) => {
+                customer.patience -= (100 / customer.maxPatience) * delta;
+
+                const tableEl = $(`table-${customer.table}`);
+                if (tableEl) {
+                    const fill = tableEl.querySelector('.patience-fill');
+                    fill.style.width = Math.max(0, customer.patience) + '%';
+                }
+
+                if (customer.patience <= 0) {
+                    removeCustomer(idx, false);
+                }
+            });
+        }
+
+        function removeCustomer(idx, happy) {
+            const customer = gameState.customers[idx];
+            if (!customer) return;
+
+            const tableEl = $(`table-${customer.table}`);
+            if (tableEl) {
+                const table = tableEl.querySelector('.table');
+                table.classList.remove('has-customer');
+                table.querySelector('.customer-display').style.display = 'none';
+                table.querySelector('.order-bubble').style.display = 'none';
+                table.querySelector('.patience-bar').style.display = 'none';
+            }
+
+            if (happy) {
+                gameState.hearts++;
+                const recipe = RECIPES[customer.order];
+                const bonus = Math.floor(customer.patience / 20);
+                gameState.tips += recipe.tip + bonus;
+                createFloatingHeart(tableEl);
+            }
+
+            gameState.customers.splice(idx, 1);
+            updateHUD();
+        }
+
+        function createFloatingHeart(el) {
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            const heart = document.createElement('div');
+            heart.className = 'float-heart';
+            heart.textContent = '💕';
+            heart.style.left = rect.left + rect.width / 2 + 'px';
+            heart.style.top = rect.top + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1500);
+        }
+
+        // =============================================
+        // INTERACTION
+        // =============================================
+        function interact() {
+            const px = gameState.player.x;
+            const py = gameState.player.y;
+
+            // Check ingredients
+            const ingredients = document.querySelectorAll('.ingredient');
+            for (const ing of ingredients) {
+                if (isNearElement(ing, px, py)) {
+                    if (!gameState.player.holding) {
+                        const id = ing.dataset.id;
+                        const ingData = INGREDIENTS.find(i => i.id === id);
+                        gameState.player.holding = [id];
+                        gameState.player.holdingType = 'ingredient';
+                        showPlayerHolding(ingData.img);
+                    }
+                    return;
+                }
+            }
+
+            // Check utilities
+            const utilities = document.querySelectorAll('.utility');
+            for (const util of utilities) {
+                if (isNearElement(util, px, py)) {
+                    const id = util.dataset.id;
+                    if (id === 'plates' && !gameState.player.holding) {
+                        gameState.player.holding = [];
+                        gameState.player.holdingType = 'plate';
+                        gameState.player.plate = true;
+                        showPlayerHolding('plate.svg');
+                    } else if (id === 'trash') {
+                        gameState.player.holding = null;
+                        gameState.player.holdingType = null;
+                        gameState.player.plate = false;
+                        hidePlayerHolding();
+                    }
+                    return;
+                }
+            }
+
+            // Check stations
+            const stations = document.querySelectorAll('.station');
+            for (const stationEl of stations) {
+                if (isNearElement(stationEl, px, py)) {
+                    const id = stationEl.id.replace('station-', '');
+                    const station = gameState.stations[id];
+                    const stationData = STATIONS.find(s => s.id === id);
+
+                    // Pick up cooked food
+                    if (station.content && gameState.player.plate && !station.cooking) {
+                        const recipe = RECIPES[station.content];
+                        gameState.player.holding = station.content;
+                        gameState.player.holdingType = 'dish';
+                        showPlayerHolding(recipe.img);
+                        station.content = null;
+                        stationEl.querySelector('.station-content').style.display = 'none';
+                        return;
+                    }
+
+                    // Place ingredients
+                    if (gameState.player.holdingType === 'ingredient' && !station.cooking && stationData.type !== 'serve') {
+                        if (!station.content) {
+                            station.content = [...gameState.player.holding];
+                        } else if (Array.isArray(station.content)) {
+                            station.content = [...station.content, ...gameState.player.holding];
+                        }
+
+                        // Check for recipe match
+                        const recipe = findRecipe(station.content);
+                        if (recipe && stationData.type === 'cook') {
+                            station.cooking = true;
+                            station.recipe = recipe;
+                            station.progress = 0;
+                            stationEl.classList.add('cooking');
+                        }
+
+                        // Show content
+                        const contentEl = stationEl.querySelector('.station-content');
+                        if (recipe) {
+                            contentEl.innerHTML = `<img src="images/${RECIPES[recipe].img}" style="opacity:0.5">`;
+                        } else {
+                            const lastIng = gameState.player.holding[gameState.player.holding.length - 1];
+                            const ingData = INGREDIENTS.find(i => i.id === lastIng);
+                            contentEl.innerHTML = `<img src="images/${ingData.img}">`;
+                        }
+                        contentEl.style.display = 'block';
+
+                        gameState.player.holding = null;
+                        gameState.player.holdingType = null;
+                        hidePlayerHolding();
+                    }
+                    return;
+                }
+            }
+
+            // Check tables
+            const tables = document.querySelectorAll('.table-unit');
+            for (const tableEl of tables) {
+                if (isNearElement(tableEl, px, py)) {
+                    const tableIdx = parseInt(tableEl.id.replace('table-', ''));
+                    const customerIdx = gameState.customers.findIndex(c => c.table === tableIdx);
+
+                    if (customerIdx >= 0 && gameState.player.holdingType === 'dish') {
+                        const customer = gameState.customers[customerIdx];
+                        if (gameState.player.holding === customer.order) {
+                            // Correct order!
+                            removeCustomer(customerIdx, true);
+                            gameState.player.holding = null;
+                            gameState.player.holdingType = null;
+                            gameState.player.plate = false;
+                            hidePlayerHolding();
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+
+        function findRecipe(ingredients) {
+            if (!Array.isArray(ingredients)) return null;
+            const sorted = [...ingredients].sort();
+            for (const [key, recipe] of Object.entries(RECIPES)) {
+                const recipeSorted = [...recipe.ingredients].sort();
+                if (sorted.length === recipeSorted.length &&
+                    sorted.every((v, i) => v === recipeSorted[i])) {
+                    return key;
+                }
+            }
+            return null;
+        }
+
+        function isNearElement(el, px, py) {
+            const rect = el.getBoundingClientRect();
+            const worldRect = gameWorld.getBoundingClientRect();
+            const elX = rect.left - worldRect.left + rect.width / 2;
+            const elY = rect.top - worldRect.top + rect.height / 2;
+            const dist = Math.sqrt((px - elX) ** 2 + (py - elY) ** 2);
+            return dist < 100;
+        }
+
+        function showPlayerHolding(img) {
+            playerHolding.innerHTML = `<img src="images/${img}">`;
+            playerHolding.style.display = 'flex';
+        }
+
+        function hidePlayerHolding() {
+            playerHolding.style.display = 'none';
+        }
+
+        function dropItem() {
+            gameState.player.holding = null;
+            gameState.player.holdingType = null;
+            gameState.player.plate = false;
+            hidePlayerHolding();
+        }
+
+        // =============================================
+        // DAY END
+        // =============================================
         function endDay() {
-            clearInterval(gameState.timerLoop);
-            clearInterval(gameState.customerSpawnLoop);
-            cancelAnimationFrame(gameState.gameLoop);
+            gameState.running = false;
+            clearInterval(timerInterval);
+            cancelAnimationFrame(gameLoop);
 
-            document.getElementById('completedDay').textContent = gameState.day;
-            document.getElementById('dayCustomers').textContent = gameState.dayCustomers;
-            document.getElementById('dayTips').textContent = gameState.dayTips;
-
-            const messages = [
-                "Great job! The cuties loved your food! 💕",
-                "You're getting better every day! 🌟",
-                "Amazing service! Keep it up! 😊",
-                "The cafe is thriving thanks to you! 🍳",
-                "Delicious! Everyone left happy! 💖"
-            ];
-            document.getElementById('dayMessage').textContent = messages[Math.floor(Math.random() * messages.length)];
-            document.getElementById('dayModal').classList.add('active');
+            if (gameState.day >= 10) {
+                $('winOverlay').classList.add('show');
+            } else {
+                $('dayEndText').innerHTML = `Tips earned: $${gameState.tips}<br>Happy customers: ${gameState.hearts}`;
+                $('dayEndOverlay').classList.add('show');
+            }
         }
 
         function nextDay() {
-            document.getElementById('dayModal').classList.remove('active');
             gameState.day++;
-            if (gameState.day > 10) showWin();
-            else { updateHUD(); startDay(); }
-        }
+            $('dayEndOverlay').classList.remove('show');
 
-        function showWin() {
-            const container = document.getElementById('winCharacters');
-            container.innerHTML = characters.slice(0, 12).map(c =>
-                `<img src="${c.img}" alt="${c.name}" class="win-character" style="animation-delay: ${Math.random() * 0.5}s">`
-            ).join('');
-            document.getElementById('winModal').classList.add('active');
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => createFloatingHeart(Math.random() * window.innerWidth, window.innerHeight), i * 100);
-            }
-        }
-
-        function playAgain() {
-            document.getElementById('winModal').classList.remove('active');
-            gameState.day = 1;
-            gameState.hearts = 0;
-            gameState.tips = 0;
-            gameState.heldItem = null;
-            updatePlayerHeld();
-            updateHUD();
-            Object.values(gameState.stations).forEach(station => {
-                station.contents = [];
-                station.cooking = false;
-                station.cookProgress = 0;
-                station.result = null;
-                updateStationDisplay(station);
+            // Reset stations
+            document.querySelectorAll('.station').forEach(s => {
+                s.classList.remove('cooking');
+                s.querySelector('.station-content').style.display = 'none';
+                s.querySelector('.cook-progress-bar').style.width = '0%';
             });
-            gameState.counterSlots = [null, null, null];
-            for (let i = 0; i < 3; i++) {
-                const slot = document.getElementById(`counterSlot${i}`);
-                slot.innerHTML = '';
-                slot.classList.remove('has-item');
-            }
+
+            // Reset player
+            gameState.player.holding = null;
+            gameState.player.holdingType = null;
+            gameState.player.plate = false;
+            hidePlayerHolding();
+
             startDay();
         }
 
-        function goHome() { window.location.href = 'index.html'; }
-
-        // ==================== PLAYER MOVEMENT ====================
-        function updatePlayer() {
-            const { keys, playerSpeed } = gameState;
-            let dx = 0, dy = 0;
-
-            if (keys.up) dy -= playerSpeed;
-            if (keys.down) dy += playerSpeed;
-            if (keys.left) dx -= playerSpeed;
-            if (keys.right) dx += playerSpeed;
-
-            if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
-
-            let newX = gameState.playerX + dx;
-            let newY = gameState.playerY + dy;
-
-            const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-            newX = Math.max(10, Math.min(worldRect.width - 90, newX));
-            newY = Math.max(10, Math.min(worldRect.height - 90, newY));
-
-            gameState.playerX = newX;
-            gameState.playerY = newY;
-
-            const player = document.getElementById('player');
-            player.style.left = newX + 'px';
-            player.style.top = newY + 'px';
-
-            updateNearbyHighlights();
+        function playAgain() {
+            gameState.day = 1;
+            gameState.tips = 0;
+            gameState.hearts = 0;
+            $('winOverlay').classList.remove('show');
+            initGame();
         }
 
-        function updateNearbyHighlights() {
-            document.querySelectorAll('.nearby').forEach(el => el.classList.remove('nearby'));
-            const playerCenterX = gameState.playerX + 40;
-            const playerCenterY = gameState.playerY + 40;
+        // =============================================
+        // INPUT HANDLING
+        // =============================================
+        document.addEventListener('keydown', e => {
+            if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') keys.up = true;
+            if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') keys.down = true;
+            if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') keys.left = true;
+            if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') keys.right = true;
+            if (e.key === ' ' || e.key === 'e' || e.key === 'E') {
+                e.preventDefault();
+                interact();
+            }
+            if (e.key === 'q' || e.key === 'Q') dropItem();
+        });
 
-            Object.entries(gameState.stations).forEach(([id, station]) => {
-                if (getDistance(playerCenterX, playerCenterY, station.x + 50, station.y + 50) < 110) {
-                    station.el.classList.add('nearby');
-                }
+        document.addEventListener('keyup', e => {
+            if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') keys.up = false;
+            if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') keys.down = false;
+            if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') keys.left = false;
+            if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') keys.right = false;
+        });
+
+        // Mobile controls
+        document.querySelectorAll('.dpad-btn').forEach(btn => {
+            const dir = btn.dataset.dir;
+            btn.addEventListener('touchstart', e => {
+                e.preventDefault();
+                keys[dir] = true;
             });
-
-            document.querySelectorAll('.shelf-item').forEach(item => {
-                const rect = item.getBoundingClientRect();
-                const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 27, rect.top - worldRect.top + 60 + 27) < 90) {
-                    item.classList.add('nearby');
-                }
+            btn.addEventListener('touchend', e => {
+                e.preventDefault();
+                keys[dir] = false;
             });
+        });
 
-            ['plateStack', 'trashBin'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    const rect = el.getBoundingClientRect();
-                    const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                    if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 40, rect.top - worldRect.top + 60 + 40) < 90) {
-                        el.classList.add('nearby');
-                    }
-                }
-            });
-        }
+        $('actionBtn').addEventListener('click', interact);
+        $('dropBtn').addEventListener('click', dropItem);
+        $('nextDayBtn').addEventListener('click', nextDay);
+        $('playAgainBtn').addEventListener('click', playAgain);
 
-        function getDistance(x1, y1, x2, y2) {
-            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-        }
+        $('recipeToggle').addEventListener('click', () => {
+            recipePanel.classList.toggle('show');
+        });
 
-        // ==================== INTERACTIONS ====================
-        function handleInteraction() {
-            const playerCenterX = gameState.playerX + 40;
-            const playerCenterY = gameState.playerY + 40;
-
-            // Stations
-            for (const [id, station] of Object.entries(gameState.stations)) {
-                if (getDistance(playerCenterX, playerCenterY, station.x + 50, station.y + 50) < 110) {
-                    interactStation(id);
-                    return;
-                }
-            }
-
-            // Tables
-            for (const table of gameState.tables) {
-                const tableWorldX = table.x + 456;
-                const tableWorldY = table.y + 60;
-                if (getDistance(playerCenterX, playerCenterY, tableWorldX, tableWorldY) < 100) {
-                    interactTable(table);
-                    return;
-                }
-                const chairWorldX = table.chairX + 456;
-                const chairWorldY = table.chairY + 60;
-                if (getDistance(playerCenterX, playerCenterY, chairWorldX, chairWorldY) < 80 && table.customer) {
-                    interactCustomer(table);
-                    return;
-                }
-            }
-
-            // Counter slots
-            const counter = document.getElementById('serviceCounter');
-            if (counter) {
-                const rect = counter.getBoundingClientRect();
-                const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + rect.width / 2, rect.top - worldRect.top + 60 + 40) < 120) {
-                    for (let i = 0; i < 3; i++) {
-                        const slot = document.getElementById(`counterSlot${i}`);
-                        const slotRect = slot.getBoundingClientRect();
-                        if (getDistance(playerCenterX, playerCenterY, slotRect.left - worldRect.left + 27, slotRect.top - worldRect.top + 60 + 27) < 80) {
-                            interactCounterSlot(i);
-                            return;
-                        }
-                    }
-                }
-            }
-
-            // Plates
-            const plateStack = document.getElementById('plateStack');
-            if (plateStack) {
-                const rect = plateStack.getBoundingClientRect();
-                const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 45, rect.top - worldRect.top + 60 + 45) < 90) {
-                    pickupPlate();
-                    return;
-                }
-            }
-
-            // Trash
-            const trash = document.getElementById('trashBin');
-            if (trash) {
-                const rect = trash.getBoundingClientRect();
-                const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 40, rect.top - worldRect.top + 60 + 40) < 90) {
-                    useTrash();
-                    return;
-                }
-            }
-
-            // Shelf items
-            document.querySelectorAll('.shelf-item.nearby').forEach(item => {
-                pickupIngredient(item.dataset.ingredient);
-            });
-        }
-
-        function interactStation(id) {
-            const station = gameState.stations[id];
-
-            if (gameState.heldItem) {
-                if (gameState.heldItem.type === 'ingredient') {
-                    if (station.contents.length < 3 && !station.cooking && !station.result) {
-                        station.contents.push(gameState.heldItem.data);
-                        gameState.heldItem = null;
-                        updatePlayerHeld();
-                        updateStationDisplay(station);
-                        createSparkle(gameState.playerX + 40, gameState.playerY);
-                        if ((id.includes('stove') || id === 'oven') && station.contents.length > 0) {
-                            tryStartCooking(id);
-                        }
-                    }
-                } else if (gameState.heldItem.type === 'plate' && station.result) {
-                    gameState.heldItem = { type: 'dish', data: station.result };
-                    station.result = null;
-                    station.contents = [];
-                    updatePlayerHeld();
-                    updateStationDisplay(station);
-                    createSparkle(gameState.playerX + 40, gameState.playerY, '✨');
-                }
-            } else {
-                if (station.result) {
-                    createSparkle(gameState.playerX + 40, gameState.playerY, '🍽️');
-                } else if (station.contents.length > 0 && !station.cooking) {
-                    const ing = station.contents.pop();
-                    gameState.heldItem = { type: 'ingredient', data: ing };
-                    updatePlayerHeld();
-                    updateStationDisplay(station);
-                }
-            }
-        }
-
-        function tryStartCooking(id) {
-            const station = gameState.stations[id];
-            if (station.cooking || station.contents.length === 0) return;
-
-            const sortedContents = [...station.contents].sort();
-            let matchedRecipe = null;
-
-            for (const [key, recipe] of Object.entries(recipes)) {
-                if (JSON.stringify([...recipe.ingredients].sort()) === JSON.stringify(sortedContents)) {
-                    matchedRecipe = { key, ...recipe };
-                    break;
-                }
-            }
-
-            if (matchedRecipe && matchedRecipe.cookTime > 0) {
-                station.cooking = true;
-                station.cookTime = matchedRecipe.cookTime;
-                station.cookProgress = 0;
-                station.pendingResult = matchedRecipe;
-                station.el.classList.add('cooking');
-                station.el.querySelector('.station-progress').style.display = 'block';
-            } else if (matchedRecipe) {
-                station.result = matchedRecipe;
-                station.contents = [];
-                updateStationDisplay(station);
-            }
-        }
-
-        function updateStations() {
-            Object.entries(gameState.stations).forEach(([id, station]) => {
-                if (station.cooking) {
-                    station.cookProgress += 16;
-                    const progress = Math.min(100, (station.cookProgress / station.cookTime) * 100);
-                    document.getElementById(`${id}-progress`).style.width = progress + '%';
-
-                    if (station.cookProgress >= station.cookTime) {
-                        station.cooking = false;
-                        station.result = station.pendingResult;
-                        station.contents = [];
-                        station.el.classList.remove('cooking');
-                        station.el.querySelector('.station-progress').style.display = 'none';
-                        updateStationDisplay(station);
-                        createSparkle(station.x + 50, station.y + 60 + 50, '✨');
-                    }
-                }
-            });
-        }
-
-        function updateStationDisplay(station) {
-            const contents = station.el.querySelector('.station-contents');
-            if (station.result) {
-                contents.innerHTML = `<div class="station-item" style="border-color: #4caf50;"><img src="${station.result.img}" alt=""></div>`;
-            } else if (station.contents.length > 0) {
-                contents.innerHTML = station.contents.map(ing =>
-                    `<div class="station-item"><img src="${ingredients[ing].img}" alt=""></div>`
-                ).join('');
-            } else {
-                contents.innerHTML = '';
-            }
-        }
-
-        function pickupIngredient(ing) {
-            if (!gameState.heldItem) {
-                gameState.heldItem = { type: 'ingredient', data: ing };
-                updatePlayerHeld();
-                createSparkle(gameState.playerX + 40, gameState.playerY);
-            }
-        }
-
-        function pickupPlate() {
-            if (!gameState.heldItem) {
-                gameState.heldItem = { type: 'plate', data: null };
-                updatePlayerHeld();
-                createSparkle(gameState.playerX + 40, gameState.playerY);
-            }
-        }
-
-        function useTrash() {
-            if (gameState.heldItem) {
-                gameState.heldItem = null;
-                updatePlayerHeld();
-                createSparkle(gameState.playerX + 40, gameState.playerY, '🗑️');
-            }
-        }
-
-        function interactCounterSlot(index) {
-            if (gameState.heldItem && gameState.heldItem.type === 'dish') {
-                if (!gameState.counterSlots[index]) {
-                    gameState.counterSlots[index] = gameState.heldItem.data;
-                    gameState.heldItem = null;
-                    updatePlayerHeld();
-                    const slot = document.getElementById(`counterSlot${index}`);
-                    slot.innerHTML = `<img src="${gameState.counterSlots[index].img}" alt="">`;
-                    slot.classList.add('has-item');
-                    createSparkle(gameState.playerX + 40, gameState.playerY, '✨');
-                }
-            } else if (!gameState.heldItem && gameState.counterSlots[index]) {
-                gameState.heldItem = { type: 'dish', data: gameState.counterSlots[index] };
-                gameState.counterSlots[index] = null;
-                updatePlayerHeld();
-                const slot = document.getElementById(`counterSlot${index}`);
-                slot.innerHTML = '';
-                slot.classList.remove('has-item');
-            }
-        }
-
-        function updatePlayerHeld() {
-            const held = document.getElementById('playerHeld');
-            if (gameState.heldItem) {
-                held.style.display = 'flex';
-                if (gameState.heldItem.type === 'ingredient') {
-                    held.innerHTML = `<img src="${ingredients[gameState.heldItem.data].img}" alt="">`;
-                } else if (gameState.heldItem.type === 'plate') {
-                    held.innerHTML = `<img src="images/plate.svg" alt="">`;
-                } else if (gameState.heldItem.type === 'dish') {
-                    held.innerHTML = `<img src="${gameState.heldItem.data.img}" alt="">`;
-                }
-            } else {
-                held.style.display = 'none';
-            }
-        }
-
-        // ==================== CUSTOMERS ====================
-        function spawnCustomer() {
-            const emptyTables = gameState.tables.filter(t => !t.customer);
-            if (emptyTables.length === 0) return;
-
-            const table = emptyTables[Math.floor(Math.random() * emptyTables.length)];
-            const availableChars = characters.filter(c => c.id !== selectedCharacter.id);
-            const char = availableChars[Math.floor(Math.random() * availableChars.length)];
-            const order = generateOrder();
-
-            table.customer = {
-                character: char,
-                order: order,
-                patience: 100,
-                orderTaken: false,
-                patienceTimer: setInterval(() => {
-                    table.customer.patience -= 1;
-                    updateCustomerPatience(table);
-                    if (table.customer.patience <= 0) customerLeft(table, false);
-                }, 350)
-            };
-
-            table.chairEl.classList.add('occupied');
-            table.chairEl.innerHTML = `
-                <img src="images/cafe-chair.svg" class="chair-img" alt="Chair">
-                <img src="${char.img}" class="chair-customer" alt="${char.name}">
-            `;
-        }
-
-        function generateOrder() {
-            const day = gameState.day;
-            const possibleRecipes = ['toast', 'friedEgg', 'coffee', 'cake'];
-            if (day >= 2) possibleRecipes.push('bacon', 'salad', 'riceBowl');
-            if (day >= 3) possibleRecipes.push('eggSandwich', 'cheesyToast', 'strawberryCake');
-            if (day >= 7) possibleRecipes.push('breakfast');
-            const recipeKey = possibleRecipes[Math.floor(Math.random() * possibleRecipes.length)];
-            return recipes[recipeKey];
-        }
-
-        function interactCustomer(table) {
-            if (!table.customer || table.customer.orderTaken) return;
-            table.customer.orderTaken = true;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'order-bubble';
-            bubble.id = `orderBubble${table.id}`;
-            bubble.innerHTML = `<img src="${table.customer.order.img}" alt="">`;
-            table.chairEl.appendChild(bubble);
-
-            const ring = document.createElement('div');
-            ring.className = 'patience-ring';
-            ring.id = `patienceRing${table.id}`;
-            ring.innerHTML = `<div class="patience-ring-fill" id="patienceFill${table.id}" style="width: 100%"></div>`;
-            table.chairEl.appendChild(ring);
-
-            createSparkle(table.chairX + 456, table.chairY + 30, '📝');
-        }
-
-        function interactTable(table) {
-            if (!table.customer || !table.customer.orderTaken) return;
-            if (gameState.heldItem && gameState.heldItem.type === 'dish') {
-                if (gameState.heldItem.data.name === table.customer.order.name) {
-                    serveCustomer(table);
-                } else {
-                    createSparkle(table.x + 456, table.y + 60, '❌');
-                }
-            }
-        }
-
-        function serveCustomer(table) {
-            const tipMultiplier = table.customer.patience / 100;
-            const baseTip = 10 + gameState.day * 2;
-            const tip = Math.round(baseTip * tipMultiplier);
-
-            gameState.tips += tip;
-            gameState.dayTips += tip;
-            gameState.hearts += 1;
-            gameState.dayCustomers++;
-
-            gameState.heldItem = null;
-            updatePlayerHeld();
-
-            document.getElementById(`tableItems${table.id}`).innerHTML = `<img src="${table.customer.order.img}" alt="">`;
-
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => createFloatingHeart(table.x + 456, table.y + 30), i * 100);
-            }
-            createSparkle(table.x + 456, table.y + 60, '💕');
-
-            setTimeout(() => customerLeft(table, true), 1000);
-            updateHUD();
-        }
-
-        function customerLeft(table, happy) {
-            if (!table.customer) return;
-            clearInterval(table.customer.patienceTimer);
-            table.customer = null;
-            table.chairEl.classList.remove('occupied');
-            table.chairEl.innerHTML = `<img src="images/cafe-chair.svg" class="chair-img" alt="Chair">`;
-            document.getElementById(`tableItems${table.id}`).innerHTML = '';
-            if (!happy) createSparkle(table.chairX + 456, table.chairY + 60, '😢');
-        }
-
-        function updateCustomerPatience(table) {
-            const fill = document.getElementById(`patienceFill${table.id}`);
-            if (fill) fill.style.width = table.customer.patience + '%';
-        }
-
-        // ==================== HUD ====================
-        function updateHUD() {
-            document.getElementById('dayNum').textContent = gameState.day;
-            document.getElementById('hearts').textContent = gameState.hearts;
-            document.getElementById('tips').textContent = gameState.tips;
-            document.getElementById('timerFill').style.width = (gameState.timeLeft / gameState.maxTime * 100) + '%';
-        }
-
-        // ==================== EFFECTS ====================
-        function createFloatingHeart(x, y) {
-            const heart = document.createElement('div');
-            heart.className = 'floating-heart';
-            heart.textContent = ['💕', '❤️', '💗', '💖', '💝'][Math.floor(Math.random() * 5)];
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 2000);
-        }
-
-        function createSparkle(x, y, emoji = '✨') {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.textContent = emoji;
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 800);
-        }
-
-        // ==================== INSTRUCTIONS ====================
-        function showInstructions() { document.getElementById('instructionsModal').classList.add('active'); }
-        function hideInstructions() { document.getElementById('instructionsModal').classList.remove('active'); }
-
-        // ==================== INIT ====================
-        initCharacterSelect();
+        // =============================================
+        // INIT
+        // =============================================
+        initCharSelect();
     </script>
 </body>
 </html>
