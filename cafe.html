@@ -584,6 +584,13 @@
                     <div class="hud-value" id="served">0</div>
                 </div>
             </div>
+            <div class="hud-section">
+                <span class="hud-icon">💔</span>
+                <div>
+                    <div class="hud-label">Missed</div>
+                    <div class="hud-value"><span id="missed">0</span>/5</div>
+                </div>
+            </div>
         </div>
 
         <!-- GAME WORLD -->
@@ -646,6 +653,56 @@
         <div class="win-message">사랑해 💕</div>
         <div class="win-subtitle">10 Days Complete!</div>
     </div>
+
+    <!-- FORECLOSURE SCREEN -->
+    <div id="foreclosureScreen" style="
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 300;
+        flex-direction: column;
+    ">
+        <img src="images/newspaper-foreclosure.svg" style="
+            max-width: 90%;
+            max-height: 60vh;
+            animation: newspaperDrop 0.6s ease-out;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+        ">
+        <div style="
+            color: white;
+            font-family: 'Pacifico', cursive;
+            font-size: 28px;
+            margin-top: 30px;
+            text-align: center;
+        ">
+            Too many unhappy customers... 💔
+        </div>
+        <button onclick="restartGame()" style="
+            margin-top: 20px;
+            background: linear-gradient(135deg, #f472b6, #ec4899);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Quicksand', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(236,72,153,0.4);
+        ">Try Again! 🍳</button>
+    </div>
+
+    <style>
+        @keyframes newspaperDrop {
+            0% { transform: translateY(-100vh) rotate(-10deg); opacity: 0; }
+            60% { transform: translateY(20px) rotate(3deg); }
+            80% { transform: translateY(-10px) rotate(-2deg); }
+            100% { transform: translateY(0) rotate(0); opacity: 1; }
+        }
+    </style>
 
     <!-- RECIPE GUIDE -->
     <div id="recipeGuide" style="
@@ -797,7 +854,8 @@
             tips: 0,
             served: 0,
             dayServed: 0,
-            dayTips: 0
+            dayTips: 0,
+            missed: 0
         };
 
         let player = {
@@ -1122,6 +1180,14 @@
             });
 
             customers = customers.filter(c => {
+                if (c.angry && !c.countedAsMissed) {
+                    c.countedAsMissed = true;
+                    gameState.missed++;
+                    if (gameState.missed >= 5) {
+                        triggerForeclosure();
+                        return false;
+                    }
+                }
                 if (c.angry) {
                     c.leaveTimer = (c.leaveTimer || 0) + dt;
                     if (c.leaveTimer > 2000) {
@@ -1146,6 +1212,7 @@
             document.getElementById('dayNum').textContent = gameState.day;
             document.getElementById('tips').textContent = gameState.tips;
             document.getElementById('served').textContent = gameState.served;
+            document.getElementById('missed').textContent = gameState.missed;
             const pct = (gameState.dayTimer / CONFIG.DAY_LENGTH) * 100;
             document.getElementById('dayTimerFill').style.width = pct + '%';
         }
@@ -1602,6 +1669,32 @@
             lastTime = performance.now();
             requestAnimationFrame(gameLoop);
             spawnCustomerLoop();
+        }
+
+        function triggerForeclosure() {
+            gameState.running = false;
+            document.getElementById('foreclosureScreen').style.display = 'flex';
+        }
+
+        function restartGame() {
+            document.getElementById('foreclosureScreen').style.display = 'none';
+            document.getElementById('charSelect').classList.remove('hidden');
+            // Reset all game state
+            gameState.day = 1;
+            gameState.tips = 0;
+            gameState.served = 0;
+            gameState.dayServed = 0;
+            gameState.dayTips = 0;
+            gameState.missed = 0;
+            gameState.running = false;
+            customers = [];
+            tables.forEach(t => t.customer = null);
+            cookingStations.clear();
+            player.holding = [];
+            player.hasPlate = false;
+            player.platedDish = null;
+            player.x = 350;
+            player.y = 450;
         }
 
         // ==========================================
