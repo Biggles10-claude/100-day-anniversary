@@ -1,33 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Bijou - white hamster with blue ribbons -->
+  <!-- Bijou - white hamster with blue ribbon pigtails, teal eyes -->
+
   <!-- Body -->
-  <ellipse cx="50" cy="72" rx="28" ry="22" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="72" rx="26" ry="22" fill="#FFFFFF"/>
+  <!-- White belly shading -->
+  <ellipse cx="50" cy="75" rx="18" ry="16" fill="#FAFAFA"/>
+
+  <!-- Pigtails (fur tufts sticking out) -->
+  <ellipse cx="18" cy="35" rx="8" ry="12" fill="#FFFFFF" transform="rotate(-20, 18, 35)"/>
+  <ellipse cx="82" cy="35" rx="8" ry="12" fill="#FFFFFF" transform="rotate(20, 82, 35)"/>
+
+  <!-- Blue ribbon bows (Bijou's signature!) -->
+  <!-- Left bow -->
+  <ellipse cx="12" cy="28" rx="8" ry="5" fill="#5DADE2" transform="rotate(-30, 12, 28)"/>
+  <ellipse cx="22" cy="24" rx="8" ry="5" fill="#5DADE2" transform="rotate(20, 22, 24)"/>
+  <circle cx="17" cy="28" r="4" fill="#3498DB"/>
+  <!-- Right bow -->
+  <ellipse cx="88" cy="28" rx="8" ry="5" fill="#5DADE2" transform="rotate(30, 88, 28)"/>
+  <ellipse cx="78" cy="24" rx="8" ry="5" fill="#5DADE2" transform="rotate(-20, 78, 24)"/>
+  <circle cx="83" cy="28" r="4" fill="#3498DB"/>
+
   <!-- Head -->
-  <circle cx="50" cy="45" r="28" fill="#FFFFFF"/>
-  <!-- Ears with blue ribbons -->
+  <circle cx="50" cy="42" r="28" fill="#FFFFFF"/>
+
+  <!-- Ears -->
   <ellipse cx="28" cy="22" rx="8" ry="12" fill="#FFFFFF"/>
   <ellipse cx="28" cy="22" rx="5" ry="8" fill="#FFB6C1"/>
   <ellipse cx="72" cy="22" rx="8" ry="12" fill="#FFFFFF"/>
   <ellipse cx="72" cy="22" rx="5" ry="8" fill="#FFB6C1"/>
-  <!-- Blue ribbons/pigtails -->
-  <circle cx="20" cy="28" r="6" fill="#87CEEB"/>
-  <ellipse cx="14" cy="26" rx="5" ry="4" fill="#87CEEB"/>
-  <ellipse cx="14" cy="32" rx="5" ry="4" fill="#87CEEB"/>
-  <circle cx="80" cy="28" r="6" fill="#87CEEB"/>
-  <ellipse cx="86" cy="26" rx="5" ry="4" fill="#87CEEB"/>
-  <ellipse cx="86" cy="32" rx="5" ry="4" fill="#87CEEB"/>
-  <!-- Eyes (sparkly) -->
-  <circle cx="40" cy="42" r="6" fill="#333"/>
-  <circle cx="60" cy="42" r="6" fill="#333"/>
-  <circle cx="42" cy="40" r="2" fill="#FFF"/>
-  <circle cx="62" cy="40" r="2" fill="#FFF"/>
-  <circle cx="38" cy="44" r="1" fill="#FFF"/>
-  <circle cx="58" cy="44" r="1" fill="#FFF"/>
-  <!-- Nose -->
-  <ellipse cx="50" cy="50" rx="3" ry="2" fill="#FFB6C1"/>
-  <!-- Blush -->
-  <ellipse cx="32" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
-  <ellipse cx="68" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+
+  <!-- Teal/Blue eyes (Bijou has blue eyes!) -->
+  <ellipse cx="40" cy="42" rx="6" ry="7" fill="#1ABC9C"/>
+  <ellipse cx="60" cy="42" rx="6" ry="7" fill="#1ABC9C"/>
+  <!-- Eye shine -->
+  <circle cx="42" cy="40" r="2.5" fill="#FFF"/>
+  <circle cx="62" cy="40" r="2.5" fill="#FFF"/>
+  <!-- Darker pupil -->
+  <circle cx="40" cy="44" r="2" fill="#16A085"/>
+  <circle cx="60" cy="44" r="2" fill="#16A085"/>
+
+  <!-- Eyelashes (she's elegant!) -->
+  <path d="M 34 38 L 36 35" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 36 37 L 37 34" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 64 37 L 63 34" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 66 38 L 64 35" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Pink nose -->
+  <ellipse cx="50" cy="50" rx="3" ry="2.5" fill="#FF69B4"/>
+
   <!-- Cute smile -->
-  <path d="M 45 56 Q 50 60 55 56" fill="none" stroke="#333" stroke-width="1.5"/>
+  <path d="M 45 55 Q 50 60 55 55" fill="none" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Pink cheeks -->
+  <ellipse cx="32" cy="52" rx="5" ry="3.5" fill="#FFB6C1" opacity="0.6"/>
+  <ellipse cx="68" cy="52" rx="5" ry="3.5" fill="#FFB6C1" opacity="0.6"/>
+
+  <!-- Little paws -->
+  <ellipse cx="32" cy="88" rx="8" ry="5" fill="#FFFFFF"/>
+  <ellipse cx="68" cy="88" rx="8" ry="5" fill="#FFFFFF"/>
 </svg>
