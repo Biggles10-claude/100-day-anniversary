@@ -183,10 +183,6 @@
             font-size: 0.95rem;
         }
 
-        .hud-stat span {
-            font-weight: 700;
-        }
-
         .timer-bar {
             width: 200px;
             height: 20px;
@@ -217,6 +213,7 @@
             z-index: 101;
             transition: all 0.2s;
             font-size: 0.85rem;
+            text-decoration: none;
         }
 
         .back-btn:hover {
@@ -231,41 +228,27 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #f5e6d3;
             overflow: hidden;
         }
 
-        .restaurant-floor {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background:
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 50px,
-                    rgba(139, 90, 43, 0.1) 50px,
-                    rgba(139, 90, 43, 0.1) 51px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 50px,
-                    rgba(139, 90, 43, 0.1) 50px,
-                    rgba(139, 90, 43, 0.1) 51px
-                ),
-                linear-gradient(135deg, #f5e6d3, #e8d5c4);
-        }
-
-        /* Kitchen Area */
+        /* Kitchen Zone - Left Side */
         .kitchen-zone {
             position: absolute;
             left: 0;
             top: 0;
-            width: 350px;
+            width: 450px;
             height: 100%;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-right: 8px solid #64b5f6;
+            background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-right: 6px solid #81c784;
+        }
+
+        .kitchen-floor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/floor-kitchen.svg');
+            background-size: 100px 100px;
+            opacity: 0.3;
         }
 
         .kitchen-label {
@@ -274,330 +257,260 @@
             left: 50%;
             transform: translateX(-50%);
             font-family: 'Baloo 2', cursive;
-            font-size: 1.2rem;
-            color: #1976d2;
+            font-size: 1.3rem;
+            color: #2e7d32;
             background: white;
-            padding: 5px 20px;
-            border-radius: 15px;
+            padding: 5px 25px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            z-index: 10;
         }
 
-        /* Dining Area */
+        /* Dining Zone - Right Side */
         .dining-zone {
             position: absolute;
-            left: 358px;
+            left: 456px;
             top: 0;
             right: 0;
             height: 100%;
+            background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 100%);
+        }
+
+        .dining-floor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/floor-dining.svg');
+            background-size: 120px 120px;
+            opacity: 0.3;
+        }
+
+        .dining-label {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.3rem;
+            color: #f57c00;
+            background: white;
+            padding: 5px 25px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            z-index: 10;
         }
 
         /* ==================== KITCHEN STATIONS ==================== */
         .station {
             position: absolute;
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 15px;
+            width: 100px;
+            height: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 3px solid #ddd;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .station:hover, .station.nearby {
-            transform: scale(1.05);
-            border-color: #ec407a;
+            transform: scale(1.08);
+            filter: brightness(1.1);
         }
 
-        .station.active {
-            border-color: #4caf50;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
-        }
-
-        .station.cooking {
-            animation: stationCooking 0.5s infinite alternate;
-        }
-
-        @keyframes stationCooking {
-            from { transform: scale(1); }
-            to { transform: scale(1.02); }
-        }
-
-        .station-icon {
-            font-size: 2.5rem;
+        .station-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         .station-name {
+            position: absolute;
+            bottom: -5px;
             font-size: 0.7rem;
-            font-weight: 600;
-            color: #666;
-            margin-top: 2px;
+            font-weight: 700;
+            color: #333;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .station-progress {
             position: absolute;
-            bottom: 5px;
-            width: 70px;
-            height: 6px;
-            background: #eee;
-            border-radius: 3px;
+            bottom: 15px;
+            width: 80px;
+            height: 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 4px;
             overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .station-progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #ff9800, #4caf50);
             transition: width 0.1s;
+            border-radius: 4px;
         }
 
         .station-contents {
             position: absolute;
-            top: -10px;
-            right: -10px;
+            top: -5px;
+            right: -5px;
             display: flex;
-            gap: 2px;
+            gap: 3px;
         }
 
         .station-item {
-            background: white;
-            width: 28px;
-            height: 28px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            border: 2px solid #ec407a;
-        }
-
-        /* Ingredient shelf */
-        .ingredient-shelf {
-            position: absolute;
-            background: white;
-            border-radius: 15px;
-            padding: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .shelf-item {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(145deg, #fff8e1, #ffecb3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin: 5px 0;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
-        }
-
-        .shelf-item:hover, .shelf-item.nearby {
-            transform: scale(1.1);
-            border-color: #ec407a;
-        }
-
-        /* ==================== TABLES & CHAIRS ==================== */
-        .table {
-            position: absolute;
-            width: 100px;
-            height: 80px;
-            background: linear-gradient(145deg, #8d6e63, #6d4c41);
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .table-cloth {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            background: white;
-            border-radius: 8px;
-            background: repeating-linear-gradient(
-                45deg,
-                #fff,
-                #fff 10px,
-                #ffebee 10px,
-                #ffebee 20px
-            );
-        }
-
-        .table-items {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            z-index: 2;
-        }
-
-        .chair {
-            position: absolute;
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(145deg, #ffab91, #ff8a65);
-            border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chair.occupied {
-            background: linear-gradient(145deg, #ec407a, #f48fb1);
-        }
-
-        .chair-customer {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        /* Order bubble */
-        .order-bubble {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 8px 12px;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
             border: 3px solid #ec407a;
-            white-space: nowrap;
-            z-index: 10;
-            animation: bubbleBounce 2s infinite;
-        }
-
-        .order-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 8px solid transparent;
-            border-top-color: #ec407a;
-        }
-
-        @keyframes bubbleBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        /* Patience indicator */
-        .patience-ring {
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
+            background: white;
             overflow: hidden;
         }
 
-        .patience-ring-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f44336, #ff9800, #4caf50);
-            transition: width 0.3s;
-            border-radius: 4px;
+        .station-item img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
         }
 
-        /* ==================== PLAYER ==================== */
-        .player {
+        .station.cooking .station-img {
+            animation: stationCooking 0.3s infinite alternate;
+        }
+
+        @keyframes stationCooking {
+            from { transform: scale(1) rotate(-2deg); }
+            to { transform: scale(1.02) rotate(2deg); }
+        }
+
+        /* Ingredient Shelf */
+        .ingredient-shelf {
             position: absolute;
-            width: 70px;
-            height: 70px;
-            z-index: 50;
-            transition: left 0.08s linear, top 0.08s linear;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
-        .player-sprite {
+        .shelf-item {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(145deg, #fff8e1, #ffecb3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 3px solid transparent;
+            overflow: hidden;
+        }
+
+        .shelf-item:hover, .shelf-item.nearby {
+            transform: scale(1.15);
+            border-color: #ec407a;
+            box-shadow: 0 5px 15px rgba(236, 64, 122, 0.3);
+        }
+
+        .shelf-item img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        /* Plate Stack */
+        .plate-stack {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .plate-stack:hover, .plate-stack.nearby {
+            transform: scale(1.1);
+        }
+
+        .plate-stack img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
-        .player-held {
+        .plate-stack-label {
             position: absolute;
-            top: -25px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #333;
             background: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            border: 3px solid #4caf50;
-            animation: heldBounce 0.5s infinite alternate;
-        }
-
-        @keyframes heldBounce {
-            from { transform: translateX(-50%) translateY(0); }
-            to { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        .player-highlight {
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 20px;
-            background: radial-gradient(ellipse, rgba(236, 64, 122, 0.4), transparent);
-            border-radius: 50%;
-        }
-
-        /* ==================== COUNTER/SERVING AREA ==================== */
-        .counter {
-            position: absolute;
-            height: 60px;
-            background: linear-gradient(145deg, #8d6e63, #5d4037);
+            padding: 2px 8px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            white-space: nowrap;
         }
 
-        .counter-top {
+        /* Trash Bin */
+        .trash-bin {
             position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            height: 50px;
-            background: linear-gradient(145deg, #d7ccc8, #bcaaa4);
-            border-radius: 8px;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .trash-bin:hover, .trash-bin.nearby {
+            transform: scale(1.1);
+        }
+
+        .trash-bin img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        /* Service Counter */
+        .service-counter {
+            position: absolute;
+            height: 80px;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            gap: 5px;
+            padding: 10px 15px;
+            background: linear-gradient(180deg, #8d6e63, #6d4c41);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .counter-slot {
-            width: 45px;
-            height: 45px;
+            width: 55px;
+            height: 55px;
             background: rgba(255,255,255,0.3);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            border: 2px dashed rgba(255,255,255,0.5);
+            border: 3px dashed rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .counter-slot:hover {
+            background: rgba(255,255,255,0.5);
         }
 
         .counter-slot.has-item {
@@ -606,67 +519,185 @@
             background: white;
         }
 
-        /* ==================== TRASH ==================== */
-        .trash-bin {
+        .counter-slot img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        /* ==================== TABLES & CHAIRS ==================== */
+        .table {
             position: absolute;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(145deg, #78909c, #546e7a);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 110px;
+            height: 110px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .trash-bin:hover, .trash-bin.nearby {
+        .table:hover {
             transform: scale(1.05);
-            background: linear-gradient(145deg, #90a4ae, #607d8b);
         }
 
-        .trash-icon {
-            font-size: 2rem;
+        .table-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
         }
 
-        .trash-label {
-            font-size: 0.65rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        /* ==================== PLATES ==================== */
-        .plate-stack {
+        .table-items {
             position: absolute;
-            width: 70px;
-            height: 70px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .table-items img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .chair {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            transition: all 0.2s;
+        }
+
+        .chair-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .chair.occupied .chair-img {
+            opacity: 0.3;
+        }
+
+        .chair-customer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            z-index: 5;
+        }
+
+        /* Order Bubble */
+        .order-bubble {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
             background: white;
+            padding: 8px 12px;
             border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 3px solid #ec407a;
+            z-index: 20;
+            animation: bubbleBounce 2s infinite;
+        }
+
+        .order-bubble img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .order-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #ec407a;
+        }
+
+        @keyframes bubbleBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* Patience Ring */
+        .patience-ring {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .patience-ring-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f44336, #ff9800, #4caf50);
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        /* ==================== PLAYER ==================== */
+        .player {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            z-index: 50;
+            transition: left 0.08s linear, top 0.08s linear;
+        }
+
+        .player-sprite {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+        }
+
+        .player-held {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 3px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 3px solid #4caf50;
+            animation: heldBounce 0.5s infinite alternate;
+            overflow: hidden;
         }
 
-        .plate-stack:hover, .plate-stack.nearby {
-            transform: scale(1.05);
-            border-color: #ec407a;
+        .player-held img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
         }
 
-        .plate-icon {
-            font-size: 2rem;
+        @keyframes heldBounce {
+            from { transform: translateX(-50%) translateY(0); }
+            to { transform: translateX(-50%) translateY(-8px); }
         }
 
-        .plate-label {
-            font-size: 0.65rem;
-            color: #666;
-            font-weight: 600;
+        .player-highlight {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 25px;
+            background: radial-gradient(ellipse, rgba(236, 64, 122, 0.5), transparent);
+            border-radius: 50%;
         }
 
         /* ==================== MODALS ==================== */
@@ -808,7 +839,7 @@
             100% { opacity: 0; transform: scale(0) rotate(360deg); }
         }
 
-        /* ==================== INSTRUCTIONS POPUP ==================== */
+        /* ==================== INSTRUCTIONS BUTTON ==================== */
         .instructions-btn {
             position: fixed;
             bottom: 15px;
@@ -850,7 +881,7 @@
         .mobile-btn {
             width: 60px;
             height: 60px;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.9);
             border: none;
             border-radius: 15px;
             font-size: 1.5rem;
@@ -866,27 +897,19 @@
             color: white;
         }
 
-        .mobile-action {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #4caf50, #81c784);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
-        }
-
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .mobile-controls {
                 display: block;
             }
+            .kitchen-zone {
+                width: 350px;
+            }
+            .dining-zone {
+                left: 356px;
+            }
+        }
+
+        @media (max-width: 900px) {
             .character-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
@@ -932,7 +955,7 @@
         <div class="hud-right">
             <div class="hud-stat">Day <span id="dayNum">1</span>/10</div>
             <div class="hud-stat">💕 <span id="hearts">0</span></div>
-            <div class="hud-stat">⭐ <span id="tips">$0</span></div>
+            <div class="hud-stat">⭐ $<span id="tips">0</span></div>
             <div class="timer-bar">
                 <div class="timer-fill" id="timerFill" style="width: 100%"></div>
             </div>
@@ -943,15 +966,17 @@
 
     <!-- GAME WORLD -->
     <div class="game-world" id="gameWorld" style="display: none;">
-        <div class="restaurant-floor"></div>
-
         <!-- Kitchen Zone -->
-        <div class="kitchen-zone">
+        <div class="kitchen-zone" id="kitchenZone">
+            <div class="kitchen-floor"></div>
             <div class="kitchen-label">🍳 Kitchen</div>
         </div>
 
         <!-- Dining Zone -->
-        <div class="dining-zone" id="diningZone"></div>
+        <div class="dining-zone" id="diningZone">
+            <div class="dining-floor"></div>
+            <div class="dining-label">🍽️ Dining Area</div>
+        </div>
     </div>
 
     <!-- MOBILE CONTROLS -->
@@ -982,7 +1007,7 @@
                     <div class="modal-stat-label">Customers Served</div>
                 </div>
                 <div class="modal-stat">
-                    <div class="modal-stat-value" id="dayTips">$0</div>
+                    <div class="modal-stat-value">$<span id="dayTips">0</span></div>
                     <div class="modal-stat-label">Tips Earned</div>
                 </div>
             </div>
@@ -1018,18 +1043,17 @@
 
                 <strong>🍳 Cooking:</strong><br>
                 • Pick up ingredients from shelves<br>
-                • Place on cutting board to prepare<br>
-                • Use stove/oven to cook<br>
-                • Put finished food on plates<br><br>
+                • Place on stove/oven to cook<br>
+                • Grab a plate, then pick up cooked food<br>
+                • Place plated dish on counter<br><br>
 
                 <strong>🍽️ Serving:</strong><br>
-                • Take orders from seated customers<br>
-                • Deliver the correct dish to them<br>
-                • Serve before they lose patience!<br><br>
+                • Walk to seated customer, press E to take order<br>
+                • Make the dish they want<br>
+                • Bring it to their table!<br><br>
 
                 <strong>⚠️ Tips:</strong><br>
                 • Fast service = more tips!<br>
-                • Wrong dish = unhappy customer<br>
                 • Use trash to discard mistakes
             </div>
             <button class="modal-btn" onclick="hideInstructions()">Got it! 💕</button>
@@ -1065,24 +1089,30 @@
 
         // ==================== RECIPES ====================
         const recipes = {
-            toast: { ingredients: ["bread"], emoji: "🍞", name: "Toast", cookTime: 2000, needsStove: true },
-            friedEgg: { ingredients: ["egg"], emoji: "🍳", name: "Fried Egg", cookTime: 3000, needsStove: true },
-            bacon: { ingredients: ["bacon"], emoji: "🥓", name: "Crispy Bacon", cookTime: 3000, needsStove: true },
-            salad: { ingredients: ["lettuce", "tomato"], emoji: "🥗", name: "Fresh Salad", cookTime: 0, needsStove: false },
-            eggSandwich: { ingredients: ["bread", "egg"], emoji: "🥪", name: "Egg Sandwich", cookTime: 4000, needsStove: true },
-            baconEggs: { ingredients: ["bacon", "egg"], emoji: "🍳", name: "Bacon & Eggs", cookTime: 4000, needsStove: true },
-            cheesyToast: { ingredients: ["bread", "cheese"], emoji: "🧀", name: "Cheese Toast", cookTime: 3000, needsStove: true },
-            coffee: { ingredients: ["coffee"], emoji: "☕", name: "Hot Coffee", cookTime: 2000, needsStove: true },
-            cake: { ingredients: ["cake"], emoji: "🍰", name: "Cake Slice", cookTime: 0, needsStove: false },
-            strawberryCake: { ingredients: ["cake", "strawberry"], emoji: "🍓", name: "Strawberry Cake", cookTime: 0, needsStove: false },
-            riceBowl: { ingredients: ["rice"], emoji: "🍚", name: "Rice Bowl", cookTime: 3000, needsStove: true },
-            breakfast: { ingredients: ["bread", "egg", "bacon"], emoji: "🍽️", name: "Full Breakfast", cookTime: 5000, needsStove: true }
+            toast: { ingredients: ["bread"], img: "images/dish-toast.svg", name: "Toast", cookTime: 2000 },
+            friedEgg: { ingredients: ["egg"], img: "images/dish-fried-egg.svg", name: "Fried Egg", cookTime: 3000 },
+            bacon: { ingredients: ["bacon"], img: "images/food-bacon.svg", name: "Crispy Bacon", cookTime: 3000 },
+            salad: { ingredients: ["lettuce", "tomato"], img: "images/dish-salad.svg", name: "Fresh Salad", cookTime: 0 },
+            eggSandwich: { ingredients: ["bread", "egg"], img: "images/dish-sandwich.svg", name: "Egg Sandwich", cookTime: 4000 },
+            cheesyToast: { ingredients: ["bread", "cheese"], img: "images/dish-cheese-toast.svg", name: "Cheese Toast", cookTime: 3000 },
+            coffee: { ingredients: ["coffee"], img: "images/food-coffee.svg", name: "Hot Coffee", cookTime: 2000 },
+            cake: { ingredients: ["cake"], img: "images/food-cake.svg", name: "Cake Slice", cookTime: 0 },
+            strawberryCake: { ingredients: ["cake", "strawberry"], img: "images/dish-strawberry-cake.svg", name: "Strawberry Cake", cookTime: 0 },
+            riceBowl: { ingredients: ["rice"], img: "images/food-rice.svg", name: "Rice Bowl", cookTime: 3000 },
+            breakfast: { ingredients: ["bread", "egg", "bacon"], img: "images/dish-breakfast.svg", name: "Full Breakfast", cookTime: 5000 }
         };
 
-        const ingredientEmojis = {
-            bread: "🍞", egg: "🥚", cheese: "🧀", bacon: "🥓",
-            lettuce: "🥬", tomato: "🍅", cake: "🍰", strawberry: "🍓",
-            coffee: "☕", rice: "🍚"
+        const ingredients = {
+            bread: { img: "images/food-bread.svg", name: "Bread" },
+            egg: { img: "images/food-egg.svg", name: "Egg" },
+            cheese: { img: "images/food-cheese.svg", name: "Cheese" },
+            bacon: { img: "images/food-bacon.svg", name: "Bacon" },
+            lettuce: { img: "images/food-lettuce.svg", name: "Lettuce" },
+            tomato: { img: "images/food-tomato.svg", name: "Tomato" },
+            cake: { img: "images/food-cake.svg", name: "Cake" },
+            strawberry: { img: "images/food-strawberry.svg", name: "Strawberry" },
+            coffee: { img: "images/food-coffee.svg", name: "Coffee" },
+            rice: { img: "images/food-rice.svg", name: "Rice" }
         };
 
         // ==================== GAME STATE ====================
@@ -1093,15 +1123,16 @@
             tips: 0,
             dayCustomers: 0,
             dayTips: 0,
-            timeLeft: 120, // seconds per day
+            timeLeft: 120,
             maxTime: 120,
             playerX: 200,
             playerY: 300,
-            playerSpeed: 5,
-            heldItem: null, // { type: 'ingredient'|'dish'|'plate', data: ... }
+            playerSpeed: 6,
+            heldItem: null,
             stations: {},
             tables: [],
             customers: [],
+            counterSlots: [null, null, null],
             gameLoop: null,
             timerLoop: null,
             customerSpawnLoop: null,
@@ -1121,12 +1152,8 @@
 
         function selectCharacter(id) {
             selectedCharacter = characters.find(c => c.id === id);
-
-            document.querySelectorAll('.char-option').forEach(el => {
-                el.classList.remove('selected');
-            });
+            document.querySelectorAll('.char-option').forEach(el => el.classList.remove('selected'));
             document.querySelector(`[data-id="${id}"]`).classList.add('selected');
-
             const btn = document.getElementById('startBtn');
             btn.disabled = false;
             btn.textContent = `Play as ${selectedCharacter.name}! 🍳`;
@@ -1135,17 +1162,14 @@
         // ==================== START GAME ====================
         function startGame() {
             if (!selectedCharacter) return;
-
             document.getElementById('selectScreen').classList.add('hidden');
             document.getElementById('gameHud').style.display = 'flex';
             document.getElementById('gameWorld').style.display = 'block';
             document.getElementById('backBtn').style.display = 'block';
             document.getElementById('instructionsBtn').style.display = 'block';
-
-            if (window.innerWidth <= 900) {
+            if (window.innerWidth <= 1000) {
                 document.getElementById('mobileControls').style.display = 'block';
             }
-
             setupGameWorld();
             setupControls();
             startDay();
@@ -1154,6 +1178,8 @@
         // ==================== SETUP GAME WORLD ====================
         function setupGameWorld() {
             const world = document.getElementById('gameWorld');
+            const kitchen = document.getElementById('kitchenZone');
+            const dining = document.getElementById('diningZone');
 
             // Create player
             const player = document.createElement('div');
@@ -1168,54 +1194,59 @@
             player.style.top = gameState.playerY + 'px';
             world.appendChild(player);
 
-            // Kitchen stations
-            createStation('stove1', '🍳', 'Stove', 50, 80);
-            createStation('stove2', '🍳', 'Stove', 150, 80);
-            createStation('oven', '🔥', 'Oven', 250, 80);
-            createStation('cutting', '🔪', 'Cutting', 50, 200);
-            createStation('prep', '📋', 'Prep', 150, 200);
+            // Kitchen stations - well spaced
+            createStation('stove1', 'images/stove.svg', 'Stove', 30, 60, kitchen);
+            createStation('stove2', 'images/stove.svg', 'Stove', 140, 60, kitchen);
+            createStation('oven', 'images/oven.svg', 'Oven', 250, 60, kitchen);
+            createStation('cutting', 'images/cutting-board.svg', 'Prep', 30, 180, kitchen);
+            createStation('prep', 'images/prep-counter.svg', 'Counter', 140, 180, kitchen);
 
-            // Ingredient shelves
-            createIngredientShelf(250, 180, ['bread', 'egg', 'cheese']);
-            createIngredientShelf(250, 320, ['bacon', 'lettuce', 'tomato']);
-            createIngredientShelf(250, 460, ['cake', 'strawberry', 'coffee', 'rice']);
+            // Ingredient shelves - right side of kitchen
+            createIngredientShelf(340, 60, ['bread', 'egg', 'cheese'], kitchen);
+            createIngredientShelf(340, 250, ['bacon', 'lettuce', 'tomato'], kitchen);
+            createIngredientShelf(340, 440, ['cake', 'strawberry', 'coffee', 'rice'], kitchen);
 
-            // Plates stack
-            createPlateStack(50, 350);
+            // Plate stack
+            createPlateStack(30, 320, kitchen);
 
             // Trash bin
-            createTrash(50, 450);
+            createTrashBin(30, 440, kitchen);
 
-            // Counter (where finished dishes go)
-            createCounter(150, 350, 160);
+            // Service counter
+            createServiceCounter(140, 340, kitchen);
 
-            // Tables with chairs
-            createTable(0, 450, 100);
-            createTable(1, 600, 100);
-            createTable(2, 750, 100);
-            createTable(3, 450, 280);
-            createTable(4, 600, 280);
-            createTable(5, 750, 280);
-            createTable(6, 450, 460);
-            createTable(7, 600, 460);
+            // Tables with chairs - nice grid in dining area
+            const tablePositions = [
+                { x: 80, y: 80 },
+                { x: 230, y: 80 },
+                { x: 380, y: 80 },
+                { x: 80, y: 230 },
+                { x: 230, y: 230 },
+                { x: 380, y: 230 },
+                { x: 80, y: 380 },
+                { x: 230, y: 380 },
+            ];
+
+            tablePositions.forEach((pos, i) => {
+                createTable(i, pos.x, pos.y, dining);
+            });
         }
 
-        function createStation(id, icon, name, x, y) {
+        function createStation(id, img, name, x, y, parent) {
             const station = document.createElement('div');
             station.className = 'station';
             station.id = id;
-            station.dataset.type = id.replace(/[0-9]/g, '');
             station.innerHTML = `
                 <div class="station-contents" id="${id}-contents"></div>
-                <div class="station-icon">${icon}</div>
-                <div class="station-name">${name}</div>
+                <img src="${img}" class="station-img" alt="${name}">
+                <span class="station-name">${name}</span>
                 <div class="station-progress" style="display: none;">
                     <div class="station-progress-fill" id="${id}-progress"></div>
                 </div>
             `;
             station.style.left = x + 'px';
             station.style.top = y + 'px';
-            document.querySelector('.kitchen-zone').appendChild(station);
+            parent.appendChild(station);
 
             gameState.stations[id] = {
                 el: station,
@@ -1228,107 +1259,97 @@
             };
         }
 
-        function createIngredientShelf(x, y, ingredients) {
+        function createIngredientShelf(x, y, items, parent) {
             const shelf = document.createElement('div');
             shelf.className = 'ingredient-shelf';
             shelf.style.left = x + 'px';
             shelf.style.top = y + 'px';
 
-            ingredients.forEach(ing => {
-                const item = document.createElement('div');
-                item.className = 'shelf-item';
-                item.dataset.ingredient = ing;
-                item.innerHTML = ingredientEmojis[ing];
-                item.onclick = () => pickupIngredient(ing);
-                shelf.appendChild(item);
+            items.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'shelf-item';
+                el.dataset.ingredient = item;
+                el.innerHTML = `<img src="${ingredients[item].img}" alt="${item}">`;
+                el.onclick = () => pickupIngredient(item);
+                shelf.appendChild(el);
             });
 
-            document.querySelector('.kitchen-zone').appendChild(shelf);
+            parent.appendChild(shelf);
         }
 
-        function createPlateStack(x, y) {
+        function createPlateStack(x, y, parent) {
             const stack = document.createElement('div');
             stack.className = 'plate-stack';
             stack.id = 'plateStack';
             stack.innerHTML = `
-                <div class="plate-icon">🍽️</div>
-                <div class="plate-label">Plates</div>
+                <img src="images/plate-stack.svg" alt="Plates">
+                <span class="plate-stack-label">Plates</span>
             `;
             stack.style.left = x + 'px';
             stack.style.top = y + 'px';
             stack.onclick = () => pickupPlate();
-            document.querySelector('.kitchen-zone').appendChild(stack);
+            parent.appendChild(stack);
         }
 
-        function createTrash(x, y) {
+        function createTrashBin(x, y, parent) {
             const trash = document.createElement('div');
             trash.className = 'trash-bin';
             trash.id = 'trashBin';
-            trash.innerHTML = `
-                <div class="trash-icon">🗑️</div>
-                <div class="trash-label">Trash</div>
-            `;
+            trash.innerHTML = `<img src="images/trash-bin.svg" alt="Trash">`;
             trash.style.left = x + 'px';
             trash.style.top = y + 'px';
             trash.onclick = () => useTrash();
-            document.querySelector('.kitchen-zone').appendChild(trash);
+            parent.appendChild(trash);
         }
 
-        function createCounter(x, y, width) {
+        function createServiceCounter(x, y, parent) {
             const counter = document.createElement('div');
-            counter.className = 'counter';
+            counter.className = 'service-counter';
             counter.id = 'serviceCounter';
             counter.style.left = x + 'px';
             counter.style.top = y + 'px';
-            counter.style.width = width + 'px';
 
-            counter.innerHTML = `
-                <div class="counter-top">
-                    <div class="counter-slot" id="counterSlot0" onclick="interactCounterSlot(0)"></div>
-                    <div class="counter-slot" id="counterSlot1" onclick="interactCounterSlot(1)"></div>
-                    <div class="counter-slot" id="counterSlot2" onclick="interactCounterSlot(2)"></div>
-                </div>
-            `;
+            for (let i = 0; i < 3; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'counter-slot';
+                slot.id = `counterSlot${i}`;
+                slot.onclick = () => interactCounterSlot(i);
+                counter.appendChild(slot);
+            }
 
-            document.querySelector('.kitchen-zone').appendChild(counter);
-
-            gameState.counterSlots = [null, null, null];
+            parent.appendChild(counter);
         }
 
-        function createTable(id, x, y) {
-            const diningZone = document.getElementById('diningZone');
-
+        function createTable(id, x, y, parent) {
             const table = document.createElement('div');
             table.className = 'table';
             table.id = `table${id}`;
-            table.style.left = (x - 358) + 'px';
+            table.style.left = x + 'px';
             table.style.top = y + 'px';
             table.innerHTML = `
-                <div class="table-cloth"></div>
+                <img src="images/cafe-table.svg" class="table-img" alt="Table">
                 <div class="table-items" id="tableItems${id}"></div>
             `;
 
-            // Create chair above table
             const chair = document.createElement('div');
             chair.className = 'chair';
             chair.id = `chair${id}`;
-            chair.style.left = (x - 358 + 27) + 'px';
-            chair.style.top = (y - 55) + 'px';
+            chair.style.left = (x + 25) + 'px';
+            chair.style.top = (y - 50) + 'px';
+            chair.innerHTML = `<img src="images/cafe-chair.svg" class="chair-img" alt="Chair">`;
 
-            diningZone.appendChild(table);
-            diningZone.appendChild(chair);
+            parent.appendChild(table);
+            parent.appendChild(chair);
 
             gameState.tables.push({
                 id,
                 tableEl: table,
                 chairEl: chair,
-                x: x - 358 + 50,
-                y: y + 40,
-                chairX: x - 358 + 50,
-                chairY: y - 30,
-                customer: null,
-                order: null,
-                hasFood: false
+                x: x + 55,
+                y: y + 55,
+                chairX: x + 55,
+                chairY: y - 20,
+                customer: null
             });
         }
 
@@ -1336,11 +1357,11 @@
         function setupControls() {
             document.addEventListener('keydown', (e) => {
                 switch(e.key.toLowerCase()) {
-                    case 'w': case 'arrowup': gameState.keys.up = true; break;
-                    case 's': case 'arrowdown': gameState.keys.down = true; break;
-                    case 'a': case 'arrowleft': gameState.keys.left = true; break;
-                    case 'd': case 'arrowright': gameState.keys.right = true; break;
-                    case ' ': case 'e': handleInteraction(); break;
+                    case 'w': case 'arrowup': gameState.keys.up = true; e.preventDefault(); break;
+                    case 's': case 'arrowdown': gameState.keys.down = true; e.preventDefault(); break;
+                    case 'a': case 'arrowleft': gameState.keys.left = true; e.preventDefault(); break;
+                    case 'd': case 'arrowright': gameState.keys.right = true; e.preventDefault(); break;
+                    case ' ': case 'e': handleInteraction(); e.preventDefault(); break;
                 }
             });
 
@@ -1353,23 +1374,17 @@
                 }
             });
 
-            // Mobile controls
             document.querySelectorAll('.mobile-btn').forEach(btn => {
                 btn.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                     const dir = btn.dataset.dir;
-                    if (dir === 'action') {
-                        handleInteraction();
-                    } else {
-                        gameState.keys[dir] = true;
-                    }
+                    if (dir === 'action') handleInteraction();
+                    else gameState.keys[dir] = true;
                 });
                 btn.addEventListener('touchend', (e) => {
                     e.preventDefault();
                     const dir = btn.dataset.dir;
-                    if (dir !== 'action') {
-                        gameState.keys[dir] = false;
-                    }
+                    if (dir !== 'action') gameState.keys[dir] = false;
                 });
             });
         }
@@ -1380,45 +1395,34 @@
             gameState.dayCustomers = 0;
             gameState.dayTips = 0;
 
-            // Clear tables
             gameState.tables.forEach(table => {
                 table.customer = null;
-                table.order = null;
-                table.hasFood = false;
                 table.chairEl.classList.remove('occupied');
-                table.chairEl.innerHTML = '';
+                table.chairEl.innerHTML = `<img src="images/cafe-chair.svg" class="chair-img" alt="Chair">`;
                 document.getElementById(`tableItems${table.id}`).innerHTML = '';
             });
 
-            // Clear customers
             gameState.customers = [];
-
             updateHUD();
 
-            // Game loop
             if (gameState.gameLoop) cancelAnimationFrame(gameState.gameLoop);
             function loop() {
                 updatePlayer();
                 updateStations();
-                updateCustomers();
                 gameState.gameLoop = requestAnimationFrame(loop);
             }
             loop();
 
-            // Timer
             if (gameState.timerLoop) clearInterval(gameState.timerLoop);
             gameState.timerLoop = setInterval(() => {
                 gameState.timeLeft--;
                 updateHUD();
-                if (gameState.timeLeft <= 0) {
-                    endDay();
-                }
+                if (gameState.timeLeft <= 0) endDay();
             }, 1000);
 
-            // Customer spawning
             if (gameState.customerSpawnLoop) clearInterval(gameState.customerSpawnLoop);
             spawnCustomer();
-            const spawnRate = Math.max(3000, 8000 - gameState.day * 500);
+            const spawnRate = Math.max(4000, 10000 - gameState.day * 600);
             gameState.customerSpawnLoop = setInterval(spawnCustomer, spawnRate);
         }
 
@@ -1429,7 +1433,7 @@
 
             document.getElementById('completedDay').textContent = gameState.day;
             document.getElementById('dayCustomers').textContent = gameState.dayCustomers;
-            document.getElementById('dayTips').textContent = '$' + gameState.dayTips;
+            document.getElementById('dayTips').textContent = gameState.dayTips;
 
             const messages = [
                 "Great job! The cuties loved your food! 💕",
@@ -1439,20 +1443,14 @@
                 "Delicious! Everyone left happy! 💖"
             ];
             document.getElementById('dayMessage').textContent = messages[Math.floor(Math.random() * messages.length)];
-
             document.getElementById('dayModal').classList.add('active');
         }
 
         function nextDay() {
             document.getElementById('dayModal').classList.remove('active');
             gameState.day++;
-
-            if (gameState.day > 10) {
-                showWin();
-            } else {
-                updateHUD();
-                startDay();
-            }
+            if (gameState.day > 10) showWin();
+            else { updateHUD(); startDay(); }
         }
 
         function showWin() {
@@ -1460,14 +1458,9 @@
             container.innerHTML = characters.slice(0, 12).map(c =>
                 `<img src="${c.img}" alt="${c.name}" class="win-character" style="animation-delay: ${Math.random() * 0.5}s">`
             ).join('');
-
             document.getElementById('winModal').classList.add('active');
-
-            // Celebration effects
             for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    createFloatingHeart(Math.random() * window.innerWidth, window.innerHeight);
-                }, i * 100);
+                setTimeout(() => createFloatingHeart(Math.random() * window.innerWidth, window.innerHeight), i * 100);
             }
         }
 
@@ -1479,29 +1472,23 @@
             gameState.heldItem = null;
             updatePlayerHeld();
             updateHUD();
-
-            // Reset stations
             Object.values(gameState.stations).forEach(station => {
                 station.contents = [];
                 station.cooking = false;
                 station.cookProgress = 0;
+                station.result = null;
                 updateStationDisplay(station);
             });
-
-            // Reset counter
             gameState.counterSlots = [null, null, null];
             for (let i = 0; i < 3; i++) {
                 const slot = document.getElementById(`counterSlot${i}`);
                 slot.innerHTML = '';
                 slot.classList.remove('has-item');
             }
-
             startDay();
         }
 
-        function goHome() {
-            window.location.href = 'index.html';
-        }
+        function goHome() { window.location.href = 'index.html'; }
 
         // ==================== PLAYER MOVEMENT ====================
         function updatePlayer() {
@@ -1513,18 +1500,14 @@
             if (keys.left) dx -= playerSpeed;
             if (keys.right) dx += playerSpeed;
 
-            if (dx !== 0 && dy !== 0) {
-                dx *= 0.707;
-                dy *= 0.707;
-            }
+            if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
 
             let newX = gameState.playerX + dx;
             let newY = gameState.playerY + dy;
 
-            // Bounds
             const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-            newX = Math.max(20, Math.min(worldRect.width - 90, newX));
-            newY = Math.max(20, Math.min(worldRect.height - 90, newY));
+            newX = Math.max(10, Math.min(worldRect.width - 90, newX));
+            newY = Math.max(10, Math.min(worldRect.height - 90, newY));
 
             gameState.playerX = newX;
             gameState.playerY = newY;
@@ -1533,60 +1516,38 @@
             player.style.left = newX + 'px';
             player.style.top = newY + 'px';
 
-            // Update nearby highlights
             updateNearbyHighlights();
         }
 
         function updateNearbyHighlights() {
-            // Clear all nearby
             document.querySelectorAll('.nearby').forEach(el => el.classList.remove('nearby'));
+            const playerCenterX = gameState.playerX + 40;
+            const playerCenterY = gameState.playerY + 40;
 
-            const playerCenterX = gameState.playerX + 35;
-            const playerCenterY = gameState.playerY + 35;
-
-            // Check stations
             Object.entries(gameState.stations).forEach(([id, station]) => {
-                const dist = getDistance(playerCenterX, playerCenterY, station.x + 45, station.y + 45);
-                if (dist < 100) {
+                if (getDistance(playerCenterX, playerCenterY, station.x + 50, station.y + 50) < 110) {
                     station.el.classList.add('nearby');
                 }
             });
 
-            // Check shelf items
             document.querySelectorAll('.shelf-item').forEach(item => {
                 const rect = item.getBoundingClientRect();
                 const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                const itemX = rect.left - worldRect.left + rect.width / 2;
-                const itemY = rect.top - worldRect.top + 60 + rect.height / 2;
-                const dist = getDistance(playerCenterX, playerCenterY, itemX, itemY);
-                if (dist < 80) {
+                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 27, rect.top - worldRect.top + 60 + 27) < 90) {
                     item.classList.add('nearby');
                 }
             });
 
-            // Check plates
-            const plateStack = document.getElementById('plateStack');
-            if (plateStack) {
-                const rect = plateStack.getBoundingClientRect();
-                const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                const dist = getDistance(playerCenterX, playerCenterY,
-                    rect.left - worldRect.left + 35, rect.top - worldRect.top + 60 + 35);
-                if (dist < 80) {
-                    plateStack.classList.add('nearby');
+            ['plateStack', 'trashBin'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
+                    if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 40, rect.top - worldRect.top + 60 + 40) < 90) {
+                        el.classList.add('nearby');
+                    }
                 }
-            }
-
-            // Check trash
-            const trash = document.getElementById('trashBin');
-            if (trash) {
-                const rect = trash.getBoundingClientRect();
-                const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                const dist = getDistance(playerCenterX, playerCenterY,
-                    rect.left - worldRect.left + 35, rect.top - worldRect.top + 60 + 35);
-                if (dist < 80) {
-                    trash.classList.add('nearby');
-                }
-            }
+            });
         }
 
         function getDistance(x1, y1, x2, y2) {
@@ -1595,52 +1556,43 @@
 
         // ==================== INTERACTIONS ====================
         function handleInteraction() {
-            const playerCenterX = gameState.playerX + 35;
-            const playerCenterY = gameState.playerY + 35;
+            const playerCenterX = gameState.playerX + 40;
+            const playerCenterY = gameState.playerY + 40;
 
-            // Check stations first
+            // Stations
             for (const [id, station] of Object.entries(gameState.stations)) {
-                const dist = getDistance(playerCenterX, playerCenterY, station.x + 45, station.y + 45);
-                if (dist < 100) {
+                if (getDistance(playerCenterX, playerCenterY, station.x + 50, station.y + 50) < 110) {
                     interactStation(id);
                     return;
                 }
             }
 
-            // Check tables
+            // Tables
             for (const table of gameState.tables) {
-                // Check if near the table (for food delivery)
-                const tableDist = getDistance(playerCenterX, playerCenterY, table.x + 358, table.y + 60);
-                if (tableDist < 100) {
+                const tableWorldX = table.x + 456;
+                const tableWorldY = table.y + 60;
+                if (getDistance(playerCenterX, playerCenterY, tableWorldX, tableWorldY) < 100) {
                     interactTable(table);
                     return;
                 }
-
-                // Check if near the chair (for taking orders)
-                const chairDist = getDistance(playerCenterX, playerCenterY, table.chairX + 358, table.chairY + 60);
-                if (chairDist < 80 && table.customer) {
+                const chairWorldX = table.chairX + 456;
+                const chairWorldY = table.chairY + 60;
+                if (getDistance(playerCenterX, playerCenterY, chairWorldX, chairWorldY) < 80 && table.customer) {
                     interactCustomer(table);
                     return;
                 }
             }
 
-            // Check counter slots
+            // Counter slots
             const counter = document.getElementById('serviceCounter');
             if (counter) {
                 const rect = counter.getBoundingClientRect();
                 const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                const dist = getDistance(playerCenterX, playerCenterY,
-                    rect.left - worldRect.left + rect.width / 2,
-                    rect.top - worldRect.top + 60 + 30);
-                if (dist < 120) {
-                    // Find nearest slot
+                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + rect.width / 2, rect.top - worldRect.top + 60 + 40) < 120) {
                     for (let i = 0; i < 3; i++) {
                         const slot = document.getElementById(`counterSlot${i}`);
                         const slotRect = slot.getBoundingClientRect();
-                        const slotDist = getDistance(playerCenterX, playerCenterY,
-                            slotRect.left - worldRect.left + 22,
-                            slotRect.top - worldRect.top + 60 + 22);
-                        if (slotDist < 80) {
+                        if (getDistance(playerCenterX, playerCenterY, slotRect.left - worldRect.left + 27, slotRect.top - worldRect.top + 60 + 27) < 80) {
                             interactCounterSlot(i);
                             return;
                         }
@@ -1648,33 +1600,29 @@
                 }
             }
 
-            // Check plates
+            // Plates
             const plateStack = document.getElementById('plateStack');
             if (plateStack) {
                 const rect = plateStack.getBoundingClientRect();
                 const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                const dist = getDistance(playerCenterX, playerCenterY,
-                    rect.left - worldRect.left + 35, rect.top - worldRect.top + 60 + 35);
-                if (dist < 80) {
+                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 45, rect.top - worldRect.top + 60 + 45) < 90) {
                     pickupPlate();
                     return;
                 }
             }
 
-            // Check trash
+            // Trash
             const trash = document.getElementById('trashBin');
             if (trash) {
                 const rect = trash.getBoundingClientRect();
                 const worldRect = document.getElementById('gameWorld').getBoundingClientRect();
-                const dist = getDistance(playerCenterX, playerCenterY,
-                    rect.left - worldRect.left + 35, rect.top - worldRect.top + 60 + 35);
-                if (dist < 80) {
+                if (getDistance(playerCenterX, playerCenterY, rect.left - worldRect.left + 40, rect.top - worldRect.top + 60 + 40) < 90) {
                     useTrash();
                     return;
                 }
             }
 
-            // Check ingredient shelves
+            // Shelf items
             document.querySelectorAll('.shelf-item.nearby').forEach(item => {
                 pickupIngredient(item.dataset.ingredient);
             });
@@ -1684,41 +1632,29 @@
             const station = gameState.stations[id];
 
             if (gameState.heldItem) {
-                // Try to place item
                 if (gameState.heldItem.type === 'ingredient') {
-                    if (station.contents.length < 3 && !station.cooking) {
+                    if (station.contents.length < 3 && !station.cooking && !station.result) {
                         station.contents.push(gameState.heldItem.data);
                         gameState.heldItem = null;
                         updatePlayerHeld();
                         updateStationDisplay(station);
-                        createSparkle(gameState.playerX + 35, gameState.playerY);
-
-                        // Auto-start cooking if on stove/oven
+                        createSparkle(gameState.playerX + 40, gameState.playerY);
                         if ((id.includes('stove') || id === 'oven') && station.contents.length > 0) {
                             tryStartCooking(id);
                         }
                     }
-                } else if (gameState.heldItem.type === 'plate') {
-                    // Try to plate the dish
-                    if (station.result) {
-                        gameState.heldItem = {
-                            type: 'dish',
-                            data: station.result
-                        };
-                        station.result = null;
-                        station.contents = [];
-                        updatePlayerHeld();
-                        updateStationDisplay(station);
-                        createSparkle(gameState.playerX + 35, gameState.playerY);
-                    }
+                } else if (gameState.heldItem.type === 'plate' && station.result) {
+                    gameState.heldItem = { type: 'dish', data: station.result };
+                    station.result = null;
+                    station.contents = [];
+                    updatePlayerHeld();
+                    updateStationDisplay(station);
+                    createSparkle(gameState.playerX + 40, gameState.playerY, '✨');
                 }
             } else {
-                // Try to pick up
                 if (station.result) {
-                    // Pick up cooked dish (need plate first!)
-                    createSparkle(gameState.playerX + 35, gameState.playerY, '❌');
+                    createSparkle(gameState.playerX + 40, gameState.playerY, '🍽️');
                 } else if (station.contents.length > 0 && !station.cooking) {
-                    // Pick up last ingredient
                     const ing = station.contents.pop();
                     gameState.heldItem = { type: 'ingredient', data: ing };
                     updatePlayerHeld();
@@ -1731,17 +1667,13 @@
             const station = gameState.stations[id];
             if (station.cooking || station.contents.length === 0) return;
 
-            // Find matching recipe
             const sortedContents = [...station.contents].sort();
             let matchedRecipe = null;
 
             for (const [key, recipe] of Object.entries(recipes)) {
-                const sortedRecipe = [...recipe.ingredients].sort();
-                if (JSON.stringify(sortedContents) === JSON.stringify(sortedRecipe)) {
-                    if (recipe.needsStove || !recipe.needsStove) {
-                        matchedRecipe = { key, ...recipe };
-                        break;
-                    }
+                if (JSON.stringify([...recipe.ingredients].sort()) === JSON.stringify(sortedContents)) {
+                    matchedRecipe = { key, ...recipe };
+                    break;
                 }
             }
 
@@ -1753,7 +1685,6 @@
                 station.el.classList.add('cooking');
                 station.el.querySelector('.station-progress').style.display = 'block';
             } else if (matchedRecipe) {
-                // Instant recipe (like salad)
                 station.result = matchedRecipe;
                 station.contents = [];
                 updateStationDisplay(station);
@@ -1763,19 +1694,18 @@
         function updateStations() {
             Object.entries(gameState.stations).forEach(([id, station]) => {
                 if (station.cooking) {
-                    station.cookProgress += 16; // ~60fps
+                    station.cookProgress += 16;
                     const progress = Math.min(100, (station.cookProgress / station.cookTime) * 100);
                     document.getElementById(`${id}-progress`).style.width = progress + '%';
 
                     if (station.cookProgress >= station.cookTime) {
-                        // Cooking done!
                         station.cooking = false;
                         station.result = station.pendingResult;
                         station.contents = [];
                         station.el.classList.remove('cooking');
                         station.el.querySelector('.station-progress').style.display = 'none';
                         updateStationDisplay(station);
-                        createSparkle(parseFloat(station.el.style.left) + 45, parseFloat(station.el.style.top) + 60 + 45, '✨');
+                        createSparkle(station.x + 50, station.y + 60 + 50, '✨');
                     }
                 }
             });
@@ -1783,12 +1713,11 @@
 
         function updateStationDisplay(station) {
             const contents = station.el.querySelector('.station-contents');
-
             if (station.result) {
-                contents.innerHTML = `<div class="station-item" style="border-color: #4caf50;">${station.result.emoji}</div>`;
+                contents.innerHTML = `<div class="station-item" style="border-color: #4caf50;"><img src="${station.result.img}" alt=""></div>`;
             } else if (station.contents.length > 0) {
                 contents.innerHTML = station.contents.map(ing =>
-                    `<div class="station-item">${ingredientEmojis[ing]}</div>`
+                    `<div class="station-item"><img src="${ingredients[ing].img}" alt=""></div>`
                 ).join('');
             } else {
                 contents.innerHTML = '';
@@ -1799,7 +1728,7 @@
             if (!gameState.heldItem) {
                 gameState.heldItem = { type: 'ingredient', data: ing };
                 updatePlayerHeld();
-                createSparkle(gameState.playerX + 35, gameState.playerY);
+                createSparkle(gameState.playerX + 40, gameState.playerY);
             }
         }
 
@@ -1807,7 +1736,7 @@
             if (!gameState.heldItem) {
                 gameState.heldItem = { type: 'plate', data: null };
                 updatePlayerHeld();
-                createSparkle(gameState.playerX + 35, gameState.playerY);
+                createSparkle(gameState.playerX + 40, gameState.playerY);
             }
         }
 
@@ -1815,7 +1744,7 @@
             if (gameState.heldItem) {
                 gameState.heldItem = null;
                 updatePlayerHeld();
-                createSparkle(gameState.playerX + 35, gameState.playerY, '🗑️');
+                createSparkle(gameState.playerX + 40, gameState.playerY, '🗑️');
             }
         }
 
@@ -1825,17 +1754,15 @@
                     gameState.counterSlots[index] = gameState.heldItem.data;
                     gameState.heldItem = null;
                     updatePlayerHeld();
-
                     const slot = document.getElementById(`counterSlot${index}`);
-                    slot.innerHTML = gameState.counterSlots[index].emoji;
+                    slot.innerHTML = `<img src="${gameState.counterSlots[index].img}" alt="">`;
                     slot.classList.add('has-item');
-                    createSparkle(gameState.playerX + 35, gameState.playerY, '✨');
+                    createSparkle(gameState.playerX + 40, gameState.playerY, '✨');
                 }
             } else if (!gameState.heldItem && gameState.counterSlots[index]) {
                 gameState.heldItem = { type: 'dish', data: gameState.counterSlots[index] };
                 gameState.counterSlots[index] = null;
                 updatePlayerHeld();
-
                 const slot = document.getElementById(`counterSlot${index}`);
                 slot.innerHTML = '';
                 slot.classList.remove('has-item');
@@ -1847,11 +1774,11 @@
             if (gameState.heldItem) {
                 held.style.display = 'flex';
                 if (gameState.heldItem.type === 'ingredient') {
-                    held.textContent = ingredientEmojis[gameState.heldItem.data];
+                    held.innerHTML = `<img src="${ingredients[gameState.heldItem.data].img}" alt="">`;
                 } else if (gameState.heldItem.type === 'plate') {
-                    held.textContent = '🍽️';
+                    held.innerHTML = `<img src="images/plate.svg" alt="">`;
                 } else if (gameState.heldItem.type === 'dish') {
-                    held.textContent = gameState.heldItem.data.emoji;
+                    held.innerHTML = `<img src="${gameState.heldItem.data.img}" alt="">`;
                 }
             } else {
                 held.style.display = 'none';
@@ -1860,17 +1787,12 @@
 
         // ==================== CUSTOMERS ====================
         function spawnCustomer() {
-            // Find empty table
             const emptyTables = gameState.tables.filter(t => !t.customer);
             if (emptyTables.length === 0) return;
 
             const table = emptyTables[Math.floor(Math.random() * emptyTables.length)];
-
-            // Pick random character (not the player)
             const availableChars = characters.filter(c => c.id !== selectedCharacter.id);
             const char = availableChars[Math.floor(Math.random() * availableChars.length)];
-
-            // Generate order
             const order = generateOrder();
 
             table.customer = {
@@ -1881,82 +1803,53 @@
                 patienceTimer: setInterval(() => {
                     table.customer.patience -= 1;
                     updateCustomerPatience(table);
-                    if (table.customer.patience <= 0) {
-                        customerLeft(table, false);
-                    }
-                }, 300)
+                    if (table.customer.patience <= 0) customerLeft(table, false);
+                }, 350)
             };
 
-            // Update UI
             table.chairEl.classList.add('occupied');
             table.chairEl.innerHTML = `
+                <img src="images/cafe-chair.svg" class="chair-img" alt="Chair">
                 <img src="${char.img}" class="chair-customer" alt="${char.name}">
             `;
-
-            gameState.customers.push(table.customer);
         }
 
         function generateOrder() {
             const day = gameState.day;
-            const possibleRecipes = [];
-
-            // Easy (always available)
-            possibleRecipes.push('toast', 'friedEgg', 'coffee', 'cake');
-
-            if (day >= 2) {
-                possibleRecipes.push('bacon', 'salad', 'riceBowl');
-            }
-            if (day >= 3) {
-                possibleRecipes.push('eggSandwich', 'cheesyToast', 'strawberryCake');
-            }
-            if (day >= 5) {
-                possibleRecipes.push('baconEggs');
-            }
-            if (day >= 7) {
-                possibleRecipes.push('breakfast');
-            }
-
+            const possibleRecipes = ['toast', 'friedEgg', 'coffee', 'cake'];
+            if (day >= 2) possibleRecipes.push('bacon', 'salad', 'riceBowl');
+            if (day >= 3) possibleRecipes.push('eggSandwich', 'cheesyToast', 'strawberryCake');
+            if (day >= 7) possibleRecipes.push('breakfast');
             const recipeKey = possibleRecipes[Math.floor(Math.random() * possibleRecipes.length)];
             return recipes[recipeKey];
         }
 
         function interactCustomer(table) {
-            if (!table.customer) return;
+            if (!table.customer || table.customer.orderTaken) return;
+            table.customer.orderTaken = true;
 
-            if (!table.customer.orderTaken) {
-                // Take order - show bubble
-                table.customer.orderTaken = true;
+            const bubble = document.createElement('div');
+            bubble.className = 'order-bubble';
+            bubble.id = `orderBubble${table.id}`;
+            bubble.innerHTML = `<img src="${table.customer.order.img}" alt="">`;
+            table.chairEl.appendChild(bubble);
 
-                const bubble = document.createElement('div');
-                bubble.className = 'order-bubble';
-                bubble.id = `orderBubble${table.id}`;
-                bubble.textContent = table.customer.order.emoji;
-                table.chairEl.appendChild(bubble);
+            const ring = document.createElement('div');
+            ring.className = 'patience-ring';
+            ring.id = `patienceRing${table.id}`;
+            ring.innerHTML = `<div class="patience-ring-fill" id="patienceFill${table.id}" style="width: 100%"></div>`;
+            table.chairEl.appendChild(ring);
 
-                const patienceRing = document.createElement('div');
-                patienceRing.className = 'patience-ring';
-                patienceRing.id = `patienceRing${table.id}`;
-                patienceRing.innerHTML = `<div class="patience-ring-fill" id="patienceFill${table.id}" style="width: 100%"></div>`;
-                table.chairEl.appendChild(patienceRing);
-
-                createSparkle(table.chairX + 358, table.chairY + 30, '📝');
-            }
+            createSparkle(table.chairX + 456, table.chairY + 30, '📝');
         }
 
         function interactTable(table) {
             if (!table.customer || !table.customer.orderTaken) return;
-
-            // Check if player has correct dish
             if (gameState.heldItem && gameState.heldItem.type === 'dish') {
-                const heldRecipe = gameState.heldItem.data;
-                const orderedRecipe = table.customer.order;
-
-                if (heldRecipe.name === orderedRecipe.name) {
-                    // Correct order!
+                if (gameState.heldItem.data.name === table.customer.order.name) {
                     serveCustomer(table);
                 } else {
-                    // Wrong order
-                    createSparkle(table.x + 358, table.y + 60, '❌');
+                    createSparkle(table.x + 456, table.y + 60, '❌');
                 }
             }
         }
@@ -1971,72 +1864,40 @@
             gameState.hearts += 1;
             gameState.dayCustomers++;
 
-            // Clear held item
             gameState.heldItem = null;
             updatePlayerHeld();
 
-            // Show food on table briefly
-            document.getElementById(`tableItems${table.id}`).textContent = table.customer.order.emoji;
+            document.getElementById(`tableItems${table.id}`).innerHTML = `<img src="${table.customer.order.img}" alt="">`;
 
-            // Effects
             for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createFloatingHeart(table.x + 358, table.y + 30);
-                }, i * 100);
+                setTimeout(() => createFloatingHeart(table.x + 456, table.y + 30), i * 100);
             }
-            createSparkle(table.x + 358, table.y + 60, '💕');
+            createSparkle(table.x + 456, table.y + 60, '💕');
 
-            // Customer leaves happy
             setTimeout(() => customerLeft(table, true), 1000);
-
             updateHUD();
         }
 
         function customerLeft(table, happy) {
             if (!table.customer) return;
-
             clearInterval(table.customer.patienceTimer);
-
-            // Remove from customers array
-            gameState.customers = gameState.customers.filter(c => c !== table.customer);
-
-            // Clear table
             table.customer = null;
-            table.order = null;
-            table.hasFood = false;
             table.chairEl.classList.remove('occupied');
-            table.chairEl.innerHTML = '';
+            table.chairEl.innerHTML = `<img src="images/cafe-chair.svg" class="chair-img" alt="Chair">`;
             document.getElementById(`tableItems${table.id}`).innerHTML = '';
-
-            if (!happy) {
-                createSparkle(table.chairX + 358, table.chairY + 60, '😢');
-            }
-        }
-
-        function updateCustomers() {
-            // Update patience displays
-            gameState.tables.forEach(table => {
-                if (table.customer && table.customer.orderTaken) {
-                    const fill = document.getElementById(`patienceFill${table.id}`);
-                    if (fill) {
-                        fill.style.width = table.customer.patience + '%';
-                    }
-                }
-            });
+            if (!happy) createSparkle(table.chairX + 456, table.chairY + 60, '😢');
         }
 
         function updateCustomerPatience(table) {
             const fill = document.getElementById(`patienceFill${table.id}`);
-            if (fill) {
-                fill.style.width = table.customer.patience + '%';
-            }
+            if (fill) fill.style.width = table.customer.patience + '%';
         }
 
         // ==================== HUD ====================
         function updateHUD() {
             document.getElementById('dayNum').textContent = gameState.day;
             document.getElementById('hearts').textContent = gameState.hearts;
-            document.getElementById('tips').textContent = '$' + gameState.tips;
+            document.getElementById('tips').textContent = gameState.tips;
             document.getElementById('timerFill').style.width = (gameState.timeLeft / gameState.maxTime * 100) + '%';
         }
 
@@ -2062,13 +1923,8 @@
         }
 
         // ==================== INSTRUCTIONS ====================
-        function showInstructions() {
-            document.getElementById('instructionsModal').classList.add('active');
-        }
-
-        function hideInstructions() {
-            document.getElementById('instructionsModal').classList.remove('active');
-        }
+        function showInstructions() { document.getElementById('instructionsModal').classList.add('active'); }
+        function hideInstructions() { document.getElementById('instructionsModal').classList.remove('active'); }
 
         // ==================== INIT ====================
         initCharacterSelect();
