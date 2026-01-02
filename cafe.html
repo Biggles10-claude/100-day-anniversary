@@ -652,14 +652,14 @@
         // GAME CONFIGURATION - MUCH MORE SPACE
         // ==========================================
         const CONFIG = {
-            WORLD_WIDTH: 2000,
-            WORLD_HEIGHT: 800,
+            WORLD_WIDTH: 1400,  // Smaller world - no ultrawide
+            WORLD_HEIGHT: 600,  // Shorter height
             KITCHEN_WIDTH: 500,  // Kitchen stops here
             TILE_SIZE: 80,
-            PLAYER_SPEED: 6,
-            PLAYER_SIZE: 60,
-            STATION_SIZE: 70,
-            TABLE_SIZE: 80,
+            PLAYER_SPEED: 10,   // FASTER movement
+            PLAYER_SIZE: 55,
+            STATION_SIZE: 65,
+            TABLE_SIZE: 75,
             INTERACT_DIST: 70,
             DAY_LENGTH: 120000,
             MAX_DAYS: 10
@@ -671,7 +671,7 @@
             'gudetama', 'pochacco', 'keroppi', 'badtz-maru', 'chococat',
             'tuxedosam', 'corocorokuririn', 'moomin', 'hamtori', 'bijou',
             'oxnard', 'boss', 'pashmina', 'penelope', 'mametchi',
-            'kuchipatchi', 'memetchi', 'pingsu'
+            'kuchipatchi', 'memetchi', 'pengsu'
         ];
 
         // Recipes
@@ -796,7 +796,11 @@
             player.character = char;
             document.getElementById('charSelect').classList.add('hidden');
             document.getElementById('gameContainer').classList.add('active');
-            startGame();
+            // CRITICAL: Resize canvas AFTER container is visible
+            setTimeout(() => {
+                resizeCanvas();
+                startGame();
+            }, 50);
         }
 
         function initGame() {
@@ -819,21 +823,22 @@
         function createStations() {
             stations = [];
             const S = CONFIG.STATION_SIZE;
-            const gap = 95; // Fit 5 columns in kitchen width
+            const gap = 90; // Tighter fit
+            const startY = 20; // Start higher
 
             // Row 1: Cooking appliances (top)
-            stations.push({ type: 'stove', x: 30, y: 40, w: S, h: S, canCook: true });
-            stations.push({ type: 'stove', x: 30 + gap, y: 40, w: S, h: S, canCook: true });
-            stations.push({ type: 'oven', x: 30 + gap * 2, y: 40, w: S, h: S, canCook: true });
-            stations.push({ type: 'coffee-machine', x: 30 + gap * 3, y: 40, w: S, h: S, canCook: true });
-            stations.push({ type: 'fridge', x: 30 + gap * 4, y: 40, w: S, h: S });
+            stations.push({ type: 'stove', x: 25, y: startY, w: S, h: S, canCook: true });
+            stations.push({ type: 'stove', x: 25 + gap, y: startY, w: S, h: S, canCook: true });
+            stations.push({ type: 'oven', x: 25 + gap * 2, y: startY, w: S, h: S, canCook: true });
+            stations.push({ type: 'coffee-machine', x: 25 + gap * 3, y: startY, w: S, h: S, canCook: true });
+            stations.push({ type: 'fridge', x: 25 + gap * 4, y: startY, w: S, h: S });
 
             // Row 2: Prep stations
-            stations.push({ type: 'cutting-board', x: 30, y: 40 + gap, w: S, h: S, canCook: true });
-            stations.push({ type: 'prep-counter', x: 30 + gap, y: 40 + gap, w: S, h: S, canCook: true });
-            stations.push({ type: 'prep-counter', x: 30 + gap * 2, y: 40 + gap, w: S, h: S, canCook: true });
-            stations.push({ type: 'plate-stack', x: 30 + gap * 3, y: 40 + gap, w: S, h: S });
-            stations.push({ type: 'trash-bin', x: 30 + gap * 4, y: 40 + gap, w: S, h: S });
+            stations.push({ type: 'cutting-board', x: 25, y: startY + gap, w: S, h: S, canCook: true });
+            stations.push({ type: 'prep-counter', x: 25 + gap, y: startY + gap, w: S, h: S, canCook: true });
+            stations.push({ type: 'prep-counter', x: 25 + gap * 2, y: startY + gap, w: S, h: S, canCook: true });
+            stations.push({ type: 'plate-stack', x: 25 + gap * 3, y: startY + gap, w: S, h: S });
+            stations.push({ type: 'trash-bin', x: 25 + gap * 4, y: startY + gap, w: S, h: S });
 
             // Row 3: Ingredients (first 5)
             const ingRow1 = ['bread', 'egg', 'cheese', 'bacon', 'lettuce'];
@@ -841,8 +846,8 @@
                 stations.push({
                     type: 'ingredient',
                     ingredient: ing,
-                    x: 30 + i * gap,
-                    y: 40 + gap * 2,
+                    x: 25 + i * gap,
+                    y: startY + gap * 2,
                     w: S,
                     h: S
                 });
@@ -854,8 +859,8 @@
                 stations.push({
                     type: 'ingredient',
                     ingredient: ing,
-                    x: 30 + i * gap,
-                    y: 40 + gap * 3,
+                    x: 25 + i * gap,
+                    y: startY + gap * 3,
                     w: S,
                     h: S
                 });
@@ -864,23 +869,23 @@
 
         function createTables() {
             tables = [];
-            const startX = CONFIG.KITCHEN_WIDTH + 80; // Start after kitchen
-            const gapX = 280;  // Space between tables horizontally
-            const gapY = 180;  // Space between tables vertically
+            const startX = CONFIG.KITCHEN_WIDTH + 60; // Start after kitchen
+            const gapX = 200;  // Tighter spacing
+            const gapY = 150;  // Tighter vertical
 
-            // 3 rows x 4 cols of tables in dining area
+            // 3 rows x 3 cols of tables (fewer tables, tighter fit)
             for (let row = 0; row < 3; row++) {
-                for (let col = 0; col < 4; col++) {
+                for (let col = 0; col < 3; col++) {
                     const tx = startX + col * gapX;
-                    const ty = 80 + row * gapY;
+                    const ty = 50 + row * gapY;
                     tables.push({
                         x: tx,
                         y: ty,
                         w: CONFIG.TABLE_SIZE,
                         h: CONFIG.TABLE_SIZE,
                         customer: null,
-                        chairLeft: { x: tx - 45, y: ty + 15 },
-                        chairRight: { x: tx + CONFIG.TABLE_SIZE + 5, y: ty + 15 }
+                        chairLeft: { x: tx - 40, y: ty + 12 },
+                        chairRight: { x: tx + CONFIG.TABLE_SIZE + 5, y: ty + 12 }
                     });
                 }
             }
