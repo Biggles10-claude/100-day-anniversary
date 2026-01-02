@@ -33,17 +33,7 @@
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.5)); }
-            50% { filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.8)); }
-        }
-
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            50% { transform: translateY(-8px); }
         }
 
         @keyframes bounce-in {
@@ -57,27 +47,74 @@
             100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
 
-        @keyframes lever-pull {
-            0% { transform: rotate(0deg); }
-            30% { transform: rotate(45deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        @keyframes slot-spin {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100%); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px) rotate(-1deg); }
-            75% { transform: translateX(5px) rotate(1deg); }
-        }
-
         @keyframes rainbow-bg {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* REAL GACHA MACHINE ANIMATIONS */
+        @keyframes ball-tumble {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(15px, -20px) rotate(36deg); }
+            20% { transform: translate(-10px, 10px) rotate(72deg); }
+            30% { transform: translate(20px, -15px) rotate(108deg); }
+            40% { transform: translate(-15px, 5px) rotate(144deg); }
+            50% { transform: translate(10px, -25px) rotate(180deg); }
+            60% { transform: translate(-20px, 15px) rotate(216deg); }
+            70% { transform: translate(15px, -10px) rotate(252deg); }
+            80% { transform: translate(-5px, 20px) rotate(288deg); }
+            90% { transform: translate(10px, -5px) rotate(324deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        @keyframes machine-shake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-8px) rotate(-1deg); }
+            20% { transform: translateX(8px) rotate(1deg); }
+            30% { transform: translateX(-6px) rotate(-0.5deg); }
+            40% { transform: translateX(6px) rotate(0.5deg); }
+            50% { transform: translateX(-4px); }
+            60% { transform: translateX(4px); }
+            70% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+            90% { transform: translateX(-1px); }
+        }
+
+        @keyframes crank-rotate {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes ball-drop {
+            0% { transform: translateY(-100%) scale(0.5); opacity: 0; }
+            20% { transform: translateY(0) scale(1.1); opacity: 1; }
+            40% { transform: translateY(-30px) scale(0.95); }
+            60% { transform: translateY(0) scale(1.05); }
+            80% { transform: translateY(-10px) scale(0.98); }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes capsule-open {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.1); }
+            50% { transform: scale(1.2) rotate(10deg); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes sparkle-burst {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 157, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 157, 0.8), 0 0 60px rgba(255, 215, 0, 0.4); }
         }
 
         body {
@@ -93,7 +130,6 @@
             padding: 20px;
         }
 
-        /* Stars background */
         .stars {
             position: fixed;
             inset: 0;
@@ -109,131 +145,142 @@
             opacity: 0.6;
         }
 
-        /* Main container */
         .container {
             position: relative;
             z-index: 1;
-            max-width: 500px;
+            max-width: 420px;
             width: 100%;
         }
 
-        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .title {
             font-family: 'Baloo 2', cursive;
-            font-size: clamp(28px, 8vw, 42px);
+            font-size: clamp(26px, 7vw, 38px);
             font-weight: 800;
             background: linear-gradient(135deg, var(--pink-hot) 0%, var(--pink-deep) 50%, #9B59B6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 3px 3px 0 rgba(255,255,255,0.5);
             animation: jiggle 2s ease-in-out infinite;
         }
 
         .subtitle {
-            font-size: 16px;
+            font-size: 14px;
             color: #888;
-            margin-top: 8px;
+            margin-top: 6px;
             font-weight: 500;
         }
 
-        /* Gacha Machine */
+        /* GACHA MACHINE - More realistic! */
         .gacha-machine {
-            background: linear-gradient(180deg, #FF9EBB 0%, var(--pink-hot) 100%);
-            border-radius: 40px 40px 20px 20px;
-            padding: 24px;
+            background: linear-gradient(180deg, #FF6B9D 0%, #E91E8C 100%);
+            border-radius: 30px 30px 15px 15px;
+            padding: 20px;
             position: relative;
             box-shadow:
-                0 20px 60px rgba(233, 30, 140, 0.3),
-                inset 0 2px 0 rgba(255,255,255,0.4),
-                inset 0 -5px 0 rgba(0,0,0,0.1);
+                0 20px 60px rgba(233, 30, 140, 0.4),
+                inset 0 2px 0 rgba(255,255,255,0.3),
+                inset 0 -8px 0 rgba(0,0,0,0.15);
+            transition: transform 0.1s;
+        }
+
+        .gacha-machine.shaking {
+            animation: machine-shake 0.5s ease-in-out;
         }
 
         .machine-top {
-            background: linear-gradient(180deg, #FFB3C6 0%, #FF9EBB 100%);
-            border-radius: 30px 30px 0 0;
-            padding: 20px;
-            margin: -24px -24px 0 -24px;
-            border-bottom: 4px solid rgba(0,0,0,0.1);
+            background: linear-gradient(180deg, #FF9EBB 0%, #FF6B9D 100%);
+            border-radius: 25px 25px 0 0;
+            padding: 16px;
+            margin: -20px -20px 0 -20px;
+            border-bottom: 4px solid rgba(0,0,0,0.15);
+            text-align: center;
         }
 
         .machine-title {
             font-family: 'Baloo 2', cursive;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             color: white;
-            text-align: center;
             text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
         }
 
-        /* Glass dome */
-        .dome {
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+        /* Glass globe with balls */
+        .globe {
+            background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 50%, rgba(255,220,230,0.6) 100%);
             border-radius: 50%;
-            width: 280px;
-            height: 280px;
-            margin: 20px auto;
+            width: 240px;
+            height: 240px;
+            margin: 16px auto;
             position: relative;
             box-shadow:
-                inset 0 -30px 60px rgba(255, 182, 193, 0.4),
-                inset 0 10px 30px rgba(255,255,255,0.8),
-                0 10px 30px rgba(0,0,0,0.1);
+                inset 0 -40px 60px rgba(255, 150, 180, 0.4),
+                inset 0 20px 40px rgba(255,255,255,0.9),
+                0 15px 40px rgba(0,0,0,0.15);
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 4px solid rgba(255,255,255,0.5);
         }
 
-        .dome::before {
+        /* Glass reflection */
+        .globe::before {
             content: '';
             position: absolute;
-            top: 15px;
-            left: 25%;
-            width: 50%;
-            height: 30px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, transparent 100%);
+            top: 12px;
+            left: 20%;
+            width: 60%;
+            height: 35px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
             border-radius: 50%;
+            z-index: 10;
         }
 
-        /* Gacha balls floating in dome */
-        .gacha-balls {
+        /* Gacha capsules inside */
+        .capsules {
             position: absolute;
-            inset: 30px;
+            inset: 25px;
             overflow: hidden;
         }
 
-        .gacha-ball {
+        .capsule {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
             box-shadow:
-                inset -5px -5px 10px rgba(0,0,0,0.2),
-                inset 5px 5px 10px rgba(255,255,255,0.5),
-                3px 3px 8px rgba(0,0,0,0.2);
+                inset -4px -4px 8px rgba(0,0,0,0.25),
+                inset 4px 4px 8px rgba(255,255,255,0.6),
+                2px 3px 6px rgba(0,0,0,0.2);
             animation: float 3s ease-in-out infinite;
+            transition: all 0.3s;
         }
 
-        .gacha-ball:nth-child(1) { background: linear-gradient(135deg, #FFD93D, #FFB347); top: 10%; left: 15%; animation-delay: 0s; }
-        .gacha-ball:nth-child(2) { background: linear-gradient(135deg, #FF6B9D, #FF9EBB); top: 60%; left: 10%; animation-delay: 0.5s; }
-        .gacha-ball:nth-child(3) { background: linear-gradient(135deg, #87CEEB, #B8F5EC); top: 30%; right: 15%; animation-delay: 1s; }
-        .gacha-ball:nth-child(4) { background: linear-gradient(135deg, #E8D5FF, #DDA0DD); bottom: 15%; right: 20%; animation-delay: 1.5s; }
-        .gacha-ball:nth-child(5) { background: linear-gradient(135deg, #98FB98, #90EE90); top: 50%; left: 50%; animation-delay: 2s; }
+        .capsule:nth-child(1) { background: linear-gradient(135deg, #FFD93D, #FFA500); top: 8%; left: 12%; animation-delay: 0s; }
+        .capsule:nth-child(2) { background: linear-gradient(135deg, #FF6B9D, #FF1493); top: 55%; left: 8%; animation-delay: 0.4s; }
+        .capsule:nth-child(3) { background: linear-gradient(135deg, #87CEEB, #00BFFF); top: 25%; right: 10%; animation-delay: 0.8s; }
+        .capsule:nth-child(4) { background: linear-gradient(135deg, #DDA0DD, #9370DB); bottom: 12%; right: 15%; animation-delay: 1.2s; }
+        .capsule:nth-child(5) { background: linear-gradient(135deg, #98FB98, #32CD32); top: 45%; left: 45%; animation-delay: 1.6s; }
+        .capsule:nth-child(6) { background: linear-gradient(135deg, #FFB6C1, #FF69B4); bottom: 30%; left: 20%; animation-delay: 2s; }
 
-        .dome.spinning .gacha-ball {
-            animation: shake 0.1s ease-in-out infinite;
+        /* Tumbling animation when spinning */
+        .globe.spinning .capsule {
+            animation: ball-tumble 0.4s ease-in-out infinite;
         }
+        .globe.spinning .capsule:nth-child(1) { animation-delay: 0s; }
+        .globe.spinning .capsule:nth-child(2) { animation-delay: 0.05s; }
+        .globe.spinning .capsule:nth-child(3) { animation-delay: 0.1s; }
+        .globe.spinning .capsule:nth-child(4) { animation-delay: 0.15s; }
+        .globe.spinning .capsule:nth-child(5) { animation-delay: 0.2s; }
+        .globe.spinning .capsule:nth-child(6) { animation-delay: 0.25s; }
 
-        /* Result display */
+        /* Result character in globe */
         .result-display {
             position: absolute;
             inset: 0;
@@ -242,146 +289,170 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s;
+            z-index: 5;
         }
 
         .result-display.show {
             opacity: 1;
         }
 
-        .result-character {
+        .result-capsule {
             width: 160px;
             height: 160px;
-            animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--yellow-gold) 0%, #FFA500 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                inset -8px -8px 20px rgba(0,0,0,0.3),
+                inset 8px 8px 20px rgba(255,255,255,0.5),
+                0 10px 30px rgba(0,0,0,0.3);
+            animation: ball-drop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Lever */
-        .lever-container {
+        .result-capsule.opening {
+            animation: capsule-open 0.6s ease-out;
+        }
+
+        .result-character {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+            animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+        }
+
+        /* Crank handle */
+        .crank-container {
             position: absolute;
-            right: -60px;
+            right: -55px;
             top: 50%;
             transform: translateY(-50%);
             z-index: 10;
+            cursor: pointer;
         }
 
-        .lever-base {
-            width: 30px;
-            height: 80px;
-            background: linear-gradient(90deg, #C0C0C0 0%, #E0E0E0 50%, #C0C0C0 100%);
-            border-radius: 5px;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+        .crank-base {
+            width: 25px;
+            height: 70px;
+            background: linear-gradient(90deg, #888 0%, #CCC 50%, #888 100%);
+            border-radius: 4px;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
         }
 
-        .lever-arm {
+        .crank-arm {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             transform-origin: bottom center;
-            cursor: pointer;
-            transition: transform 0.3s;
         }
 
-        .lever-arm:hover {
-            transform: translateX(-50%) rotate(10deg);
+        .crank-arm.rotating {
+            animation: crank-rotate 0.3s linear 3;
         }
 
-        .lever-arm.pulled {
-            animation: lever-pull 0.8s ease-out;
-        }
-
-        .lever-stick {
-            width: 12px;
-            height: 100px;
-            background: linear-gradient(90deg, #8B4513 0%, #A0522D 50%, #8B4513 100%);
-            border-radius: 6px;
+        .crank-shaft {
+            width: 10px;
+            height: 80px;
+            background: linear-gradient(90deg, #666 0%, #999 50%, #666 100%);
+            border-radius: 5px;
             margin: 0 auto;
         }
 
-        .lever-ball {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A5A 100%);
+        .crank-handle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%);
             border-radius: 50%;
             margin: 0 auto;
             margin-top: -5px;
             box-shadow:
-                inset -5px -5px 15px rgba(0,0,0,0.3),
-                inset 5px 5px 15px rgba(255,255,255,0.3),
+                inset -4px -4px 12px rgba(0,0,0,0.4),
+                inset 4px 4px 12px rgba(255,100,100,0.5),
                 3px 5px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
         }
 
-        /* Pull button (mobile friendly) */
+        .crank-container:hover .crank-handle {
+            transform: scale(1.1);
+            box-shadow:
+                inset -4px -4px 12px rgba(0,0,0,0.4),
+                inset 4px 4px 12px rgba(255,100,100,0.5),
+                0 0 20px rgba(255,68,68,0.5);
+        }
+
+        /* Dispenser chute */
+        .dispenser {
+            background: linear-gradient(180deg, #333 0%, #1a1a1a 100%);
+            width: 90px;
+            height: 50px;
+            margin: 0 auto -8px;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            box-shadow: inset 0 8px 15px rgba(0,0,0,0.6);
+        }
+
+        .dispenser-hole {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 22px;
+            background: #000;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* BIG PULL BUTTON */
         .pull-btn {
-            background: linear-gradient(135deg, var(--yellow-gold) 0%, #FFC107 100%);
+            background: linear-gradient(180deg, var(--yellow-gold) 0%, #FFA500 100%);
             border: none;
-            border-radius: 20px;
-            padding: 20px 40px;
+            border-radius: 25px;
+            padding: 18px 50px;
             font-family: 'Baloo 2', cursive;
-            font-size: 24px;
-            font-weight: 700;
-            color: #5D4E37;
+            font-size: 26px;
+            font-weight: 800;
+            color: #5D3A00;
             cursor: pointer;
             margin: 20px auto;
             display: block;
             box-shadow:
-                0 8px 0 #D4A017,
-                0 12px 20px rgba(0,0,0,0.2);
+                0 8px 0 #CC8800,
+                0 12px 25px rgba(0,0,0,0.25);
             transition: all 0.1s;
-            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+            animation: glow-pulse 2s ease-in-out infinite;
         }
 
         .pull-btn:hover {
-            transform: translateY(2px);
+            transform: translateY(3px);
             box-shadow:
-                0 6px 0 #D4A017,
-                0 10px 15px rgba(0,0,0,0.2);
+                0 5px 0 #CC8800,
+                0 8px 20px rgba(0,0,0,0.25);
         }
 
         .pull-btn:active {
-            transform: translateY(6px);
+            transform: translateY(7px);
             box-shadow:
-                0 2px 0 #D4A017,
-                0 5px 10px rgba(0,0,0,0.2);
+                0 1px 0 #CC8800,
+                0 4px 10px rgba(0,0,0,0.2);
         }
 
         .pull-btn:disabled {
             opacity: 0.7;
             cursor: not-allowed;
-        }
-
-        /* Dispenser */
-        .dispenser {
-            background: linear-gradient(180deg, #4A4A4A 0%, #2D2D2D 100%);
-            width: 100px;
-            height: 60px;
-            margin: 0 auto -10px;
-            border-radius: 0 0 20px 20px;
-            position: relative;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        .dispenser::before {
-            content: '';
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 25px;
-            background: #1a1a1a;
-            border-radius: 0 0 10px 10px;
+            animation: none;
         }
 
         /* Result card */
         .result-card {
             background: white;
-            border-radius: 30px;
-            padding: 30px;
-            margin-top: 24px;
+            border-radius: 28px;
+            padding: 28px;
+            margin-top: 20px;
             text-align: center;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
             display: none;
             animation: bounce-in 0.5s ease-out;
         }
@@ -394,18 +465,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
         .result-icon {
-            font-size: 36px;
-            animation: jiggle 1s ease-in-out infinite;
+            font-size: 32px;
+            animation: jiggle 0.8s ease-in-out infinite;
         }
 
         .result-label {
             font-family: 'Baloo 2', cursive;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--pink-hot);
         }
@@ -413,39 +484,52 @@
         .result-character-card {
             background: linear-gradient(135deg, var(--pink-light) 0%, var(--lavender) 100%);
             border-radius: 20px;
-            padding: 24px;
-            margin: 16px 0;
+            padding: 22px;
+            margin: 14px 0;
         }
 
         .result-char-img {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 16px;
-            animation: float 3s ease-in-out infinite;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 14px;
+            animation: float 2.5s ease-in-out infinite;
             filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
         }
 
         .result-char-name {
             font-family: 'Baloo 2', cursive;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             color: #333;
             margin-bottom: 8px;
         }
 
+        .rarity-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .rarity-ssr { background: linear-gradient(135deg, #FFD700, #FFA500); color: #5D3A00; }
+        .rarity-sr { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #333; }
+        .rarity-r { background: linear-gradient(135deg, #CD7F32, #8B4513); color: #FFF; }
+
         .result-match {
             background: linear-gradient(135deg, var(--pink-hot) 0%, var(--pink-deep) 100%);
             color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 18px;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: 600;
             display: inline-block;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .result-trait {
-            font-size: 16px;
+            font-size: 15px;
             color: #666;
             font-style: italic;
             margin-bottom: 12px;
@@ -454,70 +538,71 @@
         .result-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
         }
 
         .result-tag {
             background: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
             font-weight: 600;
             color: #555;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
         .result-message {
             background: linear-gradient(135deg, var(--yellow-cream) 0%, var(--peach) 100%);
-            border-radius: 16px;
-            padding: 16px;
-            margin-top: 16px;
-            font-size: 15px;
-            color: #666;
-            line-height: 1.6;
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 14px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
         }
 
         .play-again-btn {
-            background: linear-gradient(135deg, var(--mint) 0%, #7FDBDA 100%);
+            background: linear-gradient(135deg, var(--mint) 0%, #5DBDBD 100%);
             border: none;
-            border-radius: 20px;
-            padding: 16px 36px;
+            border-radius: 18px;
+            padding: 14px 32px;
             font-family: 'Baloo 2', cursive;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
-            color: #2D6A6A;
+            color: #1D4E4E;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 6px 0 #5DBDBD, 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 16px;
+            box-shadow: 0 5px 0 #3A9999, 0 8px 18px rgba(0,0,0,0.12);
             transition: all 0.1s;
         }
 
         .play-again-btn:hover {
             transform: translateY(2px);
-            box-shadow: 0 4px 0 #5DBDBD, 0 8px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 0 #3A9999, 0 6px 14px rgba(0,0,0,0.12);
         }
 
-        /* Collection counter */
+        /* Collection */
         .collection {
             background: white;
-            border-radius: 20px;
-            padding: 16px 24px;
-            margin-top: 24px;
+            border-radius: 18px;
+            padding: 14px 20px;
+            margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.08);
         }
 
         .collection-label {
             font-weight: 600;
             color: #666;
+            font-size: 14px;
         }
 
         .collection-count {
             font-family: 'Baloo 2', cursive;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--pink-hot);
         }
@@ -537,15 +622,34 @@
             animation: confetti-fall 3s linear forwards;
         }
 
+        /* Sparkle burst effect */
+        .sparkle-burst {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .sparkle-burst span {
+            position: absolute;
+            font-size: 24px;
+            animation: sparkle-burst 0.6s ease-out forwards;
+        }
+
         /* Back link */
         .back-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             color: #888;
             text-decoration: none;
             font-weight: 500;
-            margin-bottom: 16px;
+            font-size: 14px;
+            margin-bottom: 14px;
             transition: color 0.2s;
         }
 
@@ -554,31 +658,17 @@
         }
 
         /* Responsive */
-        @media (max-width: 500px) {
-            .lever-container {
-                display: none;
-            }
-            .dome {
-                width: 240px;
-                height: 240px;
-            }
-            .gacha-ball {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-            }
-            .result-character {
-                width: 130px;
-                height: 130px;
-            }
+        @media (max-width: 450px) {
+            .crank-container { display: none; }
+            .globe { width: 200px; height: 200px; }
+            .capsule { width: 38px; height: 38px; font-size: 18px; }
+            .result-capsule { width: 130px; height: 130px; }
+            .result-character { width: 95px; height: 95px; }
         }
     </style>
 </head>
 <body>
-    <!-- Stars background -->
     <div class="stars" id="stars"></div>
-
-    <!-- Confetti container -->
     <div class="confetti-container" id="confetti"></div>
 
     <div class="container">
@@ -586,45 +676,48 @@
 
         <header class="header">
             <h1 class="title">🎰 Boyfriend Gacha 💕</h1>
-            <p class="subtitle">Pull to see which chubby character matches your marshmallow BF!</p>
+            <p class="subtitle">Which chubby character is your marshmallow BF?</p>
         </header>
 
-        <!-- Gacha Machine -->
-        <div class="gacha-machine">
+        <div class="gacha-machine" id="gachaMachine">
             <div class="machine-top">
-                <div class="machine-title">✨ CHUBBY CHARACTER MATCHER 3000 ✨</div>
+                <div class="machine-title">✨ CHUBBY CHARACTER MATCHER ✨</div>
             </div>
 
-            <div class="dome" id="dome">
-                <div class="gacha-balls" id="gachaBalls">
-                    <div class="gacha-ball">🐹</div>
-                    <div class="gacha-ball">🐰</div>
-                    <div class="gacha-ball">🐕</div>
-                    <div class="gacha-ball">🐸</div>
-                    <div class="gacha-ball">🍮</div>
+            <div class="globe" id="globe">
+                <div class="capsules" id="capsules">
+                    <div class="capsule">🐹</div>
+                    <div class="capsule">🐰</div>
+                    <div class="capsule">🐕</div>
+                    <div class="capsule">🐸</div>
+                    <div class="capsule">🍮</div>
+                    <div class="capsule">💚</div>
                 </div>
                 <div class="result-display" id="resultDisplay">
-                    <img class="result-character" id="resultCharImg" src="" alt="">
+                    <div class="result-capsule" id="resultCapsule">
+                        <img class="result-character" id="resultCharImg" src="" alt="">
+                    </div>
+                </div>
+                <div class="sparkle-burst" id="sparkleBurst"></div>
+            </div>
+
+            <div class="crank-container" onclick="pullGacha()">
+                <div class="crank-base"></div>
+                <div class="crank-arm" id="crankArm">
+                    <div class="crank-handle"></div>
+                    <div class="crank-shaft"></div>
                 </div>
             </div>
 
-            <!-- Lever (desktop) -->
-            <div class="lever-container" onclick="pullGacha()">
-                <div class="lever-base"></div>
-                <div class="lever-arm" id="leverArm">
-                    <div class="lever-ball"></div>
-                    <div class="lever-stick"></div>
-                </div>
+            <div class="dispenser">
+                <div class="dispenser-hole"></div>
             </div>
-
-            <div class="dispenser"></div>
 
             <button class="pull-btn" id="pullBtn" onclick="pullGacha()">
                 🎰 PULL! 🎰
             </button>
         </div>
 
-        <!-- Result Card -->
         <div class="result-card" id="resultCard">
             <div class="result-header">
                 <span class="result-icon">🎊</span>
@@ -634,6 +727,7 @@
             <div class="result-character-card">
                 <img class="result-char-img" id="cardCharImg" src="" alt="">
                 <h3 class="result-char-name" id="cardCharName"></h3>
+                <span class="rarity-badge" id="rarityBadge"></span>
                 <div class="result-match" id="cardMatch"></div>
                 <p class="result-trait" id="cardTrait"></p>
                 <div class="result-tags" id="cardTags"></div>
@@ -642,24 +736,23 @@
             <button class="play-again-btn" onclick="resetGacha()">🔄 Pull Again!</button>
         </div>
 
-        <!-- Collection -->
         <div class="collection">
             <span class="collection-label">🎯 Characters Found:</span>
-            <span class="collection-count" id="collectionCount">0 / 19</span>
+            <span class="collection-count" id="collectionCount">0 / 22</span>
         </div>
     </div>
 
     <script>
-        // All characters - Sanrio + Hamtaro!
+        // ALL CHARACTERS: Sanrio + Hamtaro + Tamagotchi!
         const characters = [
-            // SANRIO CHARACTERS
+            // SANRIO
             {
                 name: "Pompompurin",
                 image: "images/pompompurin.svg",
                 match: 98,
                 trait: "Marshmallow Tummy Champion",
                 tags: ["🍮 Pudding Body", "😴 Nap King", "🥞 Snack Monster"],
-                message: "YOUR BOYFRIEND IS LITERALLY POMPOMPURIN! That golden marshmallow belly? Those sleepy eyes? The way he gravitates toward snacks? CONFIRMED PUDDING BOY! 🍮💕",
+                message: "YOUR BOYFRIEND IS POMPOMPURIN! That golden marshmallow belly? Those sleepy eyes? CONFIRMED PUDDING BOY! 🍮💕",
                 rarity: "SSR"
             },
             {
@@ -668,7 +761,7 @@
                 match: 95,
                 trait: "Fluffy Cloud Boyfriend",
                 tags: ["☁️ Cloud Body", "🎀 Extra Soft", "🍩 Dessert Radar"],
-                message: "A fluffy cloud puppy! Your boyfriend is so soft and huggable, you just want to squish him all day! Those cheeks are DANGEROUS! ☁️✨",
+                message: "A fluffy cloud puppy! Your boyfriend is so soft and huggable, you just want to squish him! ☁️✨",
                 rarity: "SSR"
             },
             {
@@ -677,7 +770,7 @@
                 match: 92,
                 trait: "Professional Couch Potato",
                 tags: ["🍳 Jiggly Egg", "😩 Maximum Lazy", "🛋️ Couch Expert"],
-                message: "A LAZY EGG! Your boyfriend probably also refuses to leave the blanket and just says 'meh' to everything. Peak lazy boyfriend energy! 🍳💤",
+                message: "A LAZY EGG! Your boyfriend refuses to leave the blanket and just says 'meh' to everything! 🍳💤",
                 rarity: "SR"
             },
             {
@@ -686,7 +779,7 @@
                 match: 90,
                 trait: "Gentle Marshmallow Hippo",
                 tags: ["🦛 Round Boy", "🤗 Hug Machine", "🌙 Soft Giant"],
-                message: "MOOMIN BOYFRIEND! Shaped like the most huggable creature in existence. That tummy is MADE for cuddles and that's just facts! 🦛💕",
+                message: "MOOMIN! Shaped like the most huggable creature. That tummy is MADE for cuddles! 🦛💕",
                 rarity: "SR"
             },
             {
@@ -695,7 +788,7 @@
                 match: 94,
                 trait: "Secret Snack Hoarder",
                 tags: ["🐹 Hamster Cheeks", "🍪 Snack Stash", "😋 Always Munching"],
-                message: "HAMSTER BOYFRIEND DETECTED! Check his pockets - he's 100% hiding snacks in there! Those cheeks aren't just for show! 🐹🍪",
+                message: "HAMSTER BOYFRIEND! Check his pockets - he's hiding snacks in there! 🐹🍪",
                 rarity: "SSR"
             },
             {
@@ -704,7 +797,7 @@
                 match: 85,
                 trait: "Iconic & Mysterious",
                 tags: ["🎀 Fashion Icon", "🍎 Apple Cheeks", "✨ Legendary"],
-                message: "Hello Kitty energy! Your boyfriend is an absolute icon - cute, round, and full of adorable mysteries! 🎀✨",
+                message: "Hello Kitty energy! Your boyfriend is an absolute icon - cute and mysterious! 🎀✨",
                 rarity: "SR"
             },
             {
@@ -713,7 +806,7 @@
                 match: 82,
                 trait: "Hoodie Stealing Bunny",
                 tags: ["🐰 Bunny Soft", "💗 Pink Lover", "🧥 Clothes Thief"],
-                message: "My Melody match! Your boyfriend is sweet, soft, and probably wearing YOUR clothes right now! So precious! 🐰💕",
+                message: "My Melody match! Your boyfriend is sweet and probably wearing YOUR clothes! 🐰💕",
                 rarity: "R"
             },
             {
@@ -722,7 +815,7 @@
                 match: 78,
                 trait: "Fake Tough Guy",
                 tags: ["😈 Acts Cool", "💜 Secret Softie", "🖤 Edgy Cutie"],
-                message: "KUROMI ENERGY! Your boyfriend ACTS all tough and cool but melts into a puddle when you hug him! We see through the act! 😈💕",
+                message: "KUROMI! Your boyfriend ACTS tough but melts when you hug him! 😈💕",
                 rarity: "R"
             },
             {
@@ -731,7 +824,7 @@
                 match: 88,
                 trait: "Clumsy Happy Puppy",
                 tags: ["🐕 Puppy Energy", "⚽ Tries His Best", "😄 Always Happy"],
-                message: "POCHACCO VIBES! Your boyfriend is the happiest, clumsiest, most lovable good boy! Probably trips over nothing! 🐕💕",
+                message: "POCHACCO! Your boyfriend is the happiest, clumsiest good boy! 🐕💕",
                 rarity: "SR"
             },
             {
@@ -740,16 +833,100 @@
                 match: 80,
                 trait: "Food-Obsessed Frog",
                 tags: ["🐸 Big Eyes", "🍽️ Always Hungry", "😊 Happy Frog"],
-                message: "Keroppi match! Your boyfriend has those big adorable eyes and is CONSTANTLY thinking about his next meal! 🐸🍽️",
+                message: "Keroppi! Your boyfriend is CONSTANTLY thinking about his next meal! 🐸🍽️",
                 rarity: "R"
             },
+            // HAMTARO (accurate Ham-Ham characters!)
+            {
+                name: "Hamtaro",
+                image: "images/hamtaro.svg",
+                match: 97,
+                trait: "Energetic Sunshine Hamster",
+                tags: ["🐹 Orange Stripes", "🌻 Hamha!", "💪 Brave Boy"],
+                message: "HAMTARO HIMSELF! Pure sunshine in hamster form! Energetic, brave, and loves sunflower seeds! HAMHA! 🐹🌻",
+                rarity: "SSR"
+            },
+            {
+                name: "Bijou",
+                image: "images/bijou.svg",
+                match: 88,
+                trait: "Elegant Ribbon Princess",
+                tags: ["🎀 Blue Ribbons", "✨ French Cutie", "💎 Precious"],
+                message: "BIJOU! Elegant with those signature blue ribbons. Sweet, refined, and absolutely precious! 💎✨",
+                rarity: "SR"
+            },
+            {
+                name: "Oxnard",
+                image: "images/oxnard.svg",
+                match: 99,
+                trait: "THE Chubby Snack King",
+                tags: ["🌻 Seed Obsessed", "🍔 Always Eating", "😊 Extra Round"],
+                message: "OXNARD! THE ULTIMATE CHUBBY BOY! Always has a sunflower seed, extra round, MAXIMUM MARSHMALLOW ENERGY! 🌻🐹",
+                rarity: "SSR"
+            },
+            {
+                name: "Boss",
+                image: "images/boss.svg",
+                match: 84,
+                trait: "Tough Field Hamster",
+                tags: ["💪 Strong Boi", "🤎 Leader", "😤 Protective"],
+                message: "BOSS! Acts tough and protective but secretly has a soft spot for Bijou! Total teddy bear inside! 💪❤️",
+                rarity: "SR"
+            },
+            {
+                name: "Pashmina",
+                image: "images/pashmina.svg",
+                match: 82,
+                trait: "Cozy Pink Scarf",
+                tags: ["🧣 Pink Scarf", "💗 Caring", "🌸 Gentle"],
+                message: "PASHMINA! Wrapped in that cozy pink scarf, always warm and gentle! Maximum comfort! 🧣💕",
+                rarity: "R"
+            },
+            {
+                name: "Penelope",
+                image: "images/penelope.svg",
+                match: 90,
+                trait: "Tiny Blanket Baby",
+                tags: ["🟡 Yellow Blanket", "👶 Smol Bean", "😴 Sleepy"],
+                message: "PENELOPE! The tiniest baby always wrapped in her yellow blanket! Must protect at all costs! 💛👶",
+                rarity: "SR"
+            },
+            // TAMAGOTCHI
+            {
+                name: "Mametchi",
+                image: "images/mametchi.svg",
+                match: 86,
+                trait: "Smart Yellow Bean",
+                tags: ["💛 Yellow Body", "🧠 Big Brain", "🔧 Inventor"],
+                message: "MAMETCHI! The smart Tamagotchi mascot with blue ears! He invents things that may or may not explode! 💛🧠",
+                rarity: "SR"
+            },
+            {
+                name: "Kuchipatchi",
+                image: "images/kuchipatchi.svg",
+                match: 96,
+                trait: "Chubby Green Eating Machine",
+                tags: ["💚 Green Bean", "👄 Big Lips", "🍔 FOOD BRAIN"],
+                message: "KUCHIPATCHI! The chubby green Tamagotchi who ONLY thinks about food and naps! Your boyfriend is a KUCHIPATCHI! 💚🍔",
+                rarity: "SSR"
+            },
+            {
+                name: "Memetchi",
+                image: "images/memetchi.svg",
+                match: 83,
+                trait: "Fashionista Pink Curl",
+                tags: ["💗 Pink Cutie", "💇 Curly Hair", "✨ Glamorous"],
+                message: "MEMETCHI! The glamorous pink Tamagotchi with the signature curl! Fashion-forward and fabulous! 💗✨",
+                rarity: "SR"
+            },
+            // More Sanrio
             {
                 name: "Badtz-Maru",
                 image: "images/badtz-maru.svg",
                 match: 75,
                 trait: "Grumpy Cuddle Penguin",
                 tags: ["🐧 Grumpy Face", "😤 Spiky Mood", "🖤 Needs Hugs"],
-                message: "Badtz-Maru! Your boyfriend looks perpetually grumpy but secretly just wants to be cuddled! Give that penguin love! 🐧💕",
+                message: "Badtz-Maru! Looks grumpy but secretly wants cuddles! Give that penguin love! 🐧💕",
                 rarity: "R"
             },
             {
@@ -757,8 +934,8 @@
                 image: "images/chococat.svg",
                 match: 83,
                 trait: "Nosy Food Watcher",
-                tags: ["🐱 Big Ears", "👀 Curious Boy", "🍫 Choco Addict"],
-                message: "CHOCOCAT! Your boyfriend probably stares at your food with those big curious eyes, hoping you'll share! 🐱👀",
+                tags: ["🐱 Big Ears", "👀 Curious", "🍫 Choco Addict"],
+                message: "CHOCOCAT! Stares at your food with those big curious eyes! 🐱👀",
                 rarity: "R"
             },
             {
@@ -767,62 +944,7 @@
                 match: 86,
                 trait: "Fancy Waddling Pudge",
                 tags: ["🐧 Fancy Boy", "🎩 Waddle King", "🍰 Treat Lover"],
-                message: "TUXEDO SAM! Your boyfriend thinks he's SO sophisticated but just waddles around being adorably pudgy! 🐧🎩",
-                rarity: "SR"
-            },
-            // HAMTARO CHARACTERS
-            {
-                name: "Hamtaro",
-                image: "images/hamtaro.svg",
-                match: 97,
-                trait: "Ultimate Hamster Energy",
-                tags: ["🐹 Orange Fluff", "🌻 Sunshine Boy", "🏃 Hamha Energy"],
-                message: "HAMTARO HIMSELF! Your boyfriend is pure sunshine in hamster form! Energetic, adorable, and absolutely obsessed with sunflower seeds! HAMHA! 🐹🌻",
-                rarity: "SSR"
-            },
-            {
-                name: "Bijou",
-                image: "images/bijou.svg",
-                match: 88,
-                trait: "Sparkly Ribbon Hamster",
-                tags: ["🎀 Blue Ribbons", "✨ Sparkle Eyes", "💎 Precious"],
-                message: "BIJOU! Your boyfriend is absolutely precious with those sparkly eyes! Sweet, elegant, and deserves all the sunflower seeds! 💎✨",
-                rarity: "SR"
-            },
-            {
-                name: "Oxnard",
-                image: "images/oxnard.svg",
-                match: 96,
-                trait: "Chubby Snack Champion",
-                tags: ["🌻 Seed Hoarder", "🍔 Always Eating", "😊 Round Boy"],
-                message: "OXNARD! THE CHUBBY KING! Your boyfriend is literally Oxnard - always has a snack, extra round, and absolutely perfect! 🌻🐹",
-                rarity: "SSR"
-            },
-            {
-                name: "Boss",
-                image: "images/boss.svg",
-                match: 84,
-                trait: "Tough But Tender",
-                tags: ["💪 Looks Strong", "🤎 Big Heart", "😤 Protective"],
-                message: "BOSS! Your boyfriend acts all tough and protective but is actually the softest inside! Total teddy bear energy! 💪❤️",
-                rarity: "SR"
-            },
-            {
-                name: "Pashmina",
-                image: "images/pashmina.svg",
-                match: 82,
-                trait: "Cozy Scarf Cutie",
-                tags: ["🧣 Pink Scarf", "💗 Sweet & Kind", "🌸 Gentle Soul"],
-                message: "PASHMINA! Your boyfriend is wrapped up in coziness, always warm and gentle! Pink scarf = maximum comfort! 🧣💕",
-                rarity: "R"
-            },
-            {
-                name: "Penelope",
-                image: "images/penelope.svg",
-                match: 90,
-                trait: "Tiny Blanket Baby",
-                tags: ["🟡 Yellow Blanket", "👶 Smol Bean", "😴 Sleepy Baby"],
-                message: "PENELOPE! Your boyfriend is the tiniest, most precious baby who's always wrapped in a blanket! Must protect at all costs! 💛👶",
+                message: "TUXEDO SAM! Thinks he's SO fancy but just waddles around being adorably pudgy! 🐧🎩",
                 rarity: "SR"
             }
         ];
@@ -830,81 +952,118 @@
         let collectedCharacters = new Set();
         let isSpinning = false;
 
-        // Create stars background
         function createStars() {
             const container = document.getElementById('stars');
             const stars = ['⭐', '✨', '💫', '🌟', '💕', '💗', '🩷'];
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 25; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.textContent = stars[Math.floor(Math.random() * stars.length)];
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.fontSize = (12 + Math.random() * 16) + 'px';
+                star.style.fontSize = (12 + Math.random() * 14) + 'px';
                 container.appendChild(star);
             }
         }
 
-        // Pull gacha!
         function pullGacha() {
             if (isSpinning) return;
             isSpinning = true;
 
             const pullBtn = document.getElementById('pullBtn');
-            const dome = document.getElementById('dome');
-            const leverArm = document.getElementById('leverArm');
+            const globe = document.getElementById('globe');
+            const machine = document.getElementById('gachaMachine');
+            const crankArm = document.getElementById('crankArm');
+            const capsules = document.getElementById('capsules');
             const resultDisplay = document.getElementById('resultDisplay');
             const resultCard = document.getElementById('resultCard');
+            const resultCapsule = document.getElementById('resultCapsule');
 
-            // Hide previous result
+            // Hide previous results
             resultDisplay.classList.remove('show');
             resultCard.classList.remove('show');
             pullBtn.disabled = true;
             pullBtn.textContent = '🎰 SPINNING... 🎰';
 
-            // Animate lever
-            leverArm.classList.add('pulled');
+            // Animate crank
+            crankArm.classList.add('rotating');
 
-            // Spin dome
-            dome.classList.add('spinning');
+            // Shake machine
+            machine.classList.add('shaking');
 
-            // Spin for 2 seconds
+            // Spin the balls
+            globe.classList.add('spinning');
+            capsules.style.display = 'block';
+
+            // After spin duration
             setTimeout(() => {
-                dome.classList.remove('spinning');
-                leverArm.classList.remove('pulled');
+                globe.classList.remove('spinning');
+                machine.classList.remove('shaking');
+                crankArm.classList.remove('rotating');
+
+                // Hide capsules, show result
+                capsules.style.display = 'none';
 
                 // Pick random character
                 const character = characters[Math.floor(Math.random() * characters.length)];
 
-                // Show result in dome
+                // Show result capsule with character
                 const resultImg = document.getElementById('resultCharImg');
                 resultImg.src = character.image;
                 resultDisplay.classList.add('show');
+
+                // Capsule opening effect
+                setTimeout(() => {
+                    resultCapsule.classList.add('opening');
+                    createSparkleBurst();
+                    setTimeout(() => resultCapsule.classList.remove('opening'), 600);
+                }, 400);
 
                 // Add to collection
                 collectedCharacters.add(character.name);
                 updateCollection();
 
-                // Show confetti!
+                // Confetti!
                 spawnConfetti();
 
-                // Show result card after a moment
+                // Show result card
                 setTimeout(() => {
                     showResultCard(character);
                     pullBtn.disabled = false;
                     pullBtn.textContent = '🎰 PULL! 🎰';
                     isSpinning = false;
-                }, 800);
+                }, 1000);
 
-            }, 2000);
+            }, 1800);
+        }
+
+        function createSparkleBurst() {
+            const burst = document.getElementById('sparkleBurst');
+            burst.innerHTML = '';
+            const sparkles = ['✨', '⭐', '💫', '🌟', '💕', '💗'];
+            for (let i = 0; i < 12; i++) {
+                const span = document.createElement('span');
+                span.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                const angle = (i / 12) * 360;
+                const distance = 80 + Math.random() * 40;
+                span.style.left = `calc(50% + ${Math.cos(angle * Math.PI / 180) * distance}px)`;
+                span.style.top = `calc(50% + ${Math.sin(angle * Math.PI / 180) * distance}px)`;
+                span.style.animationDelay = (i * 0.03) + 's';
+                burst.appendChild(span);
+            }
         }
 
         function showResultCard(character) {
             const card = document.getElementById('resultCard');
             document.getElementById('cardCharImg').src = character.image;
             document.getElementById('cardCharName').textContent = character.name;
-            document.getElementById('cardMatch').textContent = character.match + '% BF Match! ' + (character.rarity === 'SSR' ? '⭐⭐⭐' : character.rarity === 'SR' ? '⭐⭐' : '⭐');
+
+            const rarityBadge = document.getElementById('rarityBadge');
+            rarityBadge.textContent = character.rarity === 'SSR' ? '⭐⭐⭐ SSR' : character.rarity === 'SR' ? '⭐⭐ SR' : '⭐ R';
+            rarityBadge.className = 'rarity-badge rarity-' + character.rarity.toLowerCase();
+
+            document.getElementById('cardMatch').textContent = character.match + '% BF Match!';
             document.getElementById('cardTrait').textContent = '"' + character.trait + '"';
             document.getElementById('cardTags').innerHTML = character.tags.map(t => `<span class="result-tag">${t}</span>`).join('');
             document.getElementById('cardMessage').textContent = character.message;
@@ -914,8 +1073,10 @@
         function resetGacha() {
             const resultDisplay = document.getElementById('resultDisplay');
             const resultCard = document.getElementById('resultCard');
+            const capsules = document.getElementById('capsules');
             resultDisplay.classList.remove('show');
             resultCard.classList.remove('show');
+            capsules.style.display = 'block';
         }
 
         function updateCollection() {
@@ -925,23 +1086,22 @@
 
         function spawnConfetti() {
             const container = document.getElementById('confetti');
-            const confettiItems = ['🎉', '🎊', '💕', '✨', '⭐', '💗', '🩷', '🌟', '💫', '🎀'];
+            const items = ['🎉', '🎊', '💕', '✨', '⭐', '💗', '🩷', '🌟', '💫', '🎀'];
 
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
-                    confetti.textContent = confettiItems[Math.floor(Math.random() * confettiItems.length)];
+                    confetti.textContent = items[Math.floor(Math.random() * items.length)];
                     confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.fontSize = (16 + Math.random() * 24) + 'px';
+                    confetti.style.fontSize = (14 + Math.random() * 20) + 'px';
                     confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
                     container.appendChild(confetti);
                     setTimeout(() => confetti.remove(), 4000);
-                }, i * 30);
+                }, i * 25);
             }
         }
 
-        // Initialize
         createStars();
         updateCollection();
     </script>

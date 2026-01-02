@@ -294,39 +294,97 @@
             letter-spacing: 1px;
         }
 
-        /* Memories */
-        .memories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            margin: 32px 0;
-        }
-
-        .memory-card {
-            background: white;
-            border-radius: 24px;
-            padding: 28px 20px;
+        /* Reasons I Love You */
+        .reasons-section {
+            margin: 48px 0;
             text-align: center;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-            transition: all 0.3s;
-            border: 2px solid transparent;
         }
 
-        .memory-card:hover {
-            border-color: var(--pink-200);
-            transform: translateY(-4px);
+        .reason-card {
+            background: linear-gradient(135deg, #fff5f8 0%, #fff0f5 100%);
+            border-radius: 32px;
+            padding: 40px 32px;
+            margin: 24px auto;
+            max-width: 500px;
+            cursor: pointer;
+            box-shadow: 0 15px 50px rgba(236, 72, 153, 0.15);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 3px solid var(--pink-200);
+            position: relative;
+            overflow: hidden;
         }
 
-        .memory-emoji {
-            font-size: 44px;
-            margin-bottom: 12px;
+        .reason-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(255,182,193,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(236, 72, 153, 0.25);
+            border-color: var(--pink-400);
+        }
+
+        .reason-card:hover::before {
+            opacity: 1;
+        }
+
+        .reason-card:active {
+            transform: scale(0.98);
+        }
+
+        .reason-heart {
+            font-size: 48px;
             display: block;
+            margin-bottom: 16px;
+            animation: heartbeat 1.2s ease-in-out infinite;
         }
 
-        .memory-text {
-            font-size: 15px;
-            color: #777;
+        .reason-text {
+            font-size: 22px;
+            color: #555;
+            line-height: 1.6;
             font-weight: 500;
+            margin: 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reason-text.changing {
+            animation: reasonChange 0.4s ease-out;
+        }
+
+        @keyframes reasonChange {
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .reason-hint {
+            display: block;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #bbb;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .reason-counter {
+            font-size: 14px;
+            color: #999;
+            margin-top: 16px;
+        }
+
+        .reason-counter span:first-child {
+            color: var(--pink-500);
+            font-weight: 700;
         }
 
         /* Love Letter */
@@ -897,8 +955,11 @@
                 height: 80px;
                 font-size: 36px;
             }
-            .memories-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .reason-card {
+                padding: 32px 24px;
+            }
+            .reason-text {
+                font-size: 18px;
             }
         }
     </style>
@@ -979,34 +1040,16 @@
             </div>
         </section>
 
-        <!-- Memories -->
-        <section>
-            <p class="section-label">Sweet Memories</p>
-            <div class="memories-grid">
-                <div class="memory-card">
-                    <span class="memory-emoji">🍜</span>
-                    <span class="memory-text">Yummy Food Dates</span>
-                </div>
-                <div class="memory-card">
-                    <span class="memory-emoji">🎬</span>
-                    <span class="memory-text">Movie Nights</span>
-                </div>
-                <div class="memory-card">
-                    <span class="memory-emoji">🛍️</span>
-                    <span class="memory-text">Shopping Together</span>
-                </div>
-                <div class="memory-card">
-                    <span class="memory-emoji">☕</span>
-                    <span class="memory-text">Cozy Cafe Trips</span>
-                </div>
-                <div class="memory-card">
-                    <span class="memory-emoji">🌸</span>
-                    <span class="memory-text">Beautiful Walks</span>
-                </div>
-                <div class="memory-card">
-                    <span class="memory-emoji">📸</span>
-                    <span class="memory-text">Photo Memories</span>
-                </div>
+        <!-- Reasons I Love You -->
+        <section class="reasons-section" id="reasonsSection">
+            <p class="section-label">Tap for a reason I love you</p>
+            <div class="reason-card" id="reasonCard" onclick="showNextReason()">
+                <span class="reason-heart">💕</span>
+                <p class="reason-text" id="reasonText">Click me!</p>
+                <span class="reason-hint">tap for another reason</span>
+            </div>
+            <div class="reason-counter">
+                <span id="reasonCounter">0</span> / <span id="totalReasons">100</span> reasons discovered
             </div>
         </section>
 
@@ -1396,6 +1439,154 @@
         // Initialize
         initDots();
         updateCharacter(false);
+
+        // ============================================
+        // REASONS I LOVE YOU
+        // ============================================
+        const reasons = [
+            "Your smile makes my whole day better",
+            "The way you laugh at my terrible jokes",
+            "How you always know when I need a hug",
+            "Your eyes light up when you talk about things you love",
+            "You make even boring days feel special",
+            "The way you scrunch your nose when you're thinking",
+            "How you always steal my hoodies (and look cuter in them)",
+            "Your random 3am thoughts that you just HAVE to share",
+            "The way you get excited about little things",
+            "How you make me want to be a better person",
+            "Your sleepy voice in the morning",
+            "The way you hold my hand",
+            "How you remember the small things I mention",
+            "Your determination and strength",
+            "The cute faces you make when you eat something yummy",
+            "How you always cheer me up when I'm down",
+            "Your endless patience with me",
+            "The way you dance when no one's watching (but I am)",
+            "How you make everywhere feel like home",
+            "Your beautiful heart",
+            "The way you care about everyone around you",
+            "How you make me feel safe",
+            "Your creativity and imagination",
+            "The way you get excited about food",
+            "How you always support my dreams",
+            "Your warm hugs that fix everything",
+            "The silly nicknames you give me",
+            "How you make me laugh until I cry",
+            "Your kindness to strangers",
+            "The way you look at me",
+            "How you never give up on us",
+            "Your voice when you sing (even off-key)",
+            "The way you fall asleep on my shoulder",
+            "How you make ordinary moments magical",
+            "Your passion for the things you love",
+            "The way you pout when you don't get your way (it's cute)",
+            "How you always think of others first",
+            "Your courage to be yourself",
+            "The way you make me feel understood",
+            "How you brighten every room you walk into",
+            "Your incredible taste in music",
+            "The way you get lost in books/movies",
+            "How you always know what to say",
+            "Your adorable sneeze",
+            "The way you stretch when you wake up",
+            "How you make even waiting in line fun",
+            "Your endless curiosity about the world",
+            "The way you take care of me when I'm sick",
+            "How you never judge me for being weird",
+            "Your beautiful mind",
+            "The way you smell (like comfort and happiness)",
+            "How you make my heart skip a beat",
+            "Your gentle touch",
+            "The way you include everyone",
+            "How you make me feel like the luckiest person alive",
+            "Your ability to find beauty in everything",
+            "The way you trust me completely",
+            "How you make me feel complete",
+            "Your infectious positivity",
+            "The way you light up talking about your passions",
+            "How you always give people second chances",
+            "Your perfect imperfections",
+            "The way you believe in me",
+            "How you make every day worth living",
+            "Your silly dance moves",
+            "The way you eat (it's so cute)",
+            "How you never let me feel alone",
+            "Your warm personality",
+            "The way you care for your loved ones",
+            "How you make me want to try new things",
+            "Your comforting presence",
+            "The way you text me good morning",
+            "How you remember our special dates",
+            "Your genuine interest in my life",
+            "The way you defend the people you love",
+            "How you make me feel appreciated",
+            "Your honesty and openness",
+            "The way you dream big",
+            "How you make me feel young again",
+            "Your beautiful soul",
+            "The way you get shy sometimes",
+            "How you push me to be better",
+            "Your amazing sense of humor",
+            "The way you fall asleep during movies",
+            "How you make me feel valued",
+            "Your unconditional love",
+            "The way you look in the morning light",
+            "How you always know what I'm thinking",
+            "Your dedication to everything you do",
+            "The way you make even bad days good",
+            "How you complete my sentences",
+            "Your endless love for cute things",
+            "The way you get hangry (it's adorable)",
+            "How you make me feel like myself",
+            "Your resilience through tough times",
+            "The way you smell after a shower",
+            "How you make every goodbye so hard",
+            "Your beautiful inside and out",
+            "The way you make me feel at peace",
+            "Simply everything about you"
+        ];
+
+        let discoveredReasons = new Set();
+        let currentReasonIndex = -1;
+
+        document.getElementById('totalReasons').textContent = reasons.length;
+
+        function showNextReason() {
+            const textEl = document.getElementById('reasonText');
+            const counterEl = document.getElementById('reasonCounter');
+
+            // Get a random reason (different from current)
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * reasons.length);
+            } while (newIndex === currentReasonIndex && reasons.length > 1);
+
+            currentReasonIndex = newIndex;
+            discoveredReasons.add(newIndex);
+
+            // Animate the text change
+            textEl.classList.remove('changing');
+            void textEl.offsetWidth; // Force reflow
+            textEl.classList.add('changing');
+            textEl.textContent = reasons[currentReasonIndex];
+
+            // Update counter
+            counterEl.textContent = discoveredReasons.size;
+
+            // Sparkle effect
+            const card = document.getElementById('reasonCard');
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = ['💕', '✨', '💗', '🩷', '💖'][Math.floor(Math.random() * 5)];
+                const rect = card.getBoundingClientRect();
+                sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                sparkle.style.fontSize = (16 + Math.random() * 12) + 'px';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 800);
+            }
+        }
     </script>
 </body>
 </html>

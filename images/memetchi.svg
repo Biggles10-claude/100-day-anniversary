@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Memetchi - pink Tamagotchi girl with curly hair swirl -->
+  <!-- Body -->
+  <ellipse cx="50" cy="75" rx="22" ry="18" fill="#FFB6C1"/>
+  <!-- Head -->
+  <circle cx="50" cy="45" r="28" fill="#FFB6C1"/>
+  <!-- Signature curly hair swirl on top -->
+  <path d="M 50 12 Q 70 8 68 20 Q 66 32 55 28 Q 44 24 48 16 Q 52 10 50 12" fill="#FF69B4" stroke="#FF1493" stroke-width="2"/>
+  <!-- Additional curl detail -->
+  <circle cx="58" cy="18" r="6" fill="#FF69B4"/>
+  <!-- Big sparkly eyes (Memetchi is fashion-conscious) -->
+  <ellipse cx="38" cy="44" rx="9" ry="11" fill="#333"/>
+  <ellipse cx="62" cy="44" rx="9" ry="11" fill="#333"/>
+  <!-- Multiple eye sparkles (she's glamorous!) -->
+  <ellipse cx="41" cy="40" rx="3" ry="4" fill="#FFF"/>
+  <ellipse cx="65" cy="40" rx="3" ry="4" fill="#FFF"/>
+  <circle cx="36" cy="46" r="1.5" fill="#FFF"/>
+  <circle cx="60" cy="46" r="1.5" fill="#FFF"/>
+  <!-- Eyelashes -->
+  <path d="M 30 38 L 33 42" stroke="#333" stroke-width="1.5"/>
+  <path d="M 33 36 L 35 40" stroke="#333" stroke-width="1.5"/>
+  <path d="M 67 40 L 70 38" stroke="#333" stroke-width="1.5"/>
+  <path d="M 65 40 L 67 36" stroke="#333" stroke-width="1.5"/>
+  <!-- Small cute mouth -->
+  <path d="M 46 58 Q 50 62 54 58" fill="none" stroke="#333" stroke-width="2"/>
+  <!-- Blush -->
+  <ellipse cx="30" cy="52" rx="5" ry="3" fill="#FF69B4" opacity="0.5"/>
+  <ellipse cx="70" cy="52" rx="5" ry="3" fill="#FF69B4" opacity="0.5"/>
+  <!-- Little arms -->
+  <ellipse cx="28" cy="72" rx="6" ry="7" fill="#FFB6C1"/>
+  <ellipse cx="72" cy="72" rx="6" ry="7" fill="#FFB6C1"/>
+  <!-- Feet -->
+  <ellipse cx="38" cy="90" rx="9" ry="5" fill="#FFB6C1"/>
+  <ellipse cx="62" cy="90" rx="9" ry="5" fill="#FFB6C1"/>
+</svg>

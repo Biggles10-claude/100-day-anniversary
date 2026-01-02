@@ -1,33 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Hamtaro - orange and white hamster -->
+  <!-- Hamtaro - orange and white hamster with signature stripes -->
   <!-- Body -->
-  <ellipse cx="50" cy="70" rx="32" ry="25" fill="#F4A460"/>
+  <ellipse cx="50" cy="70" rx="30" ry="24" fill="#F5A623"/>
   <!-- White belly -->
-  <ellipse cx="50" cy="75" rx="22" ry="18" fill="#FFF8DC"/>
+  <ellipse cx="50" cy="74" rx="22" ry="18" fill="#FFFFFF"/>
   <!-- Head -->
-  <circle cx="50" cy="42" r="30" fill="#F4A460"/>
-  <!-- White face patch -->
-  <ellipse cx="50" cy="48" rx="22" ry="20" fill="#FFF8DC"/>
+  <circle cx="50" cy="40" r="30" fill="#F5A623"/>
+  <!-- White face area -->
+  <ellipse cx="50" cy="48" rx="22" ry="20" fill="#FFFFFF"/>
+  <!-- Orange forehead stripe (Hamtaro's signature look) -->
+  <path d="M 35 25 Q 50 15 65 25" fill="none" stroke="#D4820E" stroke-width="6" stroke-linecap="round"/>
   <!-- Ears -->
-  <ellipse cx="25" cy="25" rx="10" ry="14" fill="#F4A460"/>
-  <ellipse cx="25" cy="25" rx="6" ry="9" fill="#FFB6C1"/>
-  <ellipse cx="75" cy="25" rx="10" ry="14" fill="#F4A460"/>
-  <ellipse cx="75" cy="25" rx="6" ry="9" fill="#FFB6C1"/>
-  <!-- Eyes -->
-  <circle cx="38" cy="42" r="6" fill="#333"/>
-  <circle cx="62" cy="42" r="6" fill="#333"/>
-  <circle cx="40" cy="40" r="2.5" fill="#FFF"/>
-  <circle cx="64" cy="40" r="2.5" fill="#FFF"/>
-  <!-- Nose -->
-  <ellipse cx="50" cy="52" rx="4" ry="3" fill="#333"/>
-  <!-- Cheeks -->
-  <ellipse cx="28" cy="52" rx="7" ry="5" fill="#FFB6C1" opacity="0.7"/>
-  <ellipse cx="72" cy="52" rx="7" ry="5" fill="#FFB6C1" opacity="0.7"/>
+  <ellipse cx="25" cy="20" rx="10" ry="14" fill="#F5A623"/>
+  <ellipse cx="25" cy="20" rx="6" ry="9" fill="#FFB6C1"/>
+  <ellipse cx="75" cy="20" rx="10" ry="14" fill="#F5A623"/>
+  <ellipse cx="75" cy="20" rx="6" ry="9" fill="#FFB6C1"/>
+  <!-- Big round eyes -->
+  <circle cx="38" cy="42" r="8" fill="#333"/>
+  <circle cx="62" cy="42" r="8" fill="#333"/>
+  <!-- Eye shine -->
+  <circle cx="41" cy="39" r="3" fill="#FFF"/>
+  <circle cx="65" cy="39" r="3" fill="#FFF"/>
+  <circle cx="36" cy="44" r="1.5" fill="#FFF"/>
+  <circle cx="60" cy="44" r="1.5" fill="#FFF"/>
+  <!-- Pink nose -->
+  <ellipse cx="50" cy="52" rx="4" ry="3" fill="#FF6B8A"/>
   <!-- Mouth -->
   <path d="M 44 58 Q 50 64 56 58" fill="none" stroke="#333" stroke-width="2"/>
-  <!-- Orange stripes on head -->
-  <path d="M 35 22 Q 50 18 65 22" fill="none" stroke="#D2691E" stroke-width="3"/>
+  <!-- Whisker dots -->
+  <circle cx="35" cy="55" r="1.5" fill="#333"/>
+  <circle cx="30" cy="52" r="1.5" fill="#333"/>
+  <circle cx="65" cy="55" r="1.5" fill="#333"/>
+  <circle cx="70" cy="52" r="1.5" fill="#333"/>
+  <!-- Rosy cheeks -->
+  <ellipse cx="28" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.7"/>
+  <ellipse cx="72" cy="52" rx="6" ry="4" fill="#FFB6C1" opacity="0.7"/>
   <!-- Little paws -->
-  <ellipse cx="30" cy="88" rx="8" ry="5" fill="#FFF8DC"/>
-  <ellipse cx="70" cy="88" rx="8" ry="5" fill="#FFF8DC"/>
+  <ellipse cx="30" cy="85" rx="8" ry="5" fill="#F5A623"/>
+  <ellipse cx="70" cy="85" rx="8" ry="5" fill="#F5A623"/>
 </svg>
