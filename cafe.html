@@ -647,6 +647,85 @@
         <div class="win-subtitle">10 Days Complete!</div>
     </div>
 
+    <!-- RECIPE GUIDE -->
+    <div id="recipeGuide" style="
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 250;
+    ">
+        <div style="
+            background: white;
+            border-radius: 24px;
+            padding: 25px 30px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalPop 0.4s ease-out;
+        ">
+            <h2 style="font-family: 'Pacifico', cursive; font-size: 28px; color: #ec4899; text-align: center; margin-bottom: 15px;">
+                📖 Recipe Guide
+            </h2>
+            <p style="text-align: center; color: #888; margin-bottom: 15px; font-size: 13px;">
+                Grab ingredients → Cook at stove/oven → Get plate → Pick up dish → Serve customers!
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 13px;">
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🍞 Toast</strong><br>bread → $3
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🍳 Fried Egg</strong><br>egg → $4
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>☕ Coffee</strong><br>coffee → $4
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🧀 Cheese Toast</strong><br>bread + cheese → $5
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🥗 Salad</strong><br>lettuce + tomato → $6
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🍚 Rice Bowl</strong><br>rice + egg → $6
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🥓 Bacon & Egg</strong><br>egg + bacon → $7
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🥬 Veggie Plate</strong><br>lettuce + tomato + cheese → $7
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🥪 Sandwich</strong><br>bread + cheese + lettuce → $8
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🍰 Strawberry Cake</strong><br>cake + strawberry → $9
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🍳 Breakfast</strong><br>egg + bacon + bread → $10
+                </div>
+                <div style="background: #fdf2f8; padding: 10px; border-radius: 12px;">
+                    <strong>🥪 BLT</strong><br>bread + bacon + lettuce + tomato → $12
+                </div>
+            </div>
+            <button onclick="closeRecipeGuide()" style="
+                display: block;
+                margin: 20px auto 0;
+                background: linear-gradient(135deg, #f472b6, #ec4899);
+                color: white;
+                border: none;
+                padding: 14px 40px;
+                border-radius: 25px;
+                font-size: 16px;
+                font-weight: 700;
+                font-family: 'Quicksand', sans-serif;
+                cursor: pointer;
+            ">Let's Cook! 🍳</button>
+        </div>
+    </div>
+
     <script>
         // ==========================================
         // GAME CONFIGURATION - MUCH MORE SPACE
@@ -796,6 +875,12 @@
             player.character = char;
             document.getElementById('charSelect').classList.add('hidden');
             document.getElementById('gameContainer').classList.add('active');
+            // Show recipe guide first
+            document.getElementById('recipeGuide').style.display = 'flex';
+        }
+
+        function closeRecipeGuide() {
+            document.getElementById('recipeGuide').style.display = 'none';
             // CRITICAL: Resize canvas AFTER container is visible
             setTimeout(() => {
                 resizeCanvas();
