@@ -1050,6 +1050,12 @@
             updateCooking(dt);
             updateCustomers(dt);
 
+            // Update wrong order feedback timer
+            if (wrongOrderFeedback) {
+                wrongOrderFeedback.timer -= dt;
+                if (wrongOrderFeedback.timer <= 0) wrongOrderFeedback = null;
+            }
+
             // Throttle HUD updates for performance (every 100ms)
             lastHUDUpdate += dt;
             if (lastHUDUpdate >= 100) {
@@ -1204,7 +1210,28 @@
             drawCustomers();
             drawCookingProgress();
             drawPlayer();
+            drawWrongOrderFeedback();
 
+            ctx.restore();
+        }
+
+        function drawWrongOrderFeedback() {
+            if (!wrongOrderFeedback) return;
+
+            const alpha = Math.min(1, wrongOrderFeedback.timer / 500);
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.font = 'bold 24px Quicksand';
+            ctx.fillStyle = '#ef4444';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.textAlign = 'center';
+
+            // Float upward as it fades
+            const floatY = wrongOrderFeedback.y - (1000 - wrongOrderFeedback.timer) * 0.03;
+
+            ctx.strokeText(wrongOrderFeedback.text, wrongOrderFeedback.x, floatY);
+            ctx.fillText(wrongOrderFeedback.text, wrongOrderFeedback.x, floatY);
             ctx.restore();
         }
 
@@ -1445,23 +1472,30 @@
             }
         }
 
+        let wrongOrderFeedback = null;
+
         function serveTable(t) {
             if (!t.customer || t.customer.served || !player.platedDish) return;
 
             // Check if dish matches order
             const isCorrect = player.platedDish === t.customer.order;
-            const base = recipes[t.customer.order]?.tip || 5;
 
-            if (isCorrect) {
-                // Full tip + bonus for correct order
-                const bonus = Math.floor((t.customer.patience / t.customer.maxPatience) * base);
-                gameState.tips += base + bonus;
-                gameState.dayTips += base + bonus;
-            } else {
-                // Half tip for wrong order (still serves them)
-                gameState.tips += Math.floor(base / 2);
-                gameState.dayTips += Math.floor(base / 2);
+            if (!isCorrect) {
+                // REJECT wrong order - customer shakes head, player keeps dish
+                wrongOrderFeedback = {
+                    x: t.x + t.w / 2,
+                    y: t.y - 30,
+                    timer: 1000,
+                    text: '❌ Wrong!'
+                };
+                return; // Don't serve, don't take the dish
             }
+
+            // Correct order - give tip with bonus for speed
+            const base = recipes[t.customer.order]?.tip || 5;
+            const bonus = Math.floor((t.customer.patience / t.customer.maxPatience) * base);
+            gameState.tips += base + bonus;
+            gameState.dayTips += base + bonus;
 
             gameState.served++;
             gameState.dayServed++;
