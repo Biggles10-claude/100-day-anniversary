@@ -978,6 +978,52 @@
     </style>
 </head>
 <body>
+    <!-- Background Music -->
+    <audio id="bgm" loop>
+        <source src="music__20260102_114131.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicToggle" onclick="toggleMusic()" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        transition: transform 0.2s;
+    ">🔇</button>
+    <script>
+        let musicPlaying = false;
+        function toggleMusic() {
+            const bgm = document.getElementById('bgm');
+            const btn = document.getElementById('musicToggle');
+            if (musicPlaying) {
+                bgm.pause();
+                btn.textContent = '🔇';
+                musicPlaying = false;
+            } else {
+                bgm.play();
+                btn.textContent = '🔊';
+                musicPlaying = true;
+            }
+        }
+        // Auto-play on first interaction
+        document.addEventListener('click', function autoPlay() {
+            if (!musicPlaying) {
+                document.getElementById('bgm').play().then(() => {
+                    musicPlaying = true;
+                    document.getElementById('musicToggle').textContent = '🔊';
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', autoPlay);
+        }, { once: true });
+    </script>
     <!-- Floating Background -->
     <div class="floating-container" id="floaters"></div>
 
