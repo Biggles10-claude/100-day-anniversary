@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Gudetama - lazy egg -->
+  <!-- Egg white (blanket) -->
+  <ellipse cx="50" cy="65" rx="40" ry="25" fill="#FFFFFF" stroke="#EEE" stroke-width="1"/>
+  <!-- Egg yolk body -->
+  <ellipse cx="50" cy="55" rx="25" ry="22" fill="#FFD93D"/>
+  <!-- Lazy/tired eyes -->
+  <line x1="35" y1="48" x2="45" y2="48" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="55" y1="48" x2="65" y2="48" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Tired mouth -->
+  <ellipse cx="50" cy="60" rx="4" ry="2" fill="#F4A460"/>
+  <!-- Butt crack line (signature gudetama) -->
+  <path d="M 50 65 Q 50 75 50 78" fill="none" stroke="#E6B800" stroke-width="2"/>
+  <!-- Little arm sticking out -->
+  <ellipse cx="25" cy="58" rx="8" ry="5" fill="#FFD93D"/>
+  <!-- Lazy expression lines -->
+  <path d="M 32 42 L 35 45" stroke="#333" stroke-width="1"/>
+  <path d="M 68 42 L 65 45" stroke="#333" stroke-width="1"/>
+</svg>

@@ -415,6 +415,394 @@
             100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
         }
 
+        /* ============================================
+           CHARACTER MATCHING GAME STYLES
+           ============================================ */
+        .matching-game {
+            background: linear-gradient(135deg, #fff5f8 0%, #fef3c7 50%, #fce7f3 100%);
+            border-radius: 40px;
+            padding: 48px 24px;
+            margin: 48px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 25px 80px rgba(236, 72, 153, 0.15),
+                inset 0 0 100px rgba(255, 255, 255, 0.5);
+        }
+
+        .matching-game::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,182,193,0.2) 0%, transparent 50%);
+            animation: rotateGlow 20s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .game-header {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 32px;
+        }
+
+        .game-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 16px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .game-title {
+            font-family: 'Sacramento', cursive;
+            font-size: clamp(32px, 8vw, 48px);
+            color: var(--pink-500);
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0 white;
+        }
+
+        .game-subtitle {
+            font-size: 16px;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .carousel-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: var(--pink-500);
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover {
+            transform: scale(1.15);
+            background: var(--pink-500);
+            color: white;
+        }
+
+        .carousel-btn:active {
+            transform: scale(0.95);
+        }
+
+        .character-showcase {
+            width: 100%;
+            max-width: 320px;
+            perspective: 1000px;
+        }
+
+        .showcase-card {
+            background: white;
+            border-radius: 32px;
+            padding: 32px 24px;
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(255,182,193,0.3);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-8px) rotateY(5deg);
+        }
+
+        .showcase-card.swipe-left {
+            animation: swipeLeft 0.4s ease-out forwards;
+        }
+
+        .showcase-card.swipe-right {
+            animation: swipeRight 0.4s ease-out forwards;
+        }
+
+        @keyframes swipeLeft {
+            0% { transform: translateX(0) rotate(0); opacity: 1; }
+            100% { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
+        }
+
+        @keyframes swipeRight {
+            0% { transform: translateX(0) rotate(0); opacity: 1; }
+            100% { transform: translateX(150%) rotate(20deg); opacity: 0; }
+        }
+
+        .showcase-card.enter {
+            animation: cardEnter 0.4s ease-out forwards;
+        }
+
+        @keyframes cardEnter {
+            0% { transform: translateY(50px) scale(0.8); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .card-inner {
+            text-align: center;
+        }
+
+        .character-image-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .character-image-wrapper img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            animation: floatCharacter 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        @keyframes floatCharacter {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .sparkle-effect {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,215,0,0.3) 0%, transparent 50%);
+            animation: sparkleRotate 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkleRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .character-name {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .match-percent {
+            background: linear-gradient(135deg, var(--pink-400) 0%, #f472b6 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .percent-num {
+            font-size: 32px;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+
+        .percent-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .character-desc {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-style: italic;
+            min-height: 48px;
+        }
+
+        .traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .trait {
+            background: linear-gradient(135deg, var(--pink-50) 0%, var(--cream) 100%);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            border: 1px solid var(--pink-100);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--pink-200);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--pink-500);
+            transform: scale(1.3);
+        }
+
+        .dot:hover {
+            background: var(--pink-400);
+        }
+
+        .match-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .action-btn {
+            padding: 16px 32px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn span {
+            font-size: 20px;
+        }
+
+        .nope-btn {
+            background: white;
+            color: #999;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .nope-btn:hover {
+            background: #fee2e2;
+            color: #ef4444;
+            transform: scale(1.05);
+        }
+
+        .love-btn {
+            background: linear-gradient(135deg, var(--pink-400) 0%, var(--pink-500) 100%);
+            color: white;
+            box-shadow: 0 8px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .love-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 40px rgba(236, 72, 153, 0.5);
+        }
+
+        .match-result {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .match-result.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 32px;
+            padding: 48px;
+            text-align: center;
+            max-width: 400px;
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .result-icon {
+            font-size: 72px;
+            margin-bottom: 16px;
+            animation: bounce 0.6s ease-in-out infinite;
+        }
+
+        .result-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 42px;
+            color: var(--pink-500);
+            margin-bottom: 16px;
+        }
+
+        .result-text {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .play-again-btn {
+            background: linear-gradient(135deg, var(--pink-400) 0%, var(--pink-500) 100%);
+            color: white;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .play-again-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .glass-card, .letter-card, .stats-section {
@@ -539,6 +927,65 @@
             </div>
         </section>
 
+        <!-- CHARACTER MATCHING GAME -->
+        <section class="matching-game" id="matchingGame">
+            <div class="game-header">
+                <span class="game-icon">🎮</span>
+                <h2 class="game-title">Which Chubby Character Is Your Boyfriend?</h2>
+                <p class="game-subtitle">Swipe through to find your marshmallow match! 🍡</p>
+            </div>
+
+            <div class="carousel-container">
+                <button class="carousel-btn prev-btn" onclick="prevCharacter()">❮</button>
+
+                <div class="character-showcase" id="characterShowcase">
+                    <div class="showcase-card" id="showcaseCard">
+                        <div class="card-inner">
+                            <div class="character-image-wrapper">
+                                <img id="characterImg" src="images/pompompurin.svg" alt="Character">
+                                <div class="sparkle-effect"></div>
+                            </div>
+                            <h3 class="character-name" id="characterName">Pompompurin</h3>
+                            <div class="match-percent" id="matchPercent">
+                                <span class="percent-num">95%</span>
+                                <span class="percent-label">BOYFRIEND MATCH</span>
+                            </div>
+                            <p class="character-desc" id="characterDesc">
+                                "Soft, squishy, and loves to nap. Your boyfriend IS a golden pudding!"
+                            </p>
+                            <div class="traits" id="traits">
+                                <span class="trait">🍮 Soft & Squishy</span>
+                                <span class="trait">😴 Sleepy Boy</span>
+                                <span class="trait">🍰 Snack Lover</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn next-btn" onclick="nextCharacter()">❯</button>
+            </div>
+
+            <div class="carousel-dots" id="carouselDots"></div>
+
+            <div class="match-actions">
+                <button class="action-btn nope-btn" onclick="nopeCharacter()">
+                    <span>✗</span> Not Him
+                </button>
+                <button class="action-btn love-btn" onclick="matchCharacter()">
+                    <span>💕</span> That's My BF!
+                </button>
+            </div>
+
+            <div class="match-result" id="matchResult">
+                <div class="result-content">
+                    <div class="result-icon">🎉</div>
+                    <h3 class="result-title">Perfect Match!</h3>
+                    <p class="result-text" id="resultText"></p>
+                    <button class="play-again-btn" onclick="resetGame()">Play Again 🔄</button>
+                </div>
+            </div>
+        </section>
+
         <!-- Love Letter -->
         <div class="letter-card">
             <div class="letter-seal">💌</div>
@@ -624,6 +1071,236 @@
         });
 
         createFloaters();
+
+        // ============================================
+        // CHARACTER MATCHING GAME
+        // ============================================
+        const characters = [
+            {
+                name: "Pompompurin",
+                image: "images/pompompurin.svg",
+                match: 98,
+                desc: "Soft like a pudding, golden like sunshine, and naps ALL the time. Your boyfriend IS a living Pompompurin! 🍮",
+                traits: ["🍮 Pudding Belly", "😴 Nap Champion", "🥞 Snack Monster"],
+                matchText: "CONFIRMED: Your boyfriend is literally a golden pudding! That marshmallow tummy? Pure Pompompurin energy! 🍮✨"
+            },
+            {
+                name: "Cinnamoroll",
+                image: "images/cinnamoroll.svg",
+                match: 95,
+                desc: "Fluffy, round, and so huggable you want to squish him! Those big ears hear every snack wrapper open 👂",
+                traits: ["☁️ Cloud Body", "🎀 Extra Soft", "🍩 Dessert Radar"],
+                matchText: "Your boyfriend is a fluffy cloud puppy! No wonder you want to squish him constantly! ☁️💕"
+            },
+            {
+                name: "Gudetama",
+                image: "images/gudetama.svg",
+                match: 92,
+                desc: "Lazy, jiggly, and refuses to move from the couch. Does your boyfriend also melt into furniture? 🍳",
+                traits: ["🥚 Jiggly Body", "😩 Maximum Lazy", "🛋️ Couch Potato"],
+                matchText: "Your boyfriend is a lazy egg! He probably also says 'meh' and refuses to leave the blanket! 🍳😴"
+            },
+            {
+                name: "Moomin",
+                image: "images/moomin.svg",
+                match: 90,
+                desc: "Round, white, and shaped like a friendly marshmallow hippo. Gentle giant with a squishy middle! 🦛",
+                traits: ["🍡 Marshmallow Shape", "🤗 Huggable", "🌙 Gentle Giant"],
+                matchText: "A MOOMIN! Your boyfriend is literally shaped like the most huggable creature! That tummy is meant for cuddles! 🦛💕"
+            },
+            {
+                name: "Corocorokuririn",
+                image: "images/corocorokuririn.svg",
+                match: 94,
+                desc: "Chubby hamster cheeks, loves snacks, stores food like his life depends on it! Probably has secret snack stash 🐹",
+                traits: ["🐹 Hamster Cheeks", "🍪 Snack Hoarder", "😊 Perpetually Happy"],
+                matchText: "Your boyfriend is a HAMSTER! Check his pockets - he's definitely hiding snacks in there! 🐹🍪"
+            },
+            {
+                name: "Hello Kitty",
+                image: "images/hello-kitty.svg",
+                match: 85,
+                desc: "Sweet, round face and surprisingly mysterious (no mouth, lots of secrets). Iconic and adorable! 🎀",
+                traits: ["🎀 Accessory King", "🍎 Apple Cheeks", "✨ Icon Status"],
+                matchText: "Hello Kitty energy! Your boyfriend is an icon - round, cute, and full of mysteries! 🎀✨"
+            },
+            {
+                name: "My Melody",
+                image: "images/my-melody.svg",
+                match: 82,
+                desc: "Soft bunny in a cute hood! Pink, precious, and probably also steals your hoodies 🐰",
+                traits: ["🐰 Bunny Soft", "💗 Pink Lover", "🧥 Hoodie Thief"],
+                matchText: "Your boyfriend gives My Melody vibes - soft, sweet, and definitely wearing your clothes! 🐰💕"
+            },
+            {
+                name: "Kuromi",
+                image: "images/kuromi.svg",
+                match: 78,
+                desc: "Looks tough but secretly soft inside! Probably pretends he's cool but melts when you hug him 😈",
+                traits: ["😈 Fake Tough", "💜 Secret Softie", "🖤 Edgy Cutie"],
+                matchText: "Kuromi match! Your boyfriend acts all cool but we know he's soft like a marshmallow inside! 😈💕"
+            },
+            {
+                name: "Pochacco",
+                image: "images/pochacco.svg",
+                match: 88,
+                desc: "Athletic? Maybe. Chubby? Definitely. Always happy and probably trips over his own feet! 🐕",
+                traits: ["🐕 Puppy Energy", "⚽ Tries Sports", "😄 Always Happy"],
+                matchText: "Pochacco vibes! Your boyfriend is clumsy, happy, and probably the goodest boy! 🐕💕"
+            },
+            {
+                name: "Keroppi",
+                image: "images/keroppi.svg",
+                match: 80,
+                desc: "Big eyes, bigger appetite! Happy frog who's always smiling and looking for the next meal 🐸",
+                traits: ["🐸 Big Eyes", "🍽️ Always Hungry", "😊 Eternal Optimist"],
+                matchText: "Keroppi! Your boyfriend has those big adorable eyes and is ALWAYS thinking about food! 🐸🍽️"
+            },
+            {
+                name: "Badtz-Maru",
+                image: "images/badtz-maru.svg",
+                match: 75,
+                desc: "Spiky attitude but secretly just wants love! Probably makes grumpy faces but loves cuddles 🐧",
+                traits: ["🐧 Grumpy Face", "😤 Spiky Hair", "🖤 Needs Hugs"],
+                matchText: "Badtz-Maru energy! Your boyfriend looks grumpy but inside he's just a cuddle penguin! 🐧💕"
+            },
+            {
+                name: "Chococat",
+                image: "images/chococat.svg",
+                match: 83,
+                desc: "Curious about everything, especially food! Those big eyes miss nothing, especially when you're eating 🐱",
+                traits: ["🐱 Big Ears", "👀 Nosy Boy", "🍫 Choco Lover"],
+                matchText: "Chococat! Your boyfriend probably stares at you eating with those big curious eyes! 🐱👀"
+            },
+            {
+                name: "Tuxedo Sam",
+                image: "images/tuxedosam.svg",
+                match: 86,
+                desc: "Fancy penguin with a round belly! Thinks he's sophisticated but waddles everywhere 🐧",
+                traits: ["🐧 Fancy Boy", "🎩 Waddle Walk", "🍰 Loves Treats"],
+                matchText: "Tuxedo Sam! Your boyfriend thinks he's fancy but he's just a cute waddling pudge! 🐧🎩"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        // Initialize dots
+        function initDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = '';
+            characters.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToCharacter(index);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function updateCharacter(animate = true) {
+            const char = characters[currentIndex];
+            const card = document.getElementById('showcaseCard');
+
+            if (animate) {
+                card.classList.add('enter');
+                setTimeout(() => card.classList.remove('enter'), 400);
+            }
+
+            document.getElementById('characterImg').src = char.image;
+            document.getElementById('characterName').textContent = char.name;
+            document.getElementById('characterDesc').textContent = char.desc;
+            document.querySelector('.percent-num').textContent = char.match + '%';
+
+            const traitsContainer = document.getElementById('traits');
+            traitsContainer.innerHTML = char.traits.map(t => `<span class="trait">${t}</span>`).join('');
+
+            updateDots();
+        }
+
+        function nextCharacter() {
+            const card = document.getElementById('showcaseCard');
+            card.classList.add('swipe-left');
+            setTimeout(() => {
+                card.classList.remove('swipe-left');
+                currentIndex = (currentIndex + 1) % characters.length;
+                updateCharacter();
+            }, 300);
+        }
+
+        function prevCharacter() {
+            const card = document.getElementById('showcaseCard');
+            card.classList.add('swipe-right');
+            setTimeout(() => {
+                card.classList.remove('swipe-right');
+                currentIndex = (currentIndex - 1 + characters.length) % characters.length;
+                updateCharacter();
+            }, 300);
+        }
+
+        function goToCharacter(index) {
+            currentIndex = index;
+            updateCharacter();
+        }
+
+        function nopeCharacter() {
+            nextCharacter();
+        }
+
+        function matchCharacter() {
+            const char = characters[currentIndex];
+            document.getElementById('resultText').innerHTML = char.matchText;
+            document.getElementById('matchResult').classList.add('show');
+
+            // Confetti effect
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'sparkle';
+                    confetti.textContent = ['🎉', '💕', '✨', '🎊', '💗', '⭐'][Math.floor(Math.random() * 6)];
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.top = Math.random() * window.innerHeight + 'px';
+                    confetti.style.fontSize = (20 + Math.random() * 20) + 'px';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 1000);
+                }, i * 50);
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('matchResult').classList.remove('show');
+            currentIndex = 0;
+            updateCharacter();
+        }
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('characterShowcase').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('characterShowcase').addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextCharacter();
+            if (touchEndX - touchStartX > 50) prevCharacter();
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') nextCharacter();
+            if (e.key === 'ArrowLeft') prevCharacter();
+            if (e.key === 'Enter') matchCharacter();
+        });
+
+        // Initialize
+        initDots();
+        updateCharacter(false);
     </script>
 </body>
 </html>

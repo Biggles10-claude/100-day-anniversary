@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Badtz-Maru - spiky black penguin -->
+  <!-- Body -->
+  <ellipse cx="50" cy="72" rx="28" ry="22" fill="#333"/>
+  <!-- White belly -->
+  <ellipse cx="50" cy="75" rx="18" ry="15" fill="#FFFFFF"/>
+  <!-- Head -->
+  <circle cx="50" cy="40" r="28" fill="#333"/>
+  <!-- Spiky hair -->
+  <polygon points="35,15 40,30 45,12" fill="#333"/>
+  <polygon points="50,10 52,28 55,8" fill="#333"/>
+  <polygon points="60,12 58,28 65,15" fill="#333"/>
+  <!-- Yellow beak -->
+  <ellipse cx="50" cy="48" rx="10" ry="6" fill="#FFD700"/>
+  <!-- Mischievous eyes -->
+  <ellipse cx="38" cy="38" rx="6" ry="8" fill="#FFFFFF"/>
+  <ellipse cx="62" cy="38" rx="6" ry="8" fill="#FFFFFF"/>
+  <circle cx="40" cy="40" r="4" fill="#333"/>
+  <circle cx="64" cy="40" r="4" fill="#333"/>
+  <!-- Eyebrows (angry/mischievous) -->
+  <line x1="30" y1="28" x2="42" y2="32" stroke="#333" stroke-width="3"/>
+  <line x1="70" y1="28" x2="58" y2="32" stroke="#333" stroke-width="3"/>
+  <!-- Feet -->
+  <ellipse cx="38" cy="92" rx="10" ry="5" fill="#FFD700"/>
+  <ellipse cx="62" cy="92" rx="10" ry="5" fill="#FFD700"/>
+</svg>

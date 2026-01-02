@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Pompompurin - golden retriever with brown beret -->
+  <!-- Body -->
+  <ellipse cx="50" cy="75" rx="30" ry="20" fill="#FFD700"/>
+  <!-- Head -->
+  <circle cx="50" cy="45" r="32" fill="#FFD700"/>
+  <!-- Beret -->
+  <ellipse cx="50" cy="18" rx="20" ry="8" fill="#8B4513"/>
+  <ellipse cx="50" cy="22" rx="16" ry="6" fill="#A0522D"/>
+  <!-- Ears -->
+  <ellipse cx="22" cy="35" rx="12" ry="18" fill="#8B4513"/>
+  <ellipse cx="78" cy="35" rx="12" ry="18" fill="#8B4513"/>
+  <!-- Face -->
+  <ellipse cx="50" cy="50" rx="25" ry="22" fill="#FFD700"/>
+  <!-- Eyes -->
+  <circle cx="38" cy="45" r="4" fill="#333"/>
+  <circle cx="62" cy="45" r="4" fill="#333"/>
+  <!-- Nose -->
+  <ellipse cx="50" cy="55" rx="5" ry="4" fill="#333"/>
+  <!-- Cheeks -->
+  <ellipse cx="28" cy="55" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+  <ellipse cx="72" cy="55" rx="6" ry="4" fill="#FFB6C1" opacity="0.5"/>
+  <!-- Tail -->
+  <ellipse cx="80" cy="80" rx="8" ry="6" fill="#FFD700"/>
+</svg>
