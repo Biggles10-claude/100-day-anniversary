@@ -117,6 +117,27 @@
             50% { box-shadow: 0 0 40px rgba(255, 107, 157, 0.8), 0 0 60px rgba(255, 215, 0, 0.4); }
         }
 
+        #musicToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--pink-hot), var(--pink-deep));
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(233, 30, 140, 0.4);
+            transition: transform 0.2s;
+        }
+
+        #musicToggle:hover {
+            transform: scale(1.1);
+        }
+
         body {
             font-family: 'Fredoka', sans-serif;
             background: linear-gradient(135deg, #FFE4EC 0%, #FFF9E6 25%, #E8D5FF 50%, #B8F5EC 75%, #FFE4EC 100%);
@@ -668,6 +689,37 @@
     </style>
 </head>
 <body>
+    <!-- Background Music -->
+    <audio id="bgm" loop>
+        <source src="music__20260102_120140.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicToggle" onclick="toggleMusic()">🔇</button>
+    <script>
+        let musicPlaying = false;
+        function toggleMusic() {
+            const bgm = document.getElementById('bgm');
+            const btn = document.getElementById('musicToggle');
+            if (musicPlaying) {
+                bgm.pause();
+                btn.textContent = '🔇';
+                musicPlaying = false;
+            } else {
+                bgm.play();
+                btn.textContent = '🔊';
+                musicPlaying = true;
+            }
+        }
+        document.addEventListener('click', function autoPlay() {
+            if (!musicPlaying) {
+                document.getElementById('bgm').play().then(() => {
+                    musicPlaying = true;
+                    document.getElementById('musicToggle').textContent = '🔊';
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', autoPlay);
+        }, { once: true });
+    </script>
+
     <div class="stars" id="stars"></div>
     <div class="confetti-container" id="confetti"></div>
 
